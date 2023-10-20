@@ -1,0 +1,11 @@
+---
+import dayjs from "dayjs";
+import Progress from "../components/Progress.svelte";
+import BaseLayout from "./../layouts/BaseLayout.astro";
+---
+
+<script></script>
+
+<BaseLayout>
+  <Progress client:only="svelte" endTime={dayjs().set("hour", 19).set("minute", 0)} />
+</BaseLayout>
