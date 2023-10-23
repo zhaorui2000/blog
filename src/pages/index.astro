@@ -1,10 +1,9 @@
 ---
-import BaseLayout from "./../layouts/BaseLayout.astro";
-import ProgressView from "../components/view/progress/index.svelte";
+import MainLayout from '../layouts/MainLayout.astro';
+import TimeProgress from '../component/TimeProgress.vue';
+import dayjs from 'dayjs';
 ---
 
-<script></script>
-
-<BaseLayout>
-  <ProgressView client:load></ProgressView>
-</BaseLayout>
+<MainLayout>
+  <TimeProgress client:load />
+</MainLayout>

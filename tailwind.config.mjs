@@ -5,5 +5,5 @@ export default {
   theme: {
     extend: {},
   },
-  plugins: [require('daisyui'), addDynamicIconSelectors()],
+  plugins: [addDynamicIconSelectors()],
 };
