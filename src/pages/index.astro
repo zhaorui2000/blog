@@ -1,9 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import TimeProgress from '../component/TimeProgress.vue';
-import dayjs from 'dayjs';
+import ProgressView from '../view/Progress/index.vue';
 ---
 
 <MainLayout>
-  <TimeProgress client:load />
+  <ProgressView client:load />
 </MainLayout>

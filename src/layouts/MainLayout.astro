@@ -1,6 +1,7 @@
 ---
 import 'vant/lib/index.css';
 import './../styles/global.css';
+import { NavBar } from 'vant';
 ---
 
 <html lang="zh">
@@ -12,7 +13,8 @@ import './../styles/global.css';
     />
     <title>Astro</title>
   </head>
-  <body class="h-screen bg-base-100">
+  <body class="h-screen bg-N1">
+    <NavBar title="TITLE" />
     <slot />
   </body>
 </html>
