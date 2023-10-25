@@ -4,6 +4,8 @@ import { Progress } from 'vant';
 import dayjs from 'dayjs';
 import Timer from './../utils/Timer';
 
+const emit = defineEmits(['change']);
+
 const { startTime, endTime } = defineProps({
   startTime: { require: false, default: dayjs().startOf('day') },
   endTime: { require: false, default: dayjs().endOf('day') },
@@ -19,9 +21,13 @@ if (max <= 0) {
   max = max + total;
 }
 
+watch(precentage, (oldV, newV) => {
+  emit('change', newV);
+});
+
 onMounted(() => {
   const timer = new Timer(() => {
-    precentage.value = ((dayjs().diff(start, 'second') / max) * 100).toFixed(2);
+    precentage.value = (dayjs().diff(start, 'second') / max) * 100;
     if (precentage.value >= 100) {
       precentage.value = 100;
       timer?.clear();
@@ -31,6 +37,6 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <Progress :percentage="precentage"></Progress>
+    <Progress :percentage="precentage.toFixed(2)"></Progress>
   </div>
 </template>

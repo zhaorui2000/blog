@@ -3,11 +3,11 @@ import { ref, watch } from 'vue';
 import { Button, Popup, Form, Field, CellGroup } from 'vant';
 import TimePickerField from '@components/TimePickerField.vue';
 import { useStore } from '@nanostores/vue';
-import { progressList } from '@store/progressStore';
+import { $progressList } from '@store/progressStore';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
-const $progressList = useStore(progressList);
+const progressList = useStore($progressList);
 
 const show = ref(false);
 const startTime = ref();
@@ -42,14 +42,14 @@ function handleChangeEndTime({ selectedValues }) {
   }
 }
 function handleClickAdd() {
-  startTime.value = $progressList.value?.at?.(-1)?.end ?? [];
+  startTime.value = progressList.at?.(-1)?.end ?? [];
   endTime.value = [];
   durationTime.value = [];
   show.value = true;
 }
 function handleComfirm() {
-  progressList.set(
-    produce($progressList.value, (draft) => {
+  $progressList.set(
+    produce($progressList.get(), (draft) => {
       draft.push({ title: title.value, start: startTime.value, end: endTime.value });
       draft.sort((a, b) => {
         return convertTime(a.start).diff(convertTime(b.start), 'second');
