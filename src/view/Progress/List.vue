@@ -31,7 +31,7 @@ function handleDel(index) {
 }
 </script>
 <template>
-  <div>
+  <div class="flex gap-1 flex-col">
     <Item
       v-for="({ title, start, end, isFinish }, index) of progressList"
       v-show="!isFinish"

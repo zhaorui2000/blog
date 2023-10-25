@@ -42,7 +42,7 @@ function handleChangeEndTime({ selectedValues }) {
   }
 }
 function handleClickAdd() {
-  startTime.value = progressList.at?.(-1)?.end ?? [];
+  startTime.value = progressList.value?.at?.(-1)?.end ?? [];
   endTime.value = [];
   durationTime.value = [];
   show.value = true;
@@ -60,7 +60,9 @@ function handleComfirm() {
 }
 </script>
 <template>
-  <Button @click="handleClickAdd"><span class="icon-[material-symbols--add-rounded]"></span>新增</Button>
+  <Button type="primary" block round @click="handleClickAdd"
+    ><span class="icon-[material-symbols--add-rounded]"></span>新增</Button
+  >
   <Popup position="bottom" v-model:show="show" title="新增">
     <Form>
       <Field label="标题" v-model="title" placeholder="请输入标题"></Field>

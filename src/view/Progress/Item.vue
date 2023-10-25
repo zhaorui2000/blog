@@ -27,8 +27,13 @@ function handleChangeProcentage(value) {
     <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
     <Cell center>
       <template #title>
-        <Tag :type="active ? 'primary' : 'default'">{{ convertTime(props.startTime).format('HH:mm:ss') }}</Tag>
-        <span class="ml-2">{{ props.title }}</span>
+        <div class="w-full flex py-1">
+          <Tag :type="active ? 'primary' : 'default'">{{ convertTime(props.startTime).format('HH:mm:ss') }}</Tag>
+          <span class="ml-2">{{ props.title }}</span>
+          <Tag class="ml-auto" :type="active ? 'primary' : 'default'">{{
+            convertTime(props.endTime).format('HH:mm:ss')
+          }}</Tag>
+        </div>
       </template>
       <template #label
         ><TimeProgress
