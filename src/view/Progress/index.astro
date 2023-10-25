@@ -1,0 +1,9 @@
+---
+import Add from './Add.vue';
+import List from './List.vue';
+---
+
+<div class="grid h-full" style="grid-template-rows: 1fr min-content">
+  <List client:load />
+  <Add client:load />
+</div>
