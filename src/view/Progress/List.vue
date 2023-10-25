@@ -3,10 +3,10 @@ import Item from './Item.vue';
 import { progressList } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 const $progressList = useStore(progressList);
-
 </script>
 <template>
   <div>
+    <div>{{ $progressList.value }}</div>
     <Item
       v-for="({ title, start, end }, index) of $progressList"
       :title="title"

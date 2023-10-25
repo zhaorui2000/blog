@@ -22,11 +22,11 @@ if (max <= 0) {
 onMounted(() => {
   const timer = new Timer(() => {
     precentage.value = ((dayjs().diff(start, 'second') / max) * 100).toFixed(2);
+    if (precentage.value >= 100) {
+      precentage.value = 100;
+      timer?.clear();
+    }
   }, 100);
-  if (precentage.value >= 100) {
-    precentage.value = 100;
-    timer.clear();
-  }
 });
 </script>
 <template>

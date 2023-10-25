@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/vue": "^3.0.1",
     "@iconify-json/material-symbols": "^1.1.60",
+    "@nanostores/persistent": "^0.9.1",
     "@nanostores/vue": "^0.10.0",
     "astro": "^3.3.2",
     "clsx": "^2.0.0",

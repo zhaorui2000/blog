@@ -1,3 +1,7 @@
-import { atom } from 'nanostores';
+import { persistentAtom } from "@nanostores/persistent";
 
-export const progressList = atom([{ title: 'title', start: [9, 30, 0], end: [19, 0, 0] }]);
+export const progressList = persistentAtom('progressList', [], {
+  encode: JSON.stringify,
+  decode: JSON.parse,
+  listen: false
+});
