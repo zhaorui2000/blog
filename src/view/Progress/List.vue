@@ -12,7 +12,7 @@ const progressList = useStore($progressList);
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      const secondDiff = convertTime(draft[index].end).diff(dayjs(), 'second');
+      const secondDiff = dayjs().diff(convertTime(draft[index].end), 'second');
       draft[index].isFinish = true;
       for (let j = index + 1; j < draft.length; ++j) {
         draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
