@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, toRaw } from 'vue';
 import { Progress } from 'vant';
 import dayjs from 'dayjs';
 import Timer from './../utils/Timer';
@@ -29,7 +29,7 @@ watch(
       max.value = max.value + total;
     }
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 );
 
 watch(precentage, (oldV, newV) => {
@@ -37,7 +37,6 @@ watch(precentage, (oldV, newV) => {
 });
 
 onMounted(() => {
-  console.log('onMounted');
   const timer = new Timer(() => {
     precentage.value = (dayjs().diff(start.value, 'second') / max.value) * 100;
     if (precentage.value >= 100) {

@@ -1,10 +1,8 @@
 <script setup>
-import { computed } from 'vue';
 import Item from './Item.vue';
 import { $progressList } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
-import { showToast } from 'vant';
 import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
 const progressList = useStore($progressList);
@@ -14,6 +12,18 @@ function handleFinish(index) {
     produce($progressList.get(), (draft) => {
       const secondDiff = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index + 1; j < draft.length; ++j) {
+        draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
+        draft[j].end = convertTime(draft[j].end).add(secondDiff, 'second').format('HH:mm:ss').split(':');
+      }
+      return draft;
+    }),
+  );
+}
+function handleStart(index) {
+  $progressList.set(
+    produce($progressList.get(), (draft) => {
+      const secondDiff = dayjs().diff(convertTime(draft[index].start), 'second');
+      for (let j = index; j < draft.length; ++j) {
         draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
         draft[j].end = convertTime(draft[j].end).add(secondDiff, 'second').format('HH:mm:ss').split(':');
       }
@@ -39,6 +49,7 @@ function handleDel(index) {
       :endTime="end"
       @finish="() => handleFinish(index)"
       @del="() => handleDel(index)"
+      @start="() => handleStart(index)"
     ></Item>
   </div>
 </template>

@@ -4,7 +4,7 @@ import TimeProgress from '@components/TimeProgress.vue';
 import { Cell, SwipeCell, Button, Tag } from 'vant';
 import convertTime from '@utils/convertTime';
 
-const emit = defineEmits(['finish', 'del']);
+const emit = defineEmits(['finish', 'del', 'start']);
 const props = defineProps({
   title: { require: false, default: '' },
   startTime: { type: Array, require: true },
@@ -12,6 +12,9 @@ const props = defineProps({
 });
 const active = ref(false);
 
+function handleClickStart() {
+  emit('start');
+}
 function handleClickFinish() {
   emit('finish');
 }
@@ -43,7 +46,10 @@ function handleChangeProcentage(value) {
         ></TimeProgress>
       </template>
     </Cell>
-    <template #right><Button class="h-full" square type="primary" @click="handleClickFinish">完成</Button></template>
+    <template #right>
+      <Button class="h-full" square type="success" @click="handleClickFinish">完成</Button>
+      <Button class="h-full" square type="primary" @click="handleClickStart">开始</Button>
+    </template>
   </SwipeCell>
 </template>
 <style></style>
