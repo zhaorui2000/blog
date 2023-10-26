@@ -13,7 +13,6 @@ function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       const secondDiff = dayjs().diff(convertTime(draft[index].end), 'second');
-      draft[index].isFinish = true;
       for (let j = index + 1; j < draft.length; ++j) {
         draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
         draft[j].end = convertTime(draft[j].end).add(secondDiff, 'second').format('HH:mm:ss').split(':');
@@ -33,8 +32,7 @@ function handleDel(index) {
 <template>
   <div class="flex gap-1 flex-col">
     <Item
-      v-for="({ title, start, end, isFinish }, index) of progressList"
-      v-show="!isFinish"
+      v-for="({ title, start, end }, index) of progressList"
       :title="title"
       :key="index"
       :startTime="start"
