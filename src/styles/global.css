@@ -1,2 +1,6 @@
 @tailwind components;
 @tailwind utilities;
+.van-button__text {
+    display: inline-flex;
+    align-items: center;
+}

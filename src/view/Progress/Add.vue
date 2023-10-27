@@ -61,7 +61,7 @@ function handleComfirm() {
 </script>
 <template>
   <Button type="primary" block round @click="handleClickAdd"
-    ><span class="icon-[material-symbols--add-rounded]"></span>新增</Button
+    ><i class="icon-[material-symbols--add-rounded]"></i><span>新增</span></Button
   >
   <Popup position="bottom" v-model:show="show" title="新增">
     <Form>
