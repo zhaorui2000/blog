@@ -47,9 +47,11 @@ function handleClickAdd() {
     .add(progressList.value?.at?.(-1)?.diffSecond ?? 0, 'second')
     .format('HH:mm:ss')
     .split(':');
+  console.log(startTime.value);
   endTime.value = [];
   durationTime.value = [];
   show.value = true;
+  isLock.value = false;
 }
 function handleClickRest() {
   $progressList.set(
@@ -74,7 +76,7 @@ function handleComfirm() {
 </script>
 <template>
   <div>
-    <div class="flex gap-2">
+    <div class="flex gap-2 p-1">
       <Button class="w-1/4" block round @click="handleClickRest"
         ><i class="icon-[material-symbols--settings-backup-restore-rounded]"></i><span>重置</span></Button
       >

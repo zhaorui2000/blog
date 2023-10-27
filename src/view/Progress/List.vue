@@ -7,10 +7,12 @@ import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
 const progressList = useStore($progressList);
 import { computed } from 'vue';
+import clsx from 'clsx';
 
 const computedProgressList = computed(() => {
   return progressList.value.map((item) => {
-    const { start, end, diffSecond, isLock } = item;
+    const { start, end, diffSecond = 0, isLock } = item;
+
     if (isLock) {
       return item;
     }
@@ -55,11 +57,12 @@ function handleDel(index) {
 <template>
   <div class="flex gap-1 flex-col">
     <Item
-      v-for="({ title, start, end }, index) of computedProgressList"
+      v-for="({ title, start, end, isLock }, index) of computedProgressList"
       :title="title"
       :key="index"
       :startTime="start"
       :endTime="end"
+      :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
       @finish="() => handleFinish(index)"
       @del="() => handleDel(index)"
       @start="() => handleStart(index)"
