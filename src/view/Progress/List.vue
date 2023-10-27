@@ -6,14 +6,28 @@ import { produce } from 'immer';
 import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
 const progressList = useStore($progressList);
+import { computed } from 'vue';
+
+const computedProgressList = computed(() => {
+  return progressList.value.map((item) => {
+    const { start, end, diffSecond, isLock } = item;
+    if (isLock) {
+      return item;
+    }
+    return {
+      ...item,
+      start: convertTime(start).add(diffSecond, 'second').format('HH:mm:ss').split(':'),
+      end: convertTime(end).add(diffSecond, 'second').format('HH:mm:ss').split(':'),
+    };
+  });
+});
 
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      const secondDiff = dayjs().diff(convertTime(draft[index].end), 'second');
-      for (let j = index + 1; j < draft.length; ++j) {
-        draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
-        draft[j].end = convertTime(draft[j].end).add(secondDiff, 'second').format('HH:mm:ss').split(':');
+      const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
+      for (let j = index; j < draft.length; ++j) {
+        draft[j].diffSecond = diffSecond;
       }
       return draft;
     }),
@@ -22,10 +36,9 @@ function handleFinish(index) {
 function handleStart(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      const secondDiff = dayjs().diff(convertTime(draft[index].start), 'second');
+      const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
       for (let j = index; j < draft.length; ++j) {
-        draft[j].start = convertTime(draft[j].start).add(secondDiff, 'second').format('HH:mm:ss').split(':');
-        draft[j].end = convertTime(draft[j].end).add(secondDiff, 'second').format('HH:mm:ss').split(':');
+        draft[j].diffSecond = diffSecond;
       }
       return draft;
     }),
@@ -42,7 +55,7 @@ function handleDel(index) {
 <template>
   <div class="flex gap-1 flex-col">
     <Item
-      v-for="({ title, start, end }, index) of progressList"
+      v-for="({ title, start, end }, index) of computedProgressList"
       :title="title"
       :key="index"
       :startTime="start"
