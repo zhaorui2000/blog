@@ -31,7 +31,10 @@ const computedList = computed(() => {
       };
     }
 
-    if (dayjs().diff(startObj, 'second') >= -1 && endObj.diff(dayjs(), 'second') >= -1) {
+    if (
+      startObj.diff(dayjs(), 'second') >= -1 ||
+      (dayjs().diff(startObj, 'second') >= -1 && endObj.diff(dayjs(), 'second') >= -1)
+    ) {
       today.push({ ...result, index, key: `today-${index}` });
     } else {
       tomorrow.push({ ...result, index, key: `tomorrow-${index}` });
