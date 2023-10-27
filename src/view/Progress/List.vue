@@ -4,24 +4,40 @@ import { $progressList } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
-import convertTime from '@utils/convertTime';
-const progressList = useStore($progressList);
 import { computed } from 'vue';
 import clsx from 'clsx';
+import { CellGroup } from 'vant';
+import convertTime from '@utils/convertTime';
+const progressList = useStore($progressList);
 
-const computedProgressList = computed(() => {
-  return progressList.value.map((item) => {
+const computedList = computed(() => {
+  let today = [];
+  let tomorrow = [];
+  let result = [];
+
+  progressList.value.forEach((item, index) => {
     const { start, end, diffSecond = 0, isLock } = item;
 
+    let startObj = convertTime(start).add(diffSecond, 'second');
+    let endObj = convertTime(end).add(diffSecond, 'second');
+
     if (isLock) {
-      return item;
+      result = item;
+    } else {
+      result = {
+        ...item,
+        start: startObj.format('HH:mm:ss').split(':'),
+        end: endObj.format('HH:mm:ss').split(':'),
+      };
     }
-    return {
-      ...item,
-      start: convertTime(start).add(diffSecond, 'second').format('HH:mm:ss').split(':'),
-      end: convertTime(end).add(diffSecond, 'second').format('HH:mm:ss').split(':'),
-    };
+
+    if (startObj.diff(dayjs(), 'second') >= -1) {
+      today.push({ ...result, index, key: `today-${index}` });
+    } else {
+      tomorrow.push({ ...result, index, key: `tomorrow-${index}` });
+    }
   });
+  return { today, tomorrow };
 });
 
 function handleFinish(index) {
@@ -55,17 +71,32 @@ function handleDel(index) {
 }
 </script>
 <template>
-  <div class="flex gap-1 flex-col">
-    <Item
-      v-for="({ title, start, end, isLock }, index) of computedProgressList"
-      :title="title"
-      :key="index"
-      :startTime="start"
-      :endTime="end"
-      :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
-      @finish="() => handleFinish(index)"
-      @del="() => handleDel(index)"
-      @start="() => handleStart(index)"
-    ></Item>
+  <div>
+    <CellGroup inset title="今天">
+      <Item
+        v-for="{ title, start, end, isLock, index, key } of computedList.today"
+        :title="title"
+        :startTime="start"
+        :endTime="end"
+        :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
+        @finish="() => handleFinish(index)"
+        @del="() => handleDel(index)"
+        @start="() => handleStart(index)"
+      ></Item>
+    </CellGroup>
+    <CellGroup inset title="明天">
+      <Item
+        v-for="{ title, start, end, isLock, index, key } of computedList.tomorrow"
+        disabled
+        :title="title"
+        :key="key"
+        :startTime="start"
+        :endTime="end"
+        :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
+        @finish="() => handleFinish(index)"
+        @del="() => handleDel(index)"
+        @start="() => handleStart(index)"
+      ></Item>
+    </CellGroup>
   </div>
 </template>

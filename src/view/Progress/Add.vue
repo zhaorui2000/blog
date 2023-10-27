@@ -47,7 +47,6 @@ function handleClickAdd() {
     .add(progressList.value?.at?.(-1)?.diffSecond ?? 0, 'second')
     .format('HH:mm:ss')
     .split(':');
-  console.log(startTime.value);
   endTime.value = [];
   durationTime.value = [];
   show.value = true;

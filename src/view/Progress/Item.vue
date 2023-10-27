@@ -10,6 +10,7 @@ const props = defineProps({
   startTime: { type: Array, require: true },
   endTime: { type: Array, require: true },
   iconClass: { type: Array, require: false },
+  disabled: { type: Boolean, require: false, default: false },
 });
 const active = ref(false);
 
@@ -47,6 +48,7 @@ function handleChangeProcentage(value) {
           @change="handleChangeProcentage"
           :startTime="props.startTime"
           :endTime="props.endTime"
+          :disabled="props.disabled"
         ></TimeProgress>
       </template>
     </Cell>
