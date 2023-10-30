@@ -1,12 +1,13 @@
 <script setup>
 import { ref } from 'vue';
-import { Button, Popup, Form, Field, CellGroup, Switch } from 'vant';
+import { Button, Popup, Form, Field, CellGroup, Switch, showNotify } from 'vant';
 import TimePickerField from '@components/TimePickerField.vue';
 import { useStore } from '@nanostores/vue';
 import { $progressList } from '@store/progressStore';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
+import Group from '@view/Progress/Group.vue';
 const progressList = useStore($progressList);
 
 const show = ref(false);
@@ -60,6 +61,7 @@ function handleClickRest() {
       }
     }),
   );
+  showNotify({ message: '重置成功', type: 'success' });
 }
 function handleComfirm() {
   $progressList.set(
@@ -71,17 +73,15 @@ function handleComfirm() {
     }),
   );
   show.value = false;
+  showNotify({ message: '新增成功', type: 'success' });
 }
 </script>
 <template>
   <div>
     <div class="flex gap-2 p-1">
-      <Button class="w-1/4" block round @click="handleClickRest"
-        ><i class="icon-[material-symbols--settings-backup-restore-rounded]"></i><span>重置</span></Button
-      >
-      <Button class="w-3/4" type="primary" block round @click="handleClickAdd"
-        ><i class="icon-[material-symbols--add-rounded]"></i><span>新增</span></Button
-      >
+      <Button class="w-1/4" block round @click="handleClickRest"><span>重置</span></Button>
+      <Group class="w-1/4">分组</Group>
+      <Button class="w-1/2" type="primary" block round @click="handleClickAdd" icon="plus">新增</Button>
     </div>
     <Popup position="bottom" v-model:show="show" title="新增">
       <Form>
