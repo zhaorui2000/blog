@@ -6,8 +6,10 @@ import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { computed } from 'vue';
 import clsx from 'clsx';
-import { CellGroup } from 'vant';
+import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
+import Time2Arr from '@utils/time2Arr.js';
+import time2Arr from '@utils/time2Arr.js';
 const progressList = useStore($progressList);
 
 const computedList = computed(() => {
@@ -16,7 +18,7 @@ const computedList = computed(() => {
   let result = [];
 
   progressList.value.forEach((item, index) => {
-    const { start, end, diffSecond = 0, isLock } = item;
+    const { start, end, realStart, realEnd, diffSecond = 0, isLock } = item;
 
     let startObj = convertTime(start).add(diffSecond, 'second');
     let endObj = convertTime(end).add(diffSecond, 'second');
@@ -30,7 +32,6 @@ const computedList = computed(() => {
         end: endObj.format('HH:mm:ss').split(':'),
       };
     }
-
     if (
       startObj.diff(dayjs(), 'second') >= -1 ||
       (dayjs().diff(startObj, 'second') >= -1 && endObj.diff(dayjs(), 'second') >= -1)
@@ -49,6 +50,7 @@ function handleFinish(index) {
       const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
+        draft[j].realEnd = Time2Arr();
       }
       return draft;
     }),
@@ -60,6 +62,7 @@ function handleStart(index) {
       const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
+        draft[j].realStart = Time2Arr();
       }
       return draft;
     }),
@@ -72,34 +75,59 @@ function handleDel(index) {
     }),
   );
 }
+function handleActive(index) {
+  $progressList.set(
+    produce($progressList.get(), (draft) => {
+      draft[index].realStart = draft[index].start;
+      return draft;
+    }),
+  );
+}
+function handleInactive(index) {
+  $progressList.set(
+    produce($progressList.get(), (draft) => {
+      draft[index].realEnd = draft[index].end;
+      return draft;
+    }),
+  );
+}
 </script>
 <template>
   <div>
     <CellGroup inset title="今天">
       <Item
-        v-for="{ title, start, end, isLock, index, key } of computedList.today"
+        v-for="{ title, start, end, isLock, index, realStart, realEnd, key } of computedList.today"
         :title="title"
-        :startTime="start"
-        :endTime="end"
+        :startTime="realStart ?? start"
+        :endTime="realEnd ?? end"
         :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
-        @finish="() => handleFinish(index)"
         @del="() => handleDel(index)"
-        @start="() => handleStart(index)"
-      ></Item>
+        @active="() => handleActive(index)"
+        @inactive="() => handleInactive(index)"
+      >
+        <template #right>
+          <Button class="h-full" square type="primary" @click="() => handleStart(index)">开始</Button>
+          <Button class="h-full" square type="success" @click="() => handleFinish(index)">完成</Button>
+        </template>
+      </Item>
     </CellGroup>
     <CellGroup inset title="明天">
       <Item
-        v-for="{ title, start, end, isLock, index, key } of computedList.tomorrow"
-        disabled
+        v-for="{ title, start, realStart, end, realEnd, isLock, index, key } of computedList.tomorrow"
         :title="title"
         :key="key"
-        :startTime="start"
-        :endTime="end"
+        :startTime="realStart ?? start"
+        :endTime="realEnd ?? end"
         :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
-        @finish="() => handleFinish(index)"
         @del="() => handleDel(index)"
-        @start="() => handleStart(index)"
-      ></Item>
+        @active="() => handleActive(index)"
+        @inactive="() => handleInactive(index)"
+      >
+        <template #right>
+          <Button class="h-full" square type="primary" @click="() => handleStart(index)">开始</Button>
+          <Button class="h-full" square type="success" @click="() => handleFinish(index)">完成</Button>
+        </template>
+      </Item>
     </CellGroup>
   </div>
 </template>

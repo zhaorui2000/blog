@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import TimeProgress from '@components/TimeProgress.vue';
 import { Cell, SwipeCell, Button, Tag } from 'vant';
 import convertTime from '@utils/convertTime';
 
-const emit = defineEmits(['finish', 'del', 'start']);
+const emit = defineEmits(['active', 'del', 'inactive']);
 const props = defineProps({
   title: { require: false, default: '' },
   startTime: { type: Array, require: true },
@@ -12,14 +12,17 @@ const props = defineProps({
   iconClass: { type: Array, require: false },
   disabled: { type: Boolean, require: false, default: false },
 });
-const active = ref(false);
+const active = ref();
 
-function handleClickStart() {
-  emit('start');
-}
-function handleClickFinish() {
-  emit('finish');
-}
+watch(active, (newV, oldV) => {
+  if (oldV === false && newV === true) {
+    emit('active');
+  }
+  if (oldV === true && newV === false) {
+    emit('inactive');
+  }
+});
+
 function handleClickDel() {
   emit('del');
 }
@@ -53,8 +56,7 @@ function handleChangeProcentage(value) {
       </template>
     </Cell>
     <template #right>
-      <Button class="h-full" square type="success" @click="handleClickFinish">完成</Button>
-      <Button class="h-full" square type="primary" @click="handleClickStart">开始</Button>
+      <slot name="right"></slot>
     </template>
   </SwipeCell>
 </template>
