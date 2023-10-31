@@ -112,7 +112,7 @@ function handleChangeLock(index, value) {
 }
 </script>
 <template>
-  <div>
+  <div class="overflow-y-scroll h-full">
     <CellGroup inset v-for="(list, index) of computedList" :title="['今天', '明天'][index]">
       <Item
         v-for="{ title, start, end, isLock, index, realStart, realEnd, key } of list"
