@@ -8,7 +8,6 @@ import { computed } from 'vue';
 import clsx from 'clsx';
 import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
-import Time2Arr from '@utils/time2Arr.js';
 import time2Arr from '@utils/time2Arr.js';
 const progressList = useStore($progressList);
 
@@ -47,11 +46,12 @@ const computedList = computed(() => {
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
+      const diffSecond = dayjs(convertTime(draft[index].start)).diff(convertTime(draft[index].end), 'second');
+      const duration = dayjs().diff(convertTime(draft[index].start.diff(dayjs()), 'second'));
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
-        draft[j].realEnd = Time2Arr();
       }
+      draft[index].realEnd = time2Arr();
       return draft;
     }),
   );
@@ -60,10 +60,11 @@ function handleStart(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
+      const duration = dayjs(convertTime(draft[index].end)).diff(convertTime(draft[index].start), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
-        draft[j].realStart = Time2Arr();
       }
+      draft[index].realStart = time2Arr();
       return draft;
     }),
   );
@@ -72,22 +73,6 @@ function handleDel(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       return [...draft.slice(0, index), ...draft.slice(index + 1)];
-    }),
-  );
-}
-function handleActive(index) {
-  $progressList.set(
-    produce($progressList.get(), (draft) => {
-      draft[index].realStart = draft[index].start;
-      return draft;
-    }),
-  );
-}
-function handleInactive(index) {
-  $progressList.set(
-    produce($progressList.get(), (draft) => {
-      draft[index].realEnd = draft[index].end;
-      return draft;
     }),
   );
 }
@@ -100,11 +85,9 @@ function handleInactive(index) {
         :title="title"
         :startTime="realStart ?? start"
         :endTime="realEnd ?? end"
-        :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
         @del="() => handleDel(index)"
-        @active="() => handleActive(index)"
-        @inactive="() => handleInactive(index)"
       >
+        <template #icon-bar></template>
         <template #right>
           <Button class="h-full" square type="primary" @click="() => handleStart(index)">开始</Button>
           <Button class="h-full" square type="success" @click="() => handleFinish(index)">完成</Button>
@@ -118,11 +101,11 @@ function handleInactive(index) {
         :key="key"
         :startTime="realStart ?? start"
         :endTime="realEnd ?? end"
-        :iconClass="clsx({ 'icon-[material-symbols--lock-outline]': isLock }).split(' ')"
         @del="() => handleDel(index)"
         @active="() => handleActive(index)"
         @inactive="() => handleInactive(index)"
       >
+        <template #icon-bar></template>
         <template #right>
           <Button class="h-full" square type="primary" @click="() => handleStart(index)">开始</Button>
           <Button class="h-full" square type="success" @click="() => handleFinish(index)">完成</Button>

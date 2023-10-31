@@ -35,8 +35,8 @@ function handleChangeProcentage(value) {
     <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
     <Cell center>
       <template #title>
-        <div class="flex gap-2" v-show="iconClass.length > 0">
-          <i v-for="icon of iconClass" :key="icon" :class="icon" class="text-N8 text-base"></i>
+        <div class="text-xl flex gap-2">
+          <slot name="icon-bar"></slot>
         </div>
         <div class="w-full flex py-4">
           <Tag :type="active ? 'primary' : 'default'">{{ convertTime(props.startTime).format('HH:mm:ss') }}</Tag>

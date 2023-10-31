@@ -58,8 +58,8 @@ function handleClickRest() {
     produce($progressList.get(), (draft) => {
       for (let i = 0; i < draft.length; ++i) {
         draft[i].diffSecond = 0;
-        draft[i].realStart = 0;
-        draft[i].realEnd = 0;
+        draft[i].realStart = undefined;
+        draft[i].realEnd = undefined;
       }
     }),
   );
