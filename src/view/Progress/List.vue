@@ -5,7 +5,6 @@ import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { computed } from 'vue';
-import clsx from 'clsx';
 import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
@@ -47,7 +46,7 @@ function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       const diffSecond = dayjs(convertTime(draft[index].start)).diff(convertTime(draft[index].end), 'second');
-      const duration = dayjs().diff(convertTime(draft[index].start.diff(dayjs()), 'second'));
+      const duration = dayjs().diff(convertTime(draft[index].start.diff(dayjs())), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
       }
@@ -102,8 +101,6 @@ function handleDel(index) {
         :startTime="realStart ?? start"
         :endTime="realEnd ?? end"
         @del="() => handleDel(index)"
-        @active="() => handleActive(index)"
-        @inactive="() => handleInactive(index)"
       >
         <template #icon-bar></template>
         <template #right>
