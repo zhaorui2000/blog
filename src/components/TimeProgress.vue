@@ -66,6 +66,6 @@ const formatPrecentage = computed(() => {
 </script>
 <template>
   <div>
-    <Progress :percentage="formatPrecentage"></Progress>
+    <Progress :percentage="formatPrecentage" class="h-4"></Progress>
   </div>
 </template>
