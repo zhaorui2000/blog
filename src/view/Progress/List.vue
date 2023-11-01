@@ -9,6 +9,7 @@ import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
 import LockIcon from '@view/Progress/LockIcon.vue';
+import DisableIcon from '@view/Progress/DisableIcon.vue';
 const progressList = useStore($progressList);
 
 const computedList = computed(() => {
@@ -96,6 +97,14 @@ function handleDel(index) {
     }),
   );
 }
+function handleChangeDisable(index, value) {
+  $progressList.set(
+    produce($progressList.get(), (draft) => {
+      draft[index].isDisable = value;
+      return draft;
+    }),
+  );
+}
 function handleChangeLock(index, value) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
@@ -115,15 +124,20 @@ function handleChangeLock(index, value) {
   <div class="overflow-y-scroll h-full">
     <CellGroup inset v-for="(list, index) of computedList" :title="['今天', '明天'][index]">
       <Item
-        v-for="{ title, start, end, isLock, index, realStart, realEnd, key } of list"
+        v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
         :title="title"
         :key="key"
+        :disabled="isDisable"
         :startTime="realStart ?? start"
         :endTime="realEnd ?? end"
         @del="() => handleDel(index)"
       >
         <template #icon-bar>
           <LockIcon :model-value="isLock" @update:model-value="(value) => handleChangeLock(index, value)"></LockIcon>
+          <DisableIcon
+            :model-value="isDisable"
+            @update:model-value="(value) => handleChangeDisable(index, value)"
+          ></DisableIcon>
         </template>
         <template #right>
           <Button

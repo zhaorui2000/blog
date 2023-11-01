@@ -31,7 +31,7 @@ function handleChangeProcentage(value) {
 }
 </script>
 <template>
-  <SwipeCell>
+  <SwipeCell :disabled="props.disabled">
     <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
     <Cell center>
       <template #title>
@@ -39,15 +39,18 @@ function handleChangeProcentage(value) {
           <slot name="icon-bar"></slot>
         </div>
         <div class="w-full flex py-4">
-          <Tag :type="active ? 'primary' : 'default'">{{ convertTime(props.startTime).format('HH:mm:ss') }}</Tag>
+          <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'">{{
+            convertTime(props.startTime).format('HH:mm:ss')
+          }}</Tag>
           <span class="ml-2">{{ props.title }}</span>
-          <Tag class="ml-auto" :type="active ? 'primary' : 'default'">{{
+          <Tag v-show="!props.disabled" class="ml-auto" :type="active ? 'primary' : 'default'">{{
             convertTime(props.endTime).format('HH:mm:ss')
           }}</Tag>
         </div>
       </template>
       <template #label
         ><TimeProgress
+          v-show="!props.disabled"
           @change="handleChangeProcentage"
           :startTime="props.startTime"
           :endTime="props.endTime"
