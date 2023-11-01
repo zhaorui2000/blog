@@ -15,7 +15,6 @@ const startTime = ref();
 const endTime = ref();
 const durationTime = ref();
 const title = ref();
-const isLock = ref(false);
 
 function handleChangeDurationTime({ selectedValues }) {
   endTime.value = convertTime(startTime.value)
@@ -51,7 +50,6 @@ function handleClickAdd() {
   endTime.value = [];
   durationTime.value = [];
   show.value = true;
-  isLock.value = false;
 }
 function handleClickRest() {
   $progressList.set(
@@ -68,7 +66,7 @@ function handleClickRest() {
 function handleComfirm() {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      draft.push({ title: title.value, start: startTime.value, end: endTime.value, isLock: isLock.value });
+      draft.push({ title: title.value, start: startTime.value, end: endTime.value });
       draft.sort((a, b) => {
         return convertTime(a.start).diff(convertTime(b.start), 'second');
       });
@@ -109,11 +107,6 @@ function handleComfirm() {
             v-model="durationTime"
             @change="handleChangeDurationTime"
           ></TimePickerField>
-          <Field label="锁定">
-            <template #input>
-              <Switch v-model="isLock"></Switch>
-            </template>
-          </Field>
         </CellGroup>
         <Button round block type="primary" @click="handleComfirm">确定</Button>
       </Form>

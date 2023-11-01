@@ -33,12 +33,16 @@ function handleChangeProcentage(value) {
 <template>
   <SwipeCell :disabled="props.disabled">
     <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
-    <Cell center>
+    <Cell
+      center
+      class="border-solid shadow rounded-md"
+      :class="{ 'border-MR border-2': active, 'border-N4 border': !active }"
+    >
       <template #title>
         <div class="text-xl flex gap-2">
           <slot name="icon-bar"></slot>
         </div>
-        <div class="w-full flex py-4">
+        <div class="w-full flex pt-2 pb-1">
           <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'">{{
             convertTime(props.startTime).format('HH:mm:ss')
           }}</Tag>
