@@ -108,7 +108,7 @@ function handleChangeDisable(index, value) {
 function handleChangeLock(index, value) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      const { start, end, diffSecond } = draft[index];
+      const { start, end, diffSecond = 0 } = draft[index];
       draft[index].isLock = value;
       if (value) {
         draft[index].start = time2Arr(convertTime(start).add(diffSecond, 'second'));
