@@ -65,7 +65,5 @@ const formatPrecentage = computed(() => {
 });
 </script>
 <template>
-  <div>
-    <Progress :percentage="formatPrecentage" class="h-4"></Progress>
-  </div>
+  <Progress :inactive="props.disabled || precentage < 0" :percentage="formatPrecentage" class="h-3"></Progress>
 </template>
