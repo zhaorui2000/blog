@@ -73,6 +73,11 @@ function handleStart(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
+      for (let j = 0; j < index; ++j) {
+        if (convertTime(draft[j].end).diff(dayjs(), 'second') > 0) {
+          draft[j].diffSecond = diffSecond;
+        }
+      }
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
       }

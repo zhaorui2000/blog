@@ -15,8 +15,8 @@ function handleClick() {
   >
     <i
       :class="{
-        'icon-[material-symbols--disabled-by-default]': props.modelValue,
-        'icon-[material-symbols--disabled-by-default-outline]': !props.modelValue,
+        'icon-[material-symbols--visibility-off-rounded]': props.modelValue,
+        'icon-[material-symbols--visibility-outline-rounded]': !props.modelValue,
       }"
     ></i>
   </div>
