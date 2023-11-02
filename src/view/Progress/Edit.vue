@@ -1,20 +1,35 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { Button, Popup, Form, Field, CellGroup, Switch, showNotify } from 'vant';
 import TimePickerField from '@components/TimePickerField.vue';
 import { useStore } from '@nanostores/vue';
-import { $progressList } from '@store/progressStore';
+import { $progressList, $isShowEdit, $editIndex } from '@store/progressStore';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
 import Group from '@view/Progress/Group.vue';
+import time2Arr from '@utils/time2Arr.js';
 const progressList = useStore($progressList);
+const isShowEdit = useStore($isShowEdit);
+const editIndex = useStore($editIndex);
 
-const show = ref(false);
 const startTime = ref();
 const endTime = ref();
 const durationTime = ref();
 const title = ref();
+
+watch(isShowEdit, (newV) => {
+  if (newV) {
+    title.value = progressList.value[editIndex.value]?.title ?? '';
+    startTime.value = progressList.value[editIndex.value]?.start ?? [];
+    endTime.value = progressList.value[editIndex.value]?.end ?? [];
+    durationTime.value = time2Arr(
+      dayjs()
+        .startOf('day')
+        .add(convertTime(endTime.value).diff(convertTime(startTime.value), 'second'), 'second'),
+    );
+  }
+});
 
 function handleChangeDurationTime({ selectedValues }) {
   endTime.value = convertTime(startTime.value)
@@ -43,13 +58,14 @@ function handleChangeEndTime({ selectedValues }) {
   }
 }
 function handleClickAdd() {
+  $editIndex.set($progressList.get()?.length ?? 0);
   startTime.value = convertTime(progressList.value?.at?.(-1)?.end ?? [])
     .add(progressList.value?.at?.(-1)?.diffSecond ?? 0, 'second')
     .format('HH:mm:ss')
     .split(':');
   endTime.value = [];
   durationTime.value = [];
-  show.value = true;
+  $isShowEdit.set(true);
 }
 function handleClickRest() {
   $progressList.set(
@@ -66,13 +82,13 @@ function handleClickRest() {
 function handleComfirm() {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      draft.push({ title: title.value, start: startTime.value, end: endTime.value });
+      draft[editIndex.value] = { title: title.value, start: startTime.value, end: endTime.value };
       draft.sort((a, b) => {
         return convertTime(a.start).diff(convertTime(b.start), 'second');
       });
     }),
   );
-  show.value = false;
+  $isShowEdit.set(false);
   showNotify({ message: '新增成功', type: 'success' });
 }
 </script>
@@ -83,7 +99,7 @@ function handleComfirm() {
       <Group class="w-1/4">分组</Group>
       <Button class="w-1/2" type="primary" block round @click="handleClickAdd" icon="plus">新增</Button>
     </div>
-    <Popup position="bottom" v-model:show="show" title="新增">
+    <Popup position="bottom" :show="isShowEdit" title="新增" @close="$isShowEdit.set(false)">
       <Form>
         <Field label="标题" v-model="title" placeholder="请输入标题"></Field>
         <CellGroup inset>

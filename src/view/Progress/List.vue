@@ -1,6 +1,6 @@
 <script setup>
 import Item from './Item.vue';
-import { $progressList } from '@store/progressStore';
+import { $progressList, $isShowEdit, $editIndex } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
@@ -11,6 +11,7 @@ import time2Arr from '@utils/time2Arr.js';
 import LockIcon from '@view/Progress/LockIcon.vue';
 import DisableIcon from '@view/Progress/DisableIcon.vue';
 const progressList = useStore($progressList);
+const editIndex = useStore($editIndex);
 
 const computedList = computed(() => {
   let today = [];
@@ -68,6 +69,10 @@ function handleCancelFinish(index) {
       return draft;
     }),
   );
+}
+function handleClickEdit(index) {
+  $isShowEdit.set(true);
+  $editIndex.set(index);
 }
 function handleStart(index) {
   $progressList.set(
@@ -181,6 +186,16 @@ function handleChangeLock(index, value) {
             type="success"
             @click="() => handleCancelFinish(index)"
             >取消完成</Button
+          >
+          <Button
+            plain
+            type="primary"
+            v-show="!realEnd && !realStart"
+            size="small"
+            class="h-full w-12"
+            square
+            @click="() => handleClickEdit(index)"
+            >编辑</Button
           >
         </template>
       </Item>
