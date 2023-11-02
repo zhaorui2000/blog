@@ -6,6 +6,15 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig({
   integrations: [vue()],
   vite:{
-    plugins:[VitePWA()]
+    plugins:[VitePWA({
+      manifest:{
+        icons: [
+          {
+            src: 'main.png',
+            sizes: '610x610',
+            type: 'image/png'
+          }
+        ]}
+    })]
   }
 });
