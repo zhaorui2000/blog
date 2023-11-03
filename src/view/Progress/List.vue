@@ -9,6 +9,7 @@ import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
 import SwitchIcon from '@components/SwitchIcon.vue';
+import ClassIcon from '@components/ClassIcon.vue';
 const progressList = useStore($progressList);
 const editIndex = useStore($editIndex);
 
@@ -143,14 +144,7 @@ function handleChangeLock(index, value) {
         @del="() => handleDel(index)"
       >
         <template #icon-bar-right="{ resetMinute }">
-          <SwitchIcon
-            v-show="resetMinute > 0"
-            active-icon="icon-[material-symbols--timer-outline-rounded]"
-            active-class="bg-N1 text-MR "
-            in-active-class=""
-            :model-value="resetMinute > 0"
-            >{{ resetMinute }}</SwitchIcon
-          ></template
+          <ClassIcon v-show="resetMinute > 0">{{ resetMinute }}</ClassIcon></template
         >
         <template #icon-bar-left>
           <SwitchIcon

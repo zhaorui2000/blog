@@ -52,7 +52,7 @@ function handleChangeProcentage(value) {
           <div class="flex gap-2 items-center">
             <slot name="icon-bar-left"></slot>
           </div>
-          <div class="flex gap-2 ml-auto items-center">
+          <div v-show="!props.disabled" class="flex gap-2 ml-auto items-center">
             <slot name="icon-bar-right" :resetMinute="resetMinute"></slot>
           </div>
         </div>

@@ -1,5 +1,6 @@
 <script setup>
 import clsx from 'clsx';
+import ClassIcon from './ClassIcon.vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
   modelValue: { type: Boolean, required: false, default: false },
@@ -13,23 +14,16 @@ function handleClick() {
 }
 </script>
 <template>
-  <div
+  <ClassIcon
     @click="handleClick"
     :class="{
       [clsx('border-N3', inActiveClass)]: !props.modelValue,
       [clsx('border-MR', activeClass)]: props.modelValue,
     }"
-    class="flex p-2 border border-solid rounded-full text-[1em] leading-none h-[1em] w-[1em] justify-center items-center"
-  >
-    <i
-      :class="{
-        [clsx(activeIcon)]: props.modelValue,
-        [clsx(inActiveIcon)]: !props.modelValue,
-      }"
-    ></i>
-    <span class="text-sm">
-      <slot></slot>
-    </span>
-  </div>
+    :icon-class="{
+      [clsx(activeIcon)]: props.modelValue,
+      [clsx(inActiveIcon)]: !props.modelValue,
+    }"
+  ></ClassIcon>
 </template>
 <style></style>
