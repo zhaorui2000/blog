@@ -3,6 +3,8 @@ import { ref, watch } from 'vue';
 import TimeProgress from '@components/TimeProgress.vue';
 import { Cell, SwipeCell, Button, Tag } from 'vant';
 import convertTime from '@utils/convertTime';
+import dayjs from 'dayjs';
+import { computed } from 'vue';
 
 const emit = defineEmits(['active', 'del', 'inactive']);
 const props = defineProps({
@@ -13,6 +15,7 @@ const props = defineProps({
   disabled: { type: Boolean, require: false, default: false },
 });
 const active = ref();
+const resetMinute = ref(0);
 
 watch(active, (newV, oldV) => {
   if (oldV === false && newV === true) {
@@ -27,7 +30,13 @@ function handleClickDel() {
   emit('del');
 }
 function handleChangeProcentage(value) {
-  active.value = value > 0 && value < 100;
+  if (value > 0 && value < 100) {
+    active.value = true;
+    resetMinute.value = convertTime(props.endTime).diff(dayjs(), 'minute');
+  } else {
+    active.value = false;
+    resetMinute.value = -1;
+  }
 }
 </script>
 <template>
@@ -39,8 +48,13 @@ function handleChangeProcentage(value) {
       :class="{ 'border-MR border-2': active, 'border-N4 border': !active }"
     >
       <template #title>
-        <div class="text-xl flex gap-2">
-          <slot name="icon-bar"></slot>
+        <div class="text-xl flex">
+          <div class="flex gap-2 items-center">
+            <slot name="icon-bar-left"></slot>
+          </div>
+          <div class="flex gap-2 ml-auto items-center">
+            <slot name="icon-bar-right" :resetMinute="resetMinute"></slot>
+          </div>
         </div>
         <div class="w-full flex pt-2 pb-1">
           <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'">{{

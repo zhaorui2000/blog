@@ -8,8 +8,7 @@ import { computed } from 'vue';
 import { Button, CellGroup } from 'vant';
 import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
-import LockIcon from '@view/Progress/LockIcon.vue';
-import DisableIcon from '@view/Progress/DisableIcon.vue';
+import SwitchIcon from '@components/SwitchIcon.vue';
 const progressList = useStore($progressList);
 const editIndex = useStore($editIndex);
 
@@ -143,12 +142,29 @@ function handleChangeLock(index, value) {
         :endTime="realEnd ?? end"
         @del="() => handleDel(index)"
       >
-        <template #icon-bar>
-          <LockIcon :model-value="isLock" @update:model-value="(value) => handleChangeLock(index, value)"></LockIcon>
-          <DisableIcon
-            :model-value="isDisable"
+        <template #icon-bar-right="{ resetMinute }">
+          <SwitchIcon
+            v-show="resetMinute > 0"
+            active-icon="icon-[material-symbols--timer-outline-rounded]"
+            active-class="bg-N1 text-MR "
+            in-active-class=""
+            :model-value="resetMinute > 0"
+            >{{ resetMinute }}</SwitchIcon
+          ></template
+        >
+        <template #icon-bar-left>
+          <SwitchIcon
+            active-icon="icon-[material-symbols--lock]"
+            in-active-icon="icon-[material-symbols--lock-open-right-outline]"
+            @update:model-value="(value) => handleChangeLock(index, value)"
+            :model-value="isLock"
+          />
+          <SwitchIcon
+            active-icon="icon-[material-symbols--visibility-off-rounded]"
+            in-active-icon="icon-[material-symbols--visibility-outline-rounded]"
             @update:model-value="(value) => handleChangeDisable(index, value)"
-          ></DisableIcon>
+            :model-value="isDisable"
+          ></SwitchIcon>
         </template>
         <template #right>
           <Button
