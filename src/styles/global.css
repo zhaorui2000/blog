@@ -1,6 +1,12 @@
 @tailwind components;
 @tailwind utilities;
 .van-button__text {
-    display: inline-flex;
-    align-items: center;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* 禁用下拉刷新 */
+html,
+body {
+  overscroll-behavior-y: contain;
 }
