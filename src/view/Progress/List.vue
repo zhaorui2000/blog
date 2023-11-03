@@ -129,6 +129,9 @@ function handleChangeLock(index, value) {
     }),
   );
 }
+function handleClickResetMinute(index) {
+  
+}
 </script>
 <template>
   <div class="overflow-y-scroll h-full">
@@ -144,7 +147,9 @@ function handleChangeLock(index, value) {
         @del="() => handleDel(index)"
       >
         <template #icon-bar-right="{ resetMinute }">
-          <ClassIcon v-show="resetMinute > 0">{{ resetMinute }}</ClassIcon></template
+          <ClassIcon v-show="resetMinute > 0" @click="(index) => handleClickResetMinute(index)">{{
+            resetMinute
+          }}</ClassIcon></template
         >
         <template #icon-bar-left>
           <SwitchIcon

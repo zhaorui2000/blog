@@ -23,7 +23,7 @@ watch(isShowEdit, (newV) => {
     title.value = progressList.value[editIndex.value]?.title ?? '';
     startTime.value = progressList.value[editIndex.value]?.start ?? progressList.value?.at?.(-1)?.end ?? [];
     endTime.value = progressList.value[editIndex.value]?.end ?? progressList.value?.at?.(-1)?.end ?? [];
-    durationTime.value =  time2Arr(
+    durationTime.value = time2Arr(
       dayjs()
         .startOf('day')
         .add(convertTime(endTime.value).diff(convertTime(startTime.value), 'second'), 'second'),
@@ -31,14 +31,14 @@ watch(isShowEdit, (newV) => {
   }
 });
 
-function filterTime(type,options){
-  if(type==="second"){
+function filterTime(type, options) {
+  if (type === 'second') {
     return options.filter((option) => Number(option.value) % 10 === 0);
   }
-  if(type==="minute"){
+  if (type === 'minute') {
     return options.filter((option) => Number(option.value) % 5 === 0);
   }
-  return options
+  return options;
 }
 
 function handleChangeDurationTime({ selectedValues }) {
