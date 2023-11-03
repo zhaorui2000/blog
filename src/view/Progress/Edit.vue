@@ -21,15 +21,25 @@ const title = ref();
 watch(isShowEdit, (newV) => {
   if (newV) {
     title.value = progressList.value[editIndex.value]?.title ?? '';
-    startTime.value = progressList.value[editIndex.value]?.start ?? [];
-    endTime.value = progressList.value[editIndex.value]?.end ?? [];
-    durationTime.value = time2Arr(
+    startTime.value = progressList.value[editIndex.value]?.start ?? progressList.value?.at?.(-1)?.end ?? [];
+    endTime.value = progressList.value[editIndex.value]?.end ?? progressList.value?.at?.(-1)?.end ?? [];
+    durationTime.value =  time2Arr(
       dayjs()
         .startOf('day')
         .add(convertTime(endTime.value).diff(convertTime(startTime.value), 'second'), 'second'),
     );
   }
 });
+
+function filterTime(type,options){
+  if(type==="second"){
+    return options.filter((option) => Number(option.value) % 10 === 0);
+  }
+  if(type==="minute"){
+    return options.filter((option) => Number(option.value) % 5 === 0);
+  }
+  return options
+}
 
 function handleChangeDurationTime({ selectedValues }) {
   endTime.value = convertTime(startTime.value)
@@ -59,12 +69,6 @@ function handleChangeEndTime({ selectedValues }) {
 }
 function handleClickAdd() {
   $editIndex.set($progressList.get()?.length ?? 0);
-  startTime.value = convertTime(progressList.value?.at?.(-1)?.end ?? [])
-    .add(progressList.value?.at?.(-1)?.diffSecond ?? 0, 'second')
-    .format('HH:mm:ss')
-    .split(':');
-  endTime.value = [];
-  durationTime.value = [];
   $isShowEdit.set(true);
 }
 function handleClickRest() {
@@ -108,6 +112,7 @@ function handleComfirm() {
             v-model="startTime"
             :columns-type="['hour', 'minute', 'second']"
             @change="handleChangeStartTime"
+            :filter="filterTime"
           ></TimePickerField>
           <TimePickerField
             :disabled="startTime?.length < 1"
@@ -115,6 +120,7 @@ function handleComfirm() {
             :columns-type="['hour', 'minute', 'second']"
             v-model="endTime"
             @change="handleChangeEndTime"
+            :filter="filterTime"
           ></TimePickerField>
           <TimePickerField
             :disabled="startTime?.length < 1"
@@ -122,6 +128,7 @@ function handleComfirm() {
             :columns-type="['hour', 'minute', 'second']"
             v-model="durationTime"
             @change="handleChangeDurationTime"
+            :filter="filterTime"
           ></TimePickerField>
         </CellGroup>
         <Button round block type="primary" @click="handleComfirm">确定</Button>
