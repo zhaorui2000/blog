@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "clean": "npm cache clean --force && node scripts/clean.mjs && pnpm install"
   },
   "dependencies": {
     "@astrojs/vue": "^3.0.2",
