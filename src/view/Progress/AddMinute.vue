@@ -1,8 +1,11 @@
 <script setup>
 import { useStore } from '@nanostores/vue';
-import { $isShowAddMinute, $editIndex, $progressList } from '@store/progressStore';
+import { $editIndex, $isShowAddMinute, $progressList } from '@store/progressStore';
 import { produce } from 'immer';
 import { ActionSheet } from 'vant';
+import convertTime from '@utils/convertTime.js';
+import time2Arr from '@utils/time2Arr.js';
+
 const actions = [
   { name: '+5 min', value: 300 },
   { name: '+10 min', value: 600 },
@@ -11,11 +14,13 @@ const actions = [
 const isShowAddMinute = useStore($isShowAddMinute);
 const progressList = useStore($progressList);
 const editIndex = useStore($editIndex);
+
 function handleSelect(action) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      draft[editIndex.value].realStart = draft[editIndex.value].realStart ?? draft[editIndex.value].start;
-      for (var i = editIndex.value; i < draft.length; ++i) {
+      const { realStart, start, diffSecond = 0 } = draft[editIndex.value];
+      draft[editIndex.value].realStart = realStart ?? time2Arr(convertTime(start).add(diffSecond, 'second'));
+      for (let i = editIndex.value; i < draft.length; ++i) {
         draft[i].diffSecond = (draft[i].diffSecond ?? 0) + action.value;
       }
       return draft;
@@ -23,11 +28,12 @@ function handleSelect(action) {
   );
   handleClosed();
 }
+
 function handleClosed() {
   $isShowAddMinute.set(false);
   $editIndex.set(-1);
 }
 </script>
 <template>
-  <ActionSheet :show="isShowAddMinute" :actions="actions" @select="handleSelect" @close="handleClosed"></ActionSheet>
+  <ActionSheet :actions="actions" :show="isShowAddMinute" @close="handleClosed" @select="handleSelect"></ActionSheet>
 </template>
