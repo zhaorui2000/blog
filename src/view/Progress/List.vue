@@ -48,10 +48,10 @@ const computedList = computed(() => {
   });
   return [today, tomorrow];
 });
-
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
+      draft[index].realStart = draft[index].realStart ?? time2Arr(convertTime(draft[index].start).add(draft[index].diffSecond ?? 0, 'second'));
       const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
@@ -129,9 +129,7 @@ function handleChangeLock(index, value) {
     }),
   );
 }
-function handleClickResetMinute(index) {
-  
-}
+function handleClickResetMinute(index) {}
 </script>
 <template>
   <div class="overflow-y-scroll h-full">
@@ -205,7 +203,7 @@ function handleClickResetMinute(index) {
           <Button
             plain
             type="primary"
-            v-show="!realEnd && !realStart"
+            :disabled="realEnd || realStart"
             size="small"
             class="h-full w-12"
             square
