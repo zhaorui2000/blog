@@ -32,7 +32,14 @@ function handleClickDel() {
 function handleChangeProcentage(value) {
   if (value > 0 && value < 100) {
     active.value = true;
-    resetMinute.value = convertTime(props.endTime).diff(dayjs(), 'minute');
+    let diff = convertTime(props.endTime).diff(convertTime(props.startTime), 'second');
+    if (diff < 0) {
+      resetMinute.value =
+        convertTime(props.endTime).diff(dayjs(), 'minute') +
+        dayjs().endOf('day').diff(dayjs().startOf('day'), 'minute');
+    } else {
+      resetMinute.value = convertTime(props.endTime).diff(dayjs(), 'minute');
+    }
   } else {
     active.value = false;
     resetMinute.value = -1;
