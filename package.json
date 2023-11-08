@@ -11,11 +11,11 @@
     "clean": "npm cache clean --force && node scripts/clean.mjs && pnpm install"
   },
   "dependencies": {
-    "@astrojs/vue": "^3.0.3",
+    "@astrojs/vue": "^3.0.4",
     "@iconify-json/material-symbols": "^1.1.61",
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/vue": "^0.10.0",
-    "astro": "^3.4.3",
+    "astro": "^3.4.4",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
     "immer": "^10.0.3",

@@ -1,9 +1,11 @@
 ---
 import Edit from './Edit.vue';
 import List from './List.vue';
+import AddMinute from './AddMinute.vue';
 ---
 
 <div class="grid h-full" style="grid-template-rows: 1fr min-content">
   <List client:load />
   <Edit client:load />
 </div>
+<AddMinute client:load />

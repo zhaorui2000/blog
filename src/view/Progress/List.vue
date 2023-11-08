@@ -1,6 +1,6 @@
 <script setup>
 import Item from './Item.vue';
-import { $progressList, $isShowEdit, $editIndex } from '@store/progressStore';
+import { $progressList, $isShowEdit, $editIndex, $isShowAddMinute } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
@@ -129,7 +129,10 @@ function handleChangeLock(index, value) {
     }),
   );
 }
-function handleClickResetMinute(index) {}
+function handleClickResetMinute(index) {
+  $isShowAddMinute.set(true)
+  $editIndex.set(index)
+}
 </script>
 <template>
   <div class="overflow-y-scroll h-full">
@@ -145,7 +148,7 @@ function handleClickResetMinute(index) {}
         @del="() => handleDel(index)"
       >
         <template #icon-bar-right="{ resetMinute }">
-          <ClassIcon v-show="resetMinute > 0" @click="(index) => handleClickResetMinute(index)">{{
+          <ClassIcon v-show="resetMinute > 0" @click="() => handleClickResetMinute(index)">{{
             resetMinute
           }}</ClassIcon></template
         >

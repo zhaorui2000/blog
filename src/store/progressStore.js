@@ -19,4 +19,5 @@ export const $progressGroup = persistentAtom('progressGroup', [], {
 });
 
 export const $isShowEdit = atom(false);
+export const $isShowAddMinute = atom(false);
 export const $editIndex = atom(-1);
