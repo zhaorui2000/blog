@@ -2,21 +2,25 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import ProgressView from '../view/Progress/index.astro';
 import 'vant/lib/index.css';
-import './../styles/global.css';
+import './../styles/global.scss';
 ---
+
 <script src="/registerSW.js" is:inline></script>
 
 <html lang="zh">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-  <link rel="icon" href="/favicon.ico">
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <title>Astro</title>
-</head>
-<body class="h-screen bg-N1">
-  <MainLayout>
-    <ProgressView />
-  </MainLayout>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <title>Astro</title>
+  </head>
+  <body class="h-screen bg-N1">
+    <MainLayout>
+      <ProgressView />
+    </MainLayout>
+  </body>
 </html>

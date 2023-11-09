@@ -4,6 +4,12 @@
   display: inline-flex;
   align-items: center;
 }
+.van-tabs.h-full {
+  .van-tabs__content,
+  .van-tab__panel {
+    height: calc(100vh - var(--van-tabs-line-height));
+  }
+}
 
 /* 禁用下拉刷新 */
 html,
