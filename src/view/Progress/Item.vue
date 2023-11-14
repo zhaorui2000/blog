@@ -4,9 +4,12 @@ import TimeProgress from '@components/TimeProgress.vue';
 import { Cell, SwipeCell, Button, Tag } from 'vant';
 import convertTime from '@utils/convertTime';
 import dayjs from 'dayjs';
-import { computed } from 'vue';
+import { useMachine } from '@xstate/vue';
+import { machine } from './machine';
+import log from '@utils/log';
+import { nextTick } from 'vue';
 
-const emit = defineEmits(['active', 'del', 'inactive']);
+const emit = defineEmits(['active', 'del', 'inactive', 'start']);
 const props = defineProps({
   title: { require: false, default: '' },
   startTime: { type: Array, require: true },
@@ -16,14 +19,30 @@ const props = defineProps({
 });
 const active = ref();
 const resetMinute = ref(0);
-
-watch(active, (newV, oldV) => {
-  if (oldV === false && newV === true) {
-    emit('active');
-  }
-  if (oldV === true && newV === false) {
-    emit('inactive');
-  }
+function didStart(context, event) {
+  log.debug('didStart');
+  return convertTime(props.startTime).diff(dayjs(), 'second') < 0;
+}
+function didFinish(context, event) {
+  log.debug('didFinish');
+  return convertTime(props.endTime).diff(dayjs(), 'second') < 0;
+}
+function handleStart() {
+  emit('start');
+  nextTick(() => {
+    send('START');
+  });
+}
+function onReStart(){},
+const { state, send, service } = useMachine(machine, {
+  guards: {
+    didStart,
+    didFinish,
+  },
+  actions: {
+    onReStart,
+    onStart,
+  },
 });
 
 function handleClickDel() {
@@ -56,6 +75,7 @@ function handleChangeProcentage(value) {
     >
       <template #title>
         <div class="text-xl flex">
+          <span>{{ state.value }}</span>
           <div class="flex gap-2 items-center">
             <slot name="icon-bar-left"></slot>
           </div>
@@ -84,7 +104,46 @@ function handleChangeProcentage(value) {
       </template>
     </Cell>
     <template #right>
-      <slot name="right"></slot>
+      <Button v-show="!realStart" size="small" class="h-full w-12" square type="primary" @click="handleStart"
+        >开始</Button
+      >
+      <Button
+        v-show="realStart"
+        size="small"
+        class="h-full w-12"
+        square
+        type="primary"
+        @click="() => handleCancelStart(index)"
+        >取消开始</Button
+      >
+      <Button
+        v-show="!realEnd"
+        size="small"
+        class="h-full w-12"
+        square
+        type="success"
+        @click="() => handleFinish(index)"
+        >完成</Button
+      >
+      <Button
+        v-show="realEnd"
+        size="small"
+        class="h-full w-12"
+        square
+        type="success"
+        @click="() => handleCancelFinish(index)"
+        >取消完成</Button
+      >
+      <Button
+        plain
+        type="primary"
+        :disabled="realEnd || realStart"
+        size="small"
+        class="h-full w-12"
+        square
+        @click="() => handleClickEdit(index)"
+        >编辑</Button
+      >
     </template>
   </SwipeCell>
 </template>

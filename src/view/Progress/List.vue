@@ -51,7 +51,8 @@ const computedList = computed(() => {
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
-      draft[index].realStart = draft[index].realStart ?? time2Arr(convertTime(draft[index].start).add(draft[index].diffSecond ?? 0, 'second'));
+      draft[index].realStart =
+        draft[index].realStart ?? time2Arr(convertTime(draft[index].start).add(draft[index].diffSecond ?? 0, 'second'));
       const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index; j < draft.length; ++j) {
         draft[j].diffSecond = diffSecond;
@@ -130,8 +131,8 @@ function handleChangeLock(index, value) {
   );
 }
 function handleClickResetMinute(index) {
-  $isShowAddMinute.set(true)
-  $editIndex.set(index)
+  $isShowAddMinute.set(true);
+  $editIndex.set(index);
 }
 </script>
 <template>
@@ -146,6 +147,7 @@ function handleClickResetMinute(index) {
         :startTime="realStart ?? start"
         :endTime="realEnd ?? end"
         @del="() => handleDel(index)"
+        @start="() => handleStart(index)"
       >
         <template #icon-bar-right="{ resetMinute }">
           <ClassIcon v-show="resetMinute > 0" @click="() => handleClickResetMinute(index)">{{
@@ -165,54 +167,6 @@ function handleClickResetMinute(index) {
             @update:model-value="(value) => handleChangeDisable(index, value)"
             :model-value="isDisable"
           ></SwitchIcon>
-        </template>
-        <template #right>
-          <Button
-            v-show="!realStart"
-            size="small"
-            class="h-full w-12"
-            square
-            type="primary"
-            @click="() => handleStart(index)"
-            >开始</Button
-          >
-          <Button
-            v-show="realStart"
-            size="small"
-            class="h-full w-12"
-            square
-            type="primary"
-            @click="() => handleCancelStart(index)"
-            >取消开始</Button
-          >
-          <Button
-            v-show="!realEnd"
-            size="small"
-            class="h-full w-12"
-            square
-            type="success"
-            @click="() => handleFinish(index)"
-            >完成</Button
-          >
-          <Button
-            v-show="realEnd"
-            size="small"
-            class="h-full w-12"
-            square
-            type="success"
-            @click="() => handleCancelFinish(index)"
-            >取消完成</Button
-          >
-          <Button
-            plain
-            type="primary"
-            :disabled="realEnd || realStart"
-            size="small"
-            class="h-full w-12"
-            square
-            @click="() => handleClickEdit(index)"
-            >编辑</Button
-          >
         </template>
       </Item>
     </CellGroup>
