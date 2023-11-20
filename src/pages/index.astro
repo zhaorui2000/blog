@@ -7,6 +7,10 @@ import log from 'loglevel';
 ---
 
 <script src="/registerSW.js" is:inline></script>
+<script crossorigin="anonymous" is:inline src="http://127.0.0.1:6752/page-spy/index.min.js"></script>
+<script is:inline>
+  window.$pageSpy = new PageSpy();
+</script>
 
 <html lang="zh">
   <head>

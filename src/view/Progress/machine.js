@@ -2,7 +2,7 @@ import { createMachine } from 'xstate';
 
 export const machine = createMachine(
   {
-    id: 'task',
+    id: 'todo',
     initial: 'todo',
     states: {
       todo: {
@@ -15,9 +15,9 @@ export const machine = createMachine(
             target: 'doing',
             actions: ['onStart'],
           },
-          FINISH: {
+          CANCEL: {
             target: 'done',
-            actions: ['onFinish'],
+            actions: ['onCancel'],
           },
           RESET: {
             target: 'todo',
@@ -33,6 +33,10 @@ export const machine = createMachine(
           FINISH: {
             target: 'done',
             actions: ['onFinish'],
+          },
+          CANCEL: {
+            target: 'done',
+            actions: ['onCancel'],
           },
           START: {
             target: 'todo',
@@ -55,6 +59,10 @@ export const machine = createMachine(
           RESET: {
             target: 'todo',
           },
+          CANCEL: {
+            target: 'done',
+            actions: ['onCancel'],
+          },
         },
       },
     },
@@ -63,8 +71,9 @@ export const machine = createMachine(
   },
   {
     actions: {
-      onReStart: function () {},
-      onStart: function () {},
+      onReStart: function () { },
+      onStart: function () { },
+      onCancel: function () { },
     },
     services: {},
     guards: {

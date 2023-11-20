@@ -33,7 +33,9 @@ function handleStart() {
     send('START');
   });
 }
-function onReStart(){},
+function onReStart(){}
+function onStart(){}
+function handleClickEdit(){}
 const { state, send, service } = useMachine(machine, {
   guards: {
     didStart,
@@ -104,11 +106,10 @@ function handleChangeProcentage(value) {
       </template>
     </Cell>
     <template #right>
-      <Button v-show="!realStart" size="small" class="h-full w-12" square type="primary" @click="handleStart"
+      <Button size="small" class="h-full w-12" square type="primary" @click="handleStart"
         >开始</Button
       >
       <Button
-        v-show="realStart"
         size="small"
         class="h-full w-12"
         square
@@ -117,7 +118,6 @@ function handleChangeProcentage(value) {
         >取消开始</Button
       >
       <Button
-        v-show="!realEnd"
         size="small"
         class="h-full w-12"
         square
@@ -126,7 +126,6 @@ function handleChangeProcentage(value) {
         >完成</Button
       >
       <Button
-        v-show="realEnd"
         size="small"
         class="h-full w-12"
         square
@@ -137,7 +136,6 @@ function handleChangeProcentage(value) {
       <Button
         plain
         type="primary"
-        :disabled="realEnd || realStart"
         size="small"
         class="h-full w-12"
         square
