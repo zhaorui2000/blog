@@ -1,4 +1,5 @@
 <script setup>
+import { useStore } from "@nanostores/vue"
 import { ref, watch } from 'vue';
 import TimeProgress from '@components/TimeProgress.vue';
 import { Cell, SwipeCell, Button, Tag } from 'vant';
@@ -8,6 +9,9 @@ import { useMachine } from '@xstate/vue';
 import { machine } from './machine';
 import log from '@utils/log';
 import { nextTick } from 'vue';
+import { $isShowEdit } from "@store/progressStore"
+
+const isShowEdit = useStore($isShowEdit)
 
 const emit = defineEmits(['active', 'del', 'inactive', 'start']);
 const props = defineProps({
@@ -21,11 +25,11 @@ const active = ref();
 const resetMinute = ref(0);
 function didStart(context, event) {
   log.debug('didStart');
-  return convertTime(props.startTime).diff(dayjs(), 'second') < 0;
+  return convertTime(props.startTime).diff(dayjs(context.currentTime), 'second') <= 0 && convertTime(props.endTime).diff(dayjs(context.currentTime), 'second') > 0;
 }
 function didFinish(context, event) {
   log.debug('didFinish');
-  return convertTime(props.endTime).diff(dayjs(), 'second') < 0;
+  return convertTime(props.endTime).diff(dayjs(context.currentTime), 'second') <= 0;
 }
 function handleStart() {
   emit('start');
@@ -33,9 +37,19 @@ function handleStart() {
     send('START');
   });
 }
-function onReStart(){}
-function onStart(){}
-function handleClickEdit(){}
+function handleFinish() {
+  emit('finish');
+  nextTick(() => {
+    send('FINISH');
+  });
+}
+function onReStart() { }
+function onStart() {
+  emit('start');
+}
+function handleClickEdit() {
+  $isShowEdit.set(true)
+}
 const { state, send, service } = useMachine(machine, {
   guards: {
     didStart,
@@ -70,11 +84,8 @@ function handleChangeProcentage(value) {
 <template>
   <SwipeCell :disabled="props.disabled">
     <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
-    <Cell
-      center
-      class="border-solid shadow rounded-md"
-      :class="{ 'border-MR border-2': active, 'border-N4 border': !active }"
-    >
+    <Cell center class="border-solid shadow rounded-md"
+      :class="{ 'border-MR border-2': active, 'border-N4 border': !active }">
       <template #title>
         <div class="text-xl flex">
           <span>{{ state.value }}</span>
@@ -95,53 +106,16 @@ function handleChangeProcentage(value) {
           }}</Tag>
         </div>
       </template>
-      <template #label
-        ><TimeProgress
-          v-show="!props.disabled"
-          @change="handleChangeProcentage"
-          :startTime="props.startTime"
-          :endTime="props.endTime"
-          :disabled="props.disabled"
-        ></TimeProgress>
+      <template #label>
+        <TimeProgress v-show="!props.disabled" @change="handleChangeProcentage" :startTime="props.startTime"
+          :endTime="props.endTime" :disabled="props.disabled"></TimeProgress>
       </template>
     </Cell>
     <template #right>
-      <Button size="small" class="h-full w-12" square type="primary" @click="handleStart"
-        >开始</Button
-      >
-      <Button
-        size="small"
-        class="h-full w-12"
-        square
-        type="primary"
-        @click="() => handleCancelStart(index)"
-        >取消开始</Button
-      >
-      <Button
-        size="small"
-        class="h-full w-12"
-        square
-        type="success"
-        @click="() => handleFinish(index)"
-        >完成</Button
-      >
-      <Button
-        size="small"
-        class="h-full w-12"
-        square
-        type="success"
-        @click="() => handleCancelFinish(index)"
-        >取消完成</Button
-      >
-      <Button
-        plain
-        type="primary"
-        size="small"
-        class="h-full w-12"
-        square
-        @click="() => handleClickEdit(index)"
-        >编辑</Button
-      >
+      <Button size="small" class="h-full w-12" square type="primary" @click="handleStart">开始</Button>
+      <Button size="small" class="h-full w-12" square type="success" @click="() => handleFinish(index)">完成</Button>
+      <Button plain type="primary" size="small" class="h-full w-12" square
+        @click="() => handleClickEdit(index)">编辑</Button>
     </template>
   </SwipeCell>
 </template>
