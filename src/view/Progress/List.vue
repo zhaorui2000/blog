@@ -1,6 +1,6 @@
 <script setup>
 import Item from './Item.vue';
-import { $progressList, $isShowEdit, $editIndex, $isShowAddMinute } from '@store/progressStore';
+import { $editIndex, $isShowAddMinute, $isShowEdit, $progressList } from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
@@ -10,8 +10,10 @@ import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
 import SwitchIcon from '@components/SwitchIcon.vue';
 import ClassIcon from '@components/ClassIcon.vue';
+
 const progressList = useStore($progressList);
 const editIndex = useStore($editIndex);
+const isShowEdit = useStore($isShowEdit);
 
 const computedList = computed(() => {
   let today = [];
@@ -25,13 +27,13 @@ const computedList = computed(() => {
       ...(isLock
         ? {}
         : {
-          start: time2Arr(convertTime(start).add(diffSecond, 'second')),
-        }),
+            start: time2Arr(convertTime(start).add(diffSecond, 'second')),
+          }),
       ...(isLock
         ? {}
         : {
-          end: time2Arr(convertTime(end).add(diffSecond, 'second')),
-        }),
+            end: time2Arr(convertTime(end).add(diffSecond, 'second')),
+          }),
     };
 
     const startObj = convertTime(result.start);
@@ -39,7 +41,8 @@ const computedList = computed(() => {
 
     if (
       startObj.diff(dayjs(), 'second') >= -1 ||
-      (dayjs().diff(startObj, 'second') >= -1 && endObj.diff(dayjs(), 'second') >= -1)
+      (dayjs().diff(startObj, 'second') >= -1 &&
+        endObj.add(Number(startObj.diff(endObj, 'second') > 0), 'day').diff(dayjs(), 'second') >= -1)
     ) {
       today.push({ ...result, index, key: `today-${index}` });
     } else {
@@ -48,6 +51,7 @@ const computedList = computed(() => {
   });
   return [today, tomorrow];
 });
+
 function handleFinish(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
@@ -80,15 +84,7 @@ function handleStart(index) {
     }),
   );
 }
-function handleCancelStart(index) {
-  $progressList.set(
-    produce($progressList.get(), (draft) => {
-      draft[index].realStart = undefined;
-      draft[index].diffSecond = 0;
-      return draft;
-    }),
-  );
-}
+
 function handleDel(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
@@ -96,6 +92,7 @@ function handleDel(index) {
     }),
   );
 }
+
 function handleChangeDisable(index, value) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
@@ -104,6 +101,7 @@ function handleChangeDisable(index, value) {
     }),
   );
 }
+
 function handleChangeLock(index, value) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
@@ -118,6 +116,12 @@ function handleChangeLock(index, value) {
     }),
   );
 }
+
+function handleClickEdit(index) {
+  $editIndex.set(index);
+  $isShowEdit.set(true);
+}
+
 function handleClickResetMinute(index) {
   $isShowAddMinute.set(true);
   $editIndex.set(index);
@@ -126,21 +130,41 @@ function handleClickResetMinute(index) {
 <template>
   <div class="overflow-y-scroll h-full">
     <CellGroup v-for="(list, index) of computedList" :title="['今天', '明天'][index]" class="bg-N1 px-3">
-      <Item class="mb-2" v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
-        :title="title" :key="key" :disabled="isDisable" :startTime="realStart ?? start" :endTime="realEnd ?? end"
-        @del="() => handleDel(index)" @start="() => handleStart(index)" @finish="() => handleFinish(index)">
+      <Item
+        v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
+        :key="key"
+        :disabled="isDisable"
+        :endTime="realEnd ?? end"
+        :startTime="realStart ?? start"
+        :title="title"
+        class="mb-2"
+        @del="() => handleDel(index)"
+        @finish="() => handleFinish(index)"
+        @start="() => handleStart(index)"
+      >
         <template #icon-bar-right="{ resetMinute }">
-          <ClassIcon v-show="resetMinute > 0" @click="() => handleClickResetMinute(index)">{{
-            resetMinute
-          }}</ClassIcon>
+          <ClassIcon v-show="resetMinute > 0" border="true" round="true" @click="() => handleClickResetMinute(index)"
+            >{{ resetMinute }}
+          </ClassIcon>
         </template>
         <template #icon-bar-left>
-          <SwitchIcon active-icon="icon-[material-symbols--lock]"
+          <SwitchIcon
+            :model-value="isLock"
+            active-icon="icon-[material-symbols--lock]"
             in-active-icon="icon-[material-symbols--lock-open-right-outline]"
-            @update:model-value="(value) => handleChangeLock(index, value)" :model-value="isLock" />
-          <SwitchIcon active-icon="icon-[material-symbols--visibility-off-rounded]"
+            @update:model-value="(value) => handleChangeLock(index, value)"
+          />
+          <SwitchIcon
+            :model-value="isDisable"
+            active-icon="icon-[material-symbols--visibility-off-rounded]"
             in-active-icon="icon-[material-symbols--visibility-outline-rounded]"
-            @update:model-value="(value) => handleChangeDisable(index, value)" :model-value="isDisable"></SwitchIcon>
+            @update:model-value="(value) => handleChangeDisable(index, value)"
+          ></SwitchIcon>
+        </template>
+        <template #swipe-cell-right>
+          <Button class="h-full w-12" plain size="small" square type="primary" @click="() => handleClickEdit(index)"
+            >编辑
+          </Button>
         </template>
       </Item>
     </CellGroup>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, toRaw, computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Progress } from 'vant';
 import dayjs from 'dayjs';
 import Timer from '@utils/Timer';
@@ -24,7 +24,6 @@ const timer = ref();
 watch(
   () => props.disabled,
   (newV) => {
-    console.log(newV, props.startTime);
     if (!newV) {
       timer.value = new Timer(() => {
         precentage.value = (dayjs().diff(start.value, 'second') / max.value) * 100;

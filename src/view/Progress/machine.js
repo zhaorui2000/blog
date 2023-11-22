@@ -1,103 +1,86 @@
-import { createMachine, assign } from "xstate";
-import { interval, map, take } from "rxjs"
-import dayjs from "dayjs"
+import { assign, createMachine } from 'xstate';
+import { interval, map } from 'rxjs';
+import dayjs from 'dayjs';
 
 export const machine = createMachine(
   {
-    id: "todo",
-    initial: "todo",
+    id: 'todo',
+    initial: 'todo',
     context: { currentTime: 0 },
     states: {
       todo: {
         invoke: {
           src(context, event) {
-            return interval(1000).pipe(
-              map((value) => ({ type: "UPDATE" })),
-            )
-          }
+            return interval(1000).pipe(map((value) => ({ type: 'UPDATE' })));
+          },
         },
-        always: [{
-          target: "doing",
-          cond: "didStart",
-        },
-        {
-          target: "done",
-          cond: "didFinish",
-        }
+        always: [
+          {
+            target: 'doing',
+            cond: 'didStart',
+          },
+          {
+            target: 'done',
+            cond: 'didFinish',
+          },
         ],
         on: {
           START: {
-            target: "doing",
-            actions: ["onStart"],
-          },
-          CANCEL: {
-            target: "done",
-            actions: ["onCancel"],
+            target: 'doing',
+            actions: ['onStart'],
           },
           UPDATE: {
-            actions: ["update"]
-          },
-          RESET: {
-            target: "todo",
+            actions: ['update'],
           },
         },
       },
       doing: {
         invoke: {
           src(context, event) {
-            return interval(1000).pipe(
-              map((value) => ({ type: "UPDATE" })),
-            )
-          }
+            return interval(1000).pipe(map((value) => ({ type: 'UPDATE' })));
+          },
         },
-        always: {
-          target: "done",
-          cond: "didFinish",
-        },
+        always: [
+          {
+            target: 'done',
+            cond: 'didFinish',
+          },
+        ],
         on: {
           FINISH: {
-            target: "done",
-            actions: ["onFinish"],
-          },
-          CANCEL: {
-            target: "done",
-            actions: ["onCancel"],
+            target: 'done',
+            actions: ['onFinish'],
           },
           START: {
-            target: "todo",
-            actions: ["onReStart"],
-          },
-          RESET: {
-            target: "todo",
+            target: 'todo',
+            actions: ['onReStart'],
           },
           UPDATE: {
-            actions: ["update"]
-          }
+            actions: ['update'],
+          },
         },
       },
       done: {
+        invoke: {
+          src(context, event) {
+            return interval(1000).pipe(map((value) => ({ type: 'UPDATE' })));
+          },
+        },
         always: {
-          target: "doing",
-          cond: "didStart",
+          target: 'doing',
+          cond: 'didStart',
         },
         on: {
           FINISH: {
-            target: "done",
+            target: 'done',
           },
           START: {
-            target: "todo",
-            actions: ["onReStart"],
-          },
-          RESET: {
-            target: "todo",
-          },
-          CANCEL: {
-            target: "done",
-            actions: ["onCancel"],
+            target: 'todo',
+            actions: ['onReStart'],
           },
           UPDATE: {
-            actions: ["update"]
-          }
+            actions: ['update'],
+          },
         },
       },
     },
@@ -106,14 +89,14 @@ export const machine = createMachine(
   },
   {
     actions: {
-      onReStart: function () { },
-      onStart: function () { },
-      onCancel: function () { },
+      onReStart: function () {},
+      onStart: function () {},
+      onFinish: function () {},
       update: assign({
         currentTime: (context, event) => {
-          context.currentTime = +dayjs()
-        }
-      })
+          context.currentTime = +dayjs();
+        },
+      }),
     },
     services: {},
     guards: {
@@ -125,5 +108,5 @@ export const machine = createMachine(
       },
     },
     delays: {},
-  }
+  },
 );

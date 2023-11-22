@@ -7,25 +7,20 @@ import log from 'loglevel';
 ---
 
 <script src="/registerSW.js" is:inline></script>
-<script crossorigin="anonymous" is:inline src="http://192.168.133.197:6752/page-spy/index.min.js"></script>
-<script is:inline>
-  window.$pageSpy = new PageSpy();
-</script>
 
 <html lang="zh">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <link rel="icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <title>Astro</title>
-  </head>
-  <body class="h-screen bg-N1">
-    <MainLayout>
-      <ProgressView />
-    </MainLayout>
-  </body>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  />
+  <link rel="icon" href="/favicon.ico"/>
+  <link rel="manifest" href="/manifest.webmanifest"/>
+  <title>Astro</title>
+</head>
+<body class="h-screen bg-N1">
+<MainLayout>
+  <ProgressView/>
+</MainLayout>
+</body>
 </html>

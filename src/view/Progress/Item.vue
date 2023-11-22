@@ -1,17 +1,17 @@
 <script setup>
-import { useStore } from "@nanostores/vue"
-import { ref, watch } from 'vue';
+import { useStore } from '@nanostores/vue';
+import { nextTick, ref } from 'vue';
 import TimeProgress from '@components/TimeProgress.vue';
-import { Cell, SwipeCell, Button, Tag } from 'vant';
+import { Button, Cell, SwipeCell, Tag } from 'vant';
 import convertTime from '@utils/convertTime';
 import dayjs from 'dayjs';
 import { useMachine } from '@xstate/vue';
 import { machine } from './machine';
-import log from '@utils/log';
-import { nextTick } from 'vue';
-import { $isShowEdit } from "@store/progressStore"
+import { $isShowEdit } from '@store/progressStore';
+import log from 'loglevel';
+import clsx from 'clsx';
 
-const isShowEdit = useStore($isShowEdit)
+const isShowEdit = useStore($isShowEdit);
 
 const emit = defineEmits(['active', 'del', 'inactive', 'start']);
 const props = defineProps({
@@ -23,33 +23,52 @@ const props = defineProps({
 });
 const active = ref();
 const resetMinute = ref(0);
+
 function didStart(context, event) {
   log.debug('didStart');
-  return convertTime(props.startTime).diff(dayjs(context.currentTime), 'second') <= 0 && convertTime(props.endTime).diff(dayjs(context.currentTime), 'second') > 0;
+  return (
+    convertTime(props.startTime).diff(dayjs(context.currentTime), 'second') <= 0 &&
+    convertTime(props.endTime)
+      .add(Number(convertTime(props.endTime).diff(convertTime(props.startTime), 'second') < 0), 'day')
+      .diff(dayjs(context.currentTime), 'second') > 0
+  );
 }
+
 function didFinish(context, event) {
   log.debug('didFinish');
-  return convertTime(props.endTime).diff(dayjs(context.currentTime), 'second') <= 0;
+  return (
+    convertTime(props.endTime)
+      .add(Number(convertTime(props.endTime).diff(convertTime(props.startTime), 'second') < 0), 'day')
+      .diff(dayjs(context.currentTime), 'second') <= 0
+  );
 }
+
 function handleStart() {
   emit('start');
   nextTick(() => {
     send('START');
   });
 }
+
 function handleFinish() {
   emit('finish');
   nextTick(() => {
     send('FINISH');
   });
 }
-function onReStart() { }
+
+function onReStart() {
+  emit('start');
+}
+
 function onStart() {
   emit('start');
 }
-function handleClickEdit() {
-  $isShowEdit.set(true)
+
+function onFinish() {
+  emit('finish');
 }
+
 const { state, send, service } = useMachine(machine, {
   guards: {
     didStart,
@@ -58,12 +77,14 @@ const { state, send, service } = useMachine(machine, {
   actions: {
     onReStart,
     onStart,
+    onFinish,
   },
 });
 
 function handleClickDel() {
   emit('del');
 }
+
 function handleChangeProcentage(value) {
   if (value > 0 && value < 100) {
     active.value = true;
@@ -83,39 +104,47 @@ function handleChangeProcentage(value) {
 </script>
 <template>
   <SwipeCell :disabled="props.disabled">
-    <template #left><Button class="h-full" type="danger" @click="handleClickDel">删除</Button></template>
-    <Cell center class="border-solid shadow rounded-md"
-      :class="{ 'border-MR border-2': active, 'border-N4 border': !active }">
+    <template #left>
+      <Button class="h-full" type="danger" @click="handleClickDel">删除</Button>
+    </template>
+    <Cell
+      :class="{ 'border-MR border-2': active, 'border-N4 border': !active }"
+      center
+      class="border-solid shadow rounded-md"
+    >
       <template #title>
         <div class="text-xl flex">
-          <span>{{ state.value }}</span>
           <div class="flex gap-2 items-center">
             <slot name="icon-bar-left"></slot>
           </div>
           <div v-show="!props.disabled" class="flex gap-2 ml-auto items-center">
-            <slot name="icon-bar-right" :resetMinute="resetMinute"></slot>
+            <slot :resetMinute="resetMinute" name="icon-bar-right"></slot>
           </div>
         </div>
-        <div class="w-full flex pt-2 pb-1">
-          <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'">{{
-            convertTime(props.startTime).format('HH:mm:ss')
-          }}</Tag>
-          <span class="ml-2">{{ props.title }}</span>
-          <Tag v-show="!props.disabled" class="ml-auto" :type="active ? 'primary' : 'default'">{{
-            convertTime(props.endTime).format('HH:mm:ss')
-          }}</Tag>
+        <div :class="clsx('w-full flex pt-2 pb-1 items-center', { 'gap-2': !props.disabled })">
+          <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'"
+            >{{ convertTime(props.startTime).format('HH:mm:ss') }}
+          </Tag>
+          <span>{{ props.title }}</span>
+          <Tag v-show="!props.disabled" :type="active ? 'primary' : 'default'" class="ml-auto"
+            >{{ convertTime(props.endTime).format('HH:mm:ss') }}
+          </Tag>
         </div>
       </template>
       <template #label>
-        <TimeProgress v-show="!props.disabled" @change="handleChangeProcentage" :startTime="props.startTime"
-          :endTime="props.endTime" :disabled="props.disabled"></TimeProgress>
+        <TimeProgress
+          v-show="!props.disabled"
+          :disabled="props.disabled"
+          :endTime="props.endTime"
+          :startTime="props.startTime"
+          @change="handleChangeProcentage"
+        ></TimeProgress>
       </template>
     </Cell>
     <template #right>
-      <Button size="small" class="h-full w-12" square type="primary" @click="handleStart">开始</Button>
-      <Button size="small" class="h-full w-12" square type="success" @click="() => handleFinish(index)">完成</Button>
-      <Button plain type="primary" size="small" class="h-full w-12" square
-        @click="() => handleClickEdit(index)">编辑</Button>
+      <Button class="h-full w-12" size="small" square type="primary" @click="() => handleStart()">开始</Button>
+      <Button class="h-full w-12" size="small" square type="success" @click="() => handleFinish()">完成</Button>
+      <slot name="swipe-cell-right"></slot>
     </template>
   </SwipeCell>
 </template>
