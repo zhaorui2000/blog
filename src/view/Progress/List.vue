@@ -27,15 +27,14 @@ const computedList = computed(() => {
       ...(isLock
         ? {}
         : {
-            start: time2Arr(convertTime(start).add(diffSecond, 'second')),
-          }),
+          start: time2Arr(convertTime(start).add(diffSecond, 'second')),
+        }),
       ...(isLock
         ? {}
         : {
-            end: time2Arr(convertTime(end).add(diffSecond, 'second')),
-          }),
+          end: time2Arr(convertTime(end).add(diffSecond, 'second')),
+        }),
     };
-
     const startObj = convertTime(result.start);
     const endObj = convertTime(result.end);
 
@@ -59,6 +58,9 @@ function handleFinish(index) {
         draft[index].realStart ?? time2Arr(convertTime(draft[index].start).add(draft[index].diffSecond ?? 0, 'second'));
       const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index; j < draft.length; ++j) {
+        if (draft[j].isLock) {
+          break
+        }
         draft[j].diffSecond = diffSecond;
       }
       draft[index].realEnd = time2Arr();
@@ -71,14 +73,19 @@ function handleStart(index) {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
-      for (let j = 0; j < index; ++j) {
-        if (convertTime(draft[j].end).diff(dayjs(), 'second') > 0) {
+      for (let j = 0; j < draft.length; ++j) {
+        if (draft[j].isLock) {
+          break;
+        }
+        if (j >= index) {
           draft[j].diffSecond = diffSecond;
+        } else {
+          if (convertTime(draft[j].end).diff(dayjs(), 'second') > 0) {
+            draft[j].diffSecond = diffSecond;
+          }
         }
       }
-      for (let j = index; j < draft.length; ++j) {
-        draft[j].diffSecond = diffSecond;
-      }
+
       draft[index].realStart = time2Arr();
       return draft;
     }),
@@ -130,40 +137,24 @@ function handleClickResetMinute(index) {
 <template>
   <div class="overflow-y-scroll h-full">
     <CellGroup v-for="(list, index) of computedList" :title="['今天', '明天'][index]" class="bg-N1 px-3">
-      <Item
-        v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
-        :key="key"
-        :disabled="isDisable"
-        :endTime="realEnd ?? end"
-        :startTime="realStart ?? start"
-        :title="title"
-        class="mb-2"
-        @del="() => handleDel(index)"
-        @finish="() => handleFinish(index)"
-        @start="() => handleStart(index)"
-      >
+      <Item v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list" :key="key"
+        :disabled="isDisable" :endTime="realEnd ?? end" :startTime="realStart ?? start" :title="title" class="mb-2"
+        @del="() => handleDel(index)" @finish="() => handleFinish(index)" @start="() => handleStart(index)">
         <template #icon-bar-right="{ resetMinute }">
-          <ClassIcon v-show="resetMinute > 0" border="true" round="true" @click="() => handleClickResetMinute(index)"
-            >{{ resetMinute }}
+          <ClassIcon v-show="resetMinute > 0" border="true" round="true" @click="() => handleClickResetMinute(index)">{{
+            resetMinute }}
           </ClassIcon>
         </template>
         <template #icon-bar-left>
-          <SwitchIcon
-            :model-value="isLock"
-            active-icon="icon-[material-symbols--lock]"
+          <SwitchIcon :model-value="isLock" active-icon="icon-[material-symbols--lock]"
             in-active-icon="icon-[material-symbols--lock-open-right-outline]"
-            @update:model-value="(value) => handleChangeLock(index, value)"
-          />
-          <SwitchIcon
-            :model-value="isDisable"
-            active-icon="icon-[material-symbols--visibility-off-rounded]"
+            @update:model-value="(value) => handleChangeLock(index, value)" />
+          <SwitchIcon :model-value="isDisable" active-icon="icon-[material-symbols--visibility-off-rounded]"
             in-active-icon="icon-[material-symbols--visibility-outline-rounded]"
-            @update:model-value="(value) => handleChangeDisable(index, value)"
-          ></SwitchIcon>
+            @update:model-value="(value) => handleChangeDisable(index, value)"></SwitchIcon>
         </template>
         <template #swipe-cell-right>
-          <Button class="h-full w-12" plain size="small" square type="primary" @click="() => handleClickEdit(index)"
-            >编辑
+          <Button class="h-full w-12" plain size="small" square type="primary" @click="() => handleClickEdit(index)">编辑
           </Button>
         </template>
       </Item>
