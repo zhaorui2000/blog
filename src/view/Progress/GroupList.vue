@@ -21,8 +21,9 @@ function handleClick(index) {
 }
 </script>
 <template>
-  <CellGroup style="max-height: 40vh" class="overflow-y-scroll flex flex-col gap-2 bg-N1 p-4">
+  <CellGroup class="overflow-y-scroll flex flex-col gap-2 bg-N1 p-4 max-h-[40vh] h-[40vh]">
     <GroupItem
+      class="shrink-0"
       v-for="({ title }, index) of progressGroup"
       :title="title"
       @click="() => handleClick(index)"

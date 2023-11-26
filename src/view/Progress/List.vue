@@ -21,7 +21,7 @@ const computedList = computed(() => {
   let result = [];
 
   progressList.value.forEach((item, index) => {
-    const { start, end, realStart, realEnd, diffSecond = 0, isLock } = item;
+    const { start, end, diffSecond = 0 } = item;
     result = {
       ...item,
       start: time2Arr(convertTime(start).add(diffSecond, 'second')),

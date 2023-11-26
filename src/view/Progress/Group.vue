@@ -34,6 +34,7 @@ watch(show, (newV) => {
       <div class="flex">
         <Field v-model="value" placeholder="分组名"></Field>
         <Button class="shrink-0" @click="handleSave">保存当前列表</Button>
+        <Button class="shrink-0">清空当前列表</Button>
       </div>
       <GroupList class="mt-2"></GroupList>
     </ActionSheet>

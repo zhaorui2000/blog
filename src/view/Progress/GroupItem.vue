@@ -12,9 +12,9 @@ function handleClick() {
 }
 </script>
 <template>
-  <Cell :title="props.title" class="flex items-center p-2">
+  <Cell :title="props.title" class="flex items-center p-2 h-12">
     <template #value>
-      <div class="flex gap-2 justify-end">
+      <div class="flex gap-2 justify-end h-full">
         <Button type="primary" size="small" icon="success" round @click.prevent="handleClick"></Button>
         <Button type="danger" size="small" icon="delete-o" round @click.prevent="handleDel"></Button>
       </div>
