@@ -58,8 +58,8 @@ function handleFinish(index) {
         draft[index].realStart ?? time2Arr(convertTime(draft[index].start).add(draft[index].diffSecond ?? 0, 'second'));
       const diffSecond = dayjs().diff(convertTime(draft[index].end), 'second');
       for (let j = index; j < draft.length; ++j) {
-        if (draft[j].isLock) {
-          break
+        if (draft[j].isLock && j !== index) {
+          break;
         }
         draft[j].diffSecond = diffSecond;
       }
@@ -74,10 +74,10 @@ function handleStart(index) {
     produce($progressList.get(), (draft) => {
       const diffSecond = dayjs().diff(convertTime(draft[index].start), 'second');
       for (let j = 0; j < draft.length; ++j) {
-        if (draft[j].isLock) {
-          break;
-        }
         if (j >= index) {
+          if (draft[j].isLock && j !== index) {
+            break;
+          }
           draft[j].diffSecond = diffSecond;
         } else {
           if (convertTime(draft[j].end).diff(dayjs(), 'second') > 0) {
@@ -85,7 +85,6 @@ function handleStart(index) {
           }
         }
       }
-
       draft[index].realStart = time2Arr();
       return draft;
     }),
