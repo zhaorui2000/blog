@@ -24,20 +24,11 @@ const computedList = computed(() => {
     const { start, end, realStart, realEnd, diffSecond = 0, isLock } = item;
     result = {
       ...item,
-      ...(isLock
-        ? {}
-        : {
-          start: time2Arr(convertTime(start).add(diffSecond, 'second')),
-        }),
-      ...(isLock
-        ? {}
-        : {
-          end: time2Arr(convertTime(end).add(diffSecond, 'second')),
-        }),
+      start: time2Arr(convertTime(start).add(diffSecond, 'second')),
+      end: time2Arr(convertTime(end).add(diffSecond, 'second')),
     };
     const startObj = convertTime(result.start);
     const endObj = convertTime(result.end);
-
     if (
       startObj.diff(dayjs(), 'second') >= -1 ||
       (dayjs().diff(startObj, 'second') >= -1 &&
@@ -136,24 +127,40 @@ function handleClickResetMinute(index) {
 <template>
   <div class="overflow-y-scroll h-full">
     <CellGroup v-for="(list, index) of computedList" :title="['今天', '明天'][index]" class="bg-N1 px-3">
-      <Item v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list" :key="key"
-        :disabled="isDisable" :endTime="realEnd ?? end" :startTime="realStart ?? start" :title="title" class="mb-2"
-        @del="() => handleDel(index)" @finish="() => handleFinish(index)" @start="() => handleStart(index)">
+      <Item
+        v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
+        :key="key"
+        :disabled="isDisable"
+        :endTime="realEnd ?? end"
+        :startTime="realStart ?? start"
+        :title="title"
+        class="mb-2"
+        @del="() => handleDel(index)"
+        @finish="() => handleFinish(index)"
+        @start="() => handleStart(index)"
+      >
         <template #icon-bar-right="{ resetMinute }">
-          <ClassIcon v-show="resetMinute > 0" border="true" round="true" @click="() => handleClickResetMinute(index)">{{
-            resetMinute }}
+          <ClassIcon v-show="resetMinute > 0" border="true" round="true" @click="() => handleClickResetMinute(index)"
+            >{{ resetMinute }}
           </ClassIcon>
         </template>
         <template #icon-bar-left>
-          <SwitchIcon :model-value="isLock" active-icon="icon-[material-symbols--lock]"
+          <SwitchIcon
+            :model-value="isLock"
+            active-icon="icon-[material-symbols--lock]"
             in-active-icon="icon-[material-symbols--lock-open-right-outline]"
-            @update:model-value="(value) => handleChangeLock(index, value)" />
-          <SwitchIcon :model-value="isDisable" active-icon="icon-[material-symbols--visibility-off-rounded]"
+            @update:model-value="(value) => handleChangeLock(index, value)"
+          />
+          <SwitchIcon
+            :model-value="isDisable"
+            active-icon="icon-[material-symbols--visibility-off-rounded]"
             in-active-icon="icon-[material-symbols--visibility-outline-rounded]"
-            @update:model-value="(value) => handleChangeDisable(index, value)"></SwitchIcon>
+            @update:model-value="(value) => handleChangeDisable(index, value)"
+          ></SwitchIcon>
         </template>
         <template #swipe-cell-right>
-          <Button class="h-full w-12" plain size="small" square type="primary" @click="() => handleClickEdit(index)">编辑
+          <Button class="h-full w-12" plain size="small" square type="primary" @click="() => handleClickEdit(index)"
+            >编辑
           </Button>
         </template>
       </Item>
