@@ -3,6 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
+    "ej": "xgplayer eject src/styles/xgplayer ",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -31,6 +32,7 @@
     "tailwindcss": "^3.3.5",
     "vant": "^4.8.0",
     "vue": "^3.3.9",
+    "xgplayer": "^2",
     "xstate": "^4.38.3"
   },
   "devDependencies": {

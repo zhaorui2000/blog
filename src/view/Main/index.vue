@@ -5,6 +5,7 @@ import { Cell, CellGroup } from 'vant';
 <template>
   <CellGroup>
     <Cell is-link title="进度" url="/progress"></Cell>
+    <Cell is-link title="睡眠" url="/sleep"></Cell>
   </CellGroup>
 </template>
 
