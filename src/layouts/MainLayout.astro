@@ -1,1 +1,9 @@
-<slot />
+---
+import {NavBar} from "vant";
+---
+<div class="h-screen grid" style="grid-template-rows: min-content 1fr">
+  <NavBar title="navbar"></NavBar>
+  <div class="overflow-y-scroll">
+    <slot/>
+  </div>
+</div>
