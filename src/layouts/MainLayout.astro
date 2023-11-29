@@ -1,9 +1,12 @@
 ---
-import {NavBar} from "vant";
+import NavBar from "@view/NavBar/index.vue";
+import BaseLayout from "./BaseLayout.astro";
 ---
-<div class="h-screen grid" style="grid-template-rows: min-content 1fr">
-  <NavBar title="navbar"></NavBar>
-  <div class="overflow-y-scroll">
-    <slot/>
+<BaseLayout>
+  <div class="h-screen grid" style="grid-template-rows: min-content 1fr">
+    <NavBar client:load></NavBar>
+    <div class="overflow-y-scroll">
+      <slot/>
+    </div>
   </div>
-</div>
+</BaseLayout>

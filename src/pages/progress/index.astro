@@ -1,0 +1,9 @@
+---
+import Main from '@view/Progress/Main.vue';
+import AddMinute from '@view/Progress/AddMinute.vue';
+import MainLayout from "@layouts/MainLayout.astro";
+---
+<MainLayout client:load>
+  <Main client:load/>
+  <AddMinute client:load/>
+</MainLayout>
