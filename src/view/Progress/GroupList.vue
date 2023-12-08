@@ -7,6 +7,7 @@ import { CellGroup, showNotify } from 'vant';
 
 const progressGroup = useStore($progressGroup);
 const progressList = useStore($progressList);
+
 function handleDel(index) {
   $progressGroup.set(
     produce($progressGroup.get(), (draft) => {
@@ -14,18 +15,19 @@ function handleDel(index) {
     }),
   );
 }
+
 function handleClick(index) {
   const { value, title } = $progressGroup.get()?.at?.(index) ?? {};
   $progressList.set(value ?? []);
-  showNotify({ message: `使用分组 ${title}`, type: 'success' });
+  showNotify({ message: `使用分组【${title}】`, type: 'success' });
 }
 </script>
 <template>
   <CellGroup class="overflow-y-scroll flex flex-col gap-2 bg-N1 p-4 max-h-[40vh] h-[40vh]">
     <GroupItem
-      class="shrink-0"
       v-for="({ title }, index) of progressGroup"
       :title="title"
+      class="shrink-0"
       @click="() => handleClick(index)"
       @del="() => handleDel(index)"
     ></GroupItem>

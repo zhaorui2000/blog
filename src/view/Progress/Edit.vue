@@ -9,7 +9,6 @@ import dayjs from 'dayjs';
 import convertTime from '@utils/convertTime';
 import Group from '@view/Progress/Group.vue';
 import time2Arr from '@utils/time2Arr.js';
-import log from '@utils/log.js';
 
 const progressList = useStore($progressList);
 const isShowEdit = useStore($isShowEdit);
@@ -73,7 +72,6 @@ function handleChangeEndTime({ selectedValues }) {
 }
 
 function handleClickAdd() {
-  log.debug('[Button] 新增');
   $editIndex.set($progressList.get()?.length ?? 0);
   $isShowEdit.set(true);
 }

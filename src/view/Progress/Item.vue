@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 import { useMachine } from '@xstate/vue';
 import { machine } from './machine';
 import { $isShowEdit } from '@store/progressStore';
-import log from 'loglevel';
 import clsx from 'clsx';
 
 const isShowEdit = useStore($isShowEdit);
@@ -25,7 +24,6 @@ const active = ref();
 const resetMinute = ref(0);
 
 function didStart(context, event) {
-  log.debug('didStart');
   return (
     convertTime(props.startTime).diff(dayjs(context.currentTime), 'second') <= 0 &&
     convertTime(props.endTime)
@@ -35,7 +33,6 @@ function didStart(context, event) {
 }
 
 function didFinish(context, event) {
-  log.debug('didFinish');
   return (
     convertTime(props.endTime)
       .add(Number(convertTime(props.endTime).diff(convertTime(props.startTime), 'second') < 0), 'day')
