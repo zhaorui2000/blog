@@ -1,19 +1,26 @@
 <script setup>
 import Item from './Item.vue';
-import { $editIndex, $isShowAddMinute, $isShowEdit, $progressList } from '@store/progressStore';
+import {
+  $editIndex,
+  $groupIndex,
+  $isShowAddMinute,
+  $isShowEdit,
+  $progressGroup,
+  $progressList,
+} from '@store/progressStore';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
 import { computed } from 'vue';
-import { Button, CellGroup } from 'vant';
+import { Button, CellGroup, Tab, Tabs } from 'vant';
 import convertTime from '@utils/convertTime';
 import time2Arr from '@utils/time2Arr.js';
 import SwitchIcon from '@components/SwitchIcon.vue';
 import ClassIcon from '@components/ClassIcon.vue';
 
 const progressList = useStore($progressList);
-const editIndex = useStore($editIndex);
-const isShowEdit = useStore($isShowEdit);
+const progressGroup = useStore($progressGroup);
+const groupIndex = useStore($groupIndex);
 
 const computedList = computed(() => {
   let today = [];
@@ -123,9 +130,18 @@ function handleClickResetMinute(index) {
   $isShowAddMinute.set(true);
   $editIndex.set(index);
 }
+
+function handleClickTab({ name }) {
+  $groupIndex.set(name);
+  const { value } = $progressGroup.get()?.at?.(name) ?? {};
+  $progressList.set(value ?? []);
+}
 </script>
 <template>
   <div class="overflow-y-scroll h-full">
+    <Tabs :active="Number(groupIndex)" border class="mt-2" type="card" @click-tab="handleClickTab">
+      <Tab v-for="{ title } of progressGroup" :title="title"></Tab>
+    </Tabs>
     <CellGroup v-for="(list, index) of computedList" :title="['今天', '明天'][index]" class="bg-N1 px-3">
       <Item
         v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"

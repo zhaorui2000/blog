@@ -1,5 +1,4 @@
 import { persistentAtom } from '@nanostores/persistent';
-import LZString from 'lz-string';
 import { atom } from 'nanostores';
 
 export const $progressList = persistentAtom('progressList', [], {
@@ -10,10 +9,10 @@ export const $progressList = persistentAtom('progressList', [], {
 
 export const $progressGroup = persistentAtom('progressGroup', [], {
   encode(value) {
-    return LZString.compress(JSON.stringify(value));
+    return JSON.stringify(value);
   },
   decode(value) {
-    return JSON.parse(LZString.decompress(value));
+    return JSON.parse(value);
   },
   listen: false,
 });
@@ -21,3 +20,4 @@ export const $progressGroup = persistentAtom('progressGroup', [], {
 export const $isShowEdit = atom(false);
 export const $isShowAddMinute = atom(false);
 export const $editIndex = atom(-1);
+export const $groupIndex = persistentAtom('groupIndex', 1);
