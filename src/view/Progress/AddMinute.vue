@@ -21,6 +21,9 @@ function handleSelect(action) {
       const { realStart, start, diffSecond = 0 } = draft[editIndex.value];
       draft[editIndex.value].realStart = realStart ?? time2Arr(convertTime(start).add(diffSecond, 'second'));
       for (let i = editIndex.value; i < draft.length; ++i) {
+        if (draft[i].isLock) {
+          return;
+        }
         draft[i].diffSecond = (draft[i].diffSecond ?? 0) + action.value;
       }
       return draft;
