@@ -23,7 +23,7 @@ function handleClick(index) {
 }
 </script>
 <template>
-  <CellGroup class="overflow-y-scroll flex flex-col gap-2 bg-N1 p-4 max-h-[40vh] h-[40vh]">
+  <CellGroup class="overflow-y-scroll flex flex-col gap-2 p-4 max-h-[25vh] h-[25vh]">
     <GroupItem
       v-for="({ title }, index) of progressGroup"
       :title="title"
