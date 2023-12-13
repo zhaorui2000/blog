@@ -89,7 +89,7 @@ function handleClickRest() {
   showNotify({ message: '重置成功', type: 'success' });
 }
 
-function handleComfirm() {
+function handleConfirm() {
   $progressList.set(
     produce($progressList.get(), (draft) => {
       draft[editIndex.value] = { title: title.value, start: startTime.value, end: endTime.value };
@@ -139,7 +139,7 @@ function handleComfirm() {
             @change="handleChangeDurationTime"
           ></TimePickerField>
         </CellGroup>
-        <Button block round type="primary" @click="handleComfirm">确定</Button>
+        <Button block round type="primary" @click="handleConfirm">确定</Button>
       </Form>
     </Popup>
   </div>

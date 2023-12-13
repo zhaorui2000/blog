@@ -142,7 +142,7 @@ function handleClickTab({ name }) {
     <Tabs :active="Number(groupIndex)" border class="mt-2" type="card" @click-tab="handleClickTab">
       <Tab v-for="{ title } of progressGroup" :title="title"></Tab>
     </Tabs>
-    <CellGroup v-for="(list, index) of computedList" :title="['今天', '明天'][index]" class="bg-N1 px-3">
+    <CellGroup v-for="(list, index) of computedList" :title="[' ', '完成'][index]" class="bg-N1 px-3">
       <Item
         v-for="{ title, start, end, isLock, isDisable, index, realStart, realEnd, key } of list"
         :key="key"

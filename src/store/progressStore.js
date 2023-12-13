@@ -1,11 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent';
-import { atom } from 'nanostores';
-
-export const $progressList = persistentAtom('progressList', [], {
-  encode: JSON.stringify,
-  decode: JSON.parse,
-  listen: false,
-});
+import { atom, onSet } from 'nanostores';
+import { produce } from 'immer';
 
 export const $progressGroup = persistentAtom('progressGroup', [], {
   encode(value) {
@@ -17,7 +12,29 @@ export const $progressGroup = persistentAtom('progressGroup', [], {
   listen: false,
 });
 
+export const $groupIndex = persistentAtom('groupIndex', 0);
+
+export const $progressList = atom([]);
+
 export const $isShowEdit = atom(false);
 export const $isShowAddMinute = atom(false);
 export const $editIndex = atom(-1);
-export const $groupIndex = persistentAtom('groupIndex', 1);
+
+/* ----------------------------------------------------------------------------------------------------
+更新列表项同时更新 store 中的 progressGroup
+---------------------------------------------------------------------------------------------------- */
+onSet($progressList, ({ newValue, abort }) => {
+  $progressGroup.set(
+    produce($progressGroup.get(), (draft) => {
+      const index = $groupIndex.get();
+      return [
+        ...draft.slice(0, index),
+        {
+          title: draft[index]?.title ?? '未命名',
+          value: newValue,
+        },
+        ...draft.slice(index + 1),
+      ];
+    }),
+  );
+});
