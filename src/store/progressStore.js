@@ -12,7 +12,11 @@ export const $progressGroup = persistentAtom('progressGroup', [], {
   listen: false,
 });
 
-export const $groupIndex = persistentAtom('groupIndex', 0);
+export const $groupIndex = persistentAtom('groupIndex', 0, {
+  decode(value) {
+    return Number(value);
+  },
+});
 
 export const $progressList = atom([]);
 
