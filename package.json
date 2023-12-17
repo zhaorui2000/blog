@@ -32,7 +32,6 @@
     "tailwindcss": "^3.3.6",
     "vant": "^4.8.0",
     "vue": "^3.3.11",
-    "xgplayer": "^3.0.10",
     "xstate": "^4.38.3"
   },
   "devDependencies": {
