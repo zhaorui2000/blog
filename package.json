@@ -13,12 +13,12 @@
     "gh-pages": "gh-pages-clean && astro build --base blog && gh-pages -d dist -r https://gitee.com/wiserui/blog.git"
   },
   "dependencies": {
-    "@astrojs/vue": "^4.0.2",
-    "@iconify-json/material-symbols": "^1.1.66",
+    "@astrojs/vue": "^4.0.4",
+    "@iconify-json/material-symbols": "^1.1.68",
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/vue": "^0.10.0",
     "@xstate/vue": "^2.0.0",
-    "astro": "^4.0.3",
+    "astro": "^4.0.6",
     "chalk": "^5.3.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
@@ -27,11 +27,11 @@
     "loglevel": "^1.8.1",
     "lz-string": "^1.5.0",
     "nanostores": "^0.9.5",
-    "prettier": "^3.1.0",
+    "prettier": "^3.1.1",
     "rxjs": "^7.8.1",
     "tailwindcss": "^3.3.6",
-    "vant": "^4.8.0",
-    "vue": "^3.3.11",
+    "vant": "^4.8.1",
+    "vue": "^3.3.12",
     "xstate": "^4.38.3"
   },
   "devDependencies": {
