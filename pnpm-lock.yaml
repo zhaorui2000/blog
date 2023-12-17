@@ -53,6 +53,9 @@ dependencies:
   rxjs:
     specifier: ^7.8.1
     version: registry.npmmirror.com/rxjs@7.8.1
+  sortablejs:
+    specifier: ^1.15.1
+    version: registry.npmmirror.com/sortablejs@1.15.1
   tailwindcss:
     specifier: ^3.3.6
     version: registry.npmmirror.com/tailwindcss@3.3.6
@@ -6667,6 +6670,12 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sisteransi/-/sisteransi-1.0.5.tgz}
     name: sisteransi
     version: 1.0.5
+    dev: false
+
+  registry.npmmirror.com/sortablejs@1.15.1:
+    resolution: {integrity: sha512-P5Cjvb0UG1ZVNiDPj/n4V+DinttXG6K8n7vM/HQf0C25K3YKQTQY6fsr/sEGsJGpQ9exmPxluHxKBc0mLKU1lQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/sortablejs/-/sortablejs-1.15.1.tgz}
+    name: sortablejs
+    version: 1.15.1
     dev: false
 
   registry.npmmirror.com/source-map-js@1.0.2:
