@@ -9,9 +9,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/netlify": "^5.1.2",
     "@astrojs/tailwind": "^5.1.0",
+    "@blog/postcss-any-to-viewport": "workspace:*",
     "astro": "^4.4.4",
-    "tailwindcss": "^3.4.1",
-    "@blog/postcss-any-to-viewport": "workspace:*"
+    "tailwindcss": "^3.4.1"
   }
 }
