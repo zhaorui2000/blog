@@ -19,14 +19,14 @@ module.exports = (opts = {}) => {
       // px to vw
       if (decl.value.indexOf('px') !== -1) {
         const newValue = decl.value.replace('px', '');
-        const convertedValue = `${(parseFloat(newValue) / viewportWidth).toFixed(unitPrecision)}vw`;
+        const convertedValue = `${((parseFloat(newValue) / viewportWidth) * 100).toFixed(unitPrecision)}vw`;
         decl.value = convertedValue;
       }
 
       // rem to vw
       if (decl.value.indexOf('rem') !== -1) {
         const newValue = decl.value.replace('rem', '');
-        const convertedValue = `${((parseFloat(newValue) / viewportWidth) * rootValue).toFixed(unitPrecision)}vw`;
+        const convertedValue = `${((parseFloat(newValue) / viewportWidth) * rootValue * 100).toFixed(unitPrecision)}vw`;
         decl.value = convertedValue;
       }
     },

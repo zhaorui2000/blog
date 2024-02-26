@@ -11,13 +11,13 @@ async function run(input, output, opts = {}) {
 }
 
 test('transform px', async () => {
-  await run('font-size:16px', 'font-size:0.04267vw', {});
+  await run('font-size:16px', 'font-size:4.26667vw', {});
 });
 
 test('transform rem', async () => {
-  await run('font-size:2.5rem', 'font-size:0.10667vw', {});
+  await run('font-size:2.5rem', 'font-size:10.66667vw', {});
 });
 
 test('test config', async () => {
-  await run('font-size:7rem', 'font-size:0.213vw', { viewportWidth: 789, unitPrecision: 3, rootValue: 24 });
+  await run('font-size:7rem', 'font-size:21.293vw', { viewportWidth: 789, unitPrecision: 3, rootValue: 24 });
 });
