@@ -21,3 +21,11 @@ test('transform rem', async () => {
 test('test config', async () => {
   await run('font-size:7rem', 'font-size:21.293vw', { viewportWidth: 789, unitPrecision: 3, rootValue: 24 });
 });
+
+test('test multiple attributes', async () => {
+  await run('padding: 0 15px', 'padding: 0 4.00000vw');
+});
+
+test('test float number', async () => {
+  await run('border:8.6px solid #000', 'border:2.29333vw solid #000');
+});

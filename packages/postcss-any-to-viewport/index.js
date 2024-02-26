@@ -15,20 +15,20 @@ module.exports = (opts = {}) => {
 
     Declaration(decl) {
       // The faster way to find Declaration node
-
-      // px to vw
-      if (decl.value.indexOf('px') !== -1) {
-        const newValue = decl.value.replace('px', '');
-        const convertedValue = `${((parseFloat(newValue) / viewportWidth) * 100).toFixed(unitPrecision)}vw`;
-        decl.value = convertedValue;
-      }
-
-      // rem to vw
-      if (decl.value.indexOf('rem') !== -1) {
-        const newValue = decl.value.replace('rem', '');
-        const convertedValue = `${((parseFloat(newValue) / viewportWidth) * rootValue * 100).toFixed(unitPrecision)}vw`;
-        decl.value = convertedValue;
-      }
+      const regex = /(\d*\.?\d+)(px|rem)/g;
+      const vwString = decl.value.replace(regex, (match, p1, p2) => {
+        const value = parseFloat(p1);
+        if (p2 === 'px') {
+          const vwValue = ((value / viewportWidth) * 100).toFixed(unitPrecision);
+          return `${vwValue}vw`;
+        } else if (p2 === 'rem') {
+          // 这里假设 1rem 等于设计稿宽度的 10%
+          const vwValue = ((value / viewportWidth) * rootValue * 100).toFixed(unitPrecision);
+          return `${vwValue}vw`;
+        }
+        return match;
+      });
+      decl.value = vwString;
     },
 
     /*
