@@ -1,7 +1,7 @@
 ---
 export const prerender = true;
-import './../global.css';
 import '@blog/ui/style.css';
+import './../global.css';
 import { DelButton, Header, Container } from '@blog/ui';
 ---
 
@@ -13,11 +13,8 @@ import { DelButton, Header, Container } from '@blog/ui';
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
   </head>
-  <body>
+  <body class="grid h-screen" style="grid-template-rows: min-content 1fr;">
     <Header />
-    <Container client:load>
-      <h1>Astro</h1>
-      <DelButton client:only="vue" />
-    </Container>
+    <Container client:load />
   </body>
 </html>
