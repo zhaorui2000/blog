@@ -73,9 +73,10 @@ export class WebLogService implements IWebLogService {
       [LOG_LEVEL.ERROR]: '#fde2e2',
     }[logLevel];
     console.log(
-      `%c${LOG_LEVEL[logLevel]}`,
+      `%c======= ${LOG_LEVEL[logLevel]} =======`,
       `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.5rem .75rem;border-radius: 4px`,
-      ...args,
+      args.length > 1 ? "\n" : '',
+      ...args
     );
   }
 }
