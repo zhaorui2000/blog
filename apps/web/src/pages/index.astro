@@ -2,9 +2,16 @@
 export const prerender = true;
 import '@blog/ui/style.css';
 import './../global.css';
-import { DelButton, Header, Container } from '@blog/ui';
+import { Header, Container } from '@blog/ui';
 ---
 
+<script>
+  import { DesktopLogService } from '@blog/utils';
+
+  let log = new DesktopLogService();
+  log.setLogLevel(4);
+  log.log('[14]', 'asdaf');
+</script>
 <html lang="cn">
   <head>
     <meta charset="utf-8" />
@@ -14,7 +21,7 @@ import { DelButton, Header, Container } from '@blog/ui';
     <title>Astro</title>
   </head>
   <body class="grid h-screen" style="grid-template-rows: min-content 1fr;">
-    <Header />
+    <Header client:load />
     <Container client:load />
   </body>
 </html>

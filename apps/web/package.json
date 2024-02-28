@@ -14,6 +14,7 @@
     "@astrojs/vue": "^4.0.8",
     "@blog/postcss-any-to-viewport": "workspace:*",
     "@blog/ui": "workspace:*",
+    "@blog/utils": "workspace:*",
     "@sentry/astro": "^7.102.1",
     "@spotlightjs/astro": "^1.0.16",
     "astro": "^4.4.4",

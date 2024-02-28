@@ -1,0 +1,21 @@
+{
+  "name": "@blog/utils",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && vite build",
+    "build:watch": "tsc && vite build --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.21",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.4",
+    "vite-plugin-dts": "^3.7.3"
+  },
+  "types": "./lib/index.d.ts",
+  "main": "./lib/index.umd.cjs",
+  "exports": {
+    ".": "./lib/index.js"
+  }
+}
