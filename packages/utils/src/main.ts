@@ -1,2 +1,2 @@
-import { DesktopLogService } from "./DesktopLogService";
-export { DesktopLogService }
+import { WebLogService } from "./WebLogService";
+export { WebLogService }

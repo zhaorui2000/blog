@@ -6,11 +6,10 @@ import { Header, Container } from '@blog/ui';
 ---
 
 <script>
-  import { DesktopLogService } from '@blog/utils';
-
-  let log = new DesktopLogService();
-  log.setLogLevel(4);
-  log.log('[14]', 'asdaf');
+  import { WebLogService } from '@blog/utils';
+  console.warn = function (...args) {
+    new WebLogService().warn(...args);
+  };
 </script>
 <html lang="cn">
   <head>
