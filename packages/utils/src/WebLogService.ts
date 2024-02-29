@@ -1,3 +1,6 @@
+import { persistentAtom } from '@nanostores/persistent';
+import { type WritableAtom } from 'nanostores';
+
 export enum LOG_LEVEL {
   TRACE = 0,
   DEBUG = 1,
@@ -17,37 +20,40 @@ export interface IWebLogService {
   setLevel(enabled: LOG_LEVEL): void;
 }
 
-export class WebLogService implements IWebLogService {
-  private _logLevel: LOG_LEVEL = LOG_LEVEL.INFO;
+export default class WebLogService implements IWebLogService {
+  private _logLevel$: WritableAtom<number> = persistentAtom<number>('_logLevel', LOG_LEVEL.INFO, {
+    encode: String,
+    decode: Number,
+  });
 
   trace(...args: ArgsType): void {
-    if (this._logLevel <= LOG_LEVEL.TRACE) {
+    if (this._logLevel$.get() <= LOG_LEVEL.TRACE) {
       this._log(LOG_LEVEL.TRACE, ...args);
     }
   }
   debug(...args: ArgsType): void {
-    if (this._logLevel <= LOG_LEVEL.DEBUG) {
+    if (this._logLevel$.get() <= LOG_LEVEL.DEBUG) {
       this._log(LOG_LEVEL.DEBUG, ...args);
     }
   }
   info(...args: ArgsType): void {
-    if (this._logLevel <= LOG_LEVEL.INFO) {
+    if (this._logLevel$.get() <= LOG_LEVEL.INFO) {
       this._log(LOG_LEVEL.INFO, ...args);
     }
   }
   warn(...args: ArgsType): void {
-    if (this._logLevel <= LOG_LEVEL.WARN) {
+    if (this._logLevel$.get() <= LOG_LEVEL.WARN) {
       this._log(LOG_LEVEL.WARN, ...args);
     }
   }
   error(...args: ArgsType): void {
-    if (this._logLevel <= LOG_LEVEL.ERROR) {
+    if (this._logLevel$.get() <= LOG_LEVEL.ERROR) {
       this._log(LOG_LEVEL.ERROR, ...args);
     }
   }
 
   setLevel(logLevel: LOG_LEVEL): void {
-    this._logLevel = logLevel;
+    this._logLevel$.set(logLevel);
   }
 
   private _log(logLevel: LOG_LEVEL, ...args: ArgsType): void {
@@ -73,10 +79,16 @@ export class WebLogService implements IWebLogService {
       [LOG_LEVEL.ERROR]: '#fde2e2',
     }[logLevel];
     console.log(
-      `%c======= ${LOG_LEVEL[logLevel]} =======`,
-      `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.5rem .75rem;border-radius: 4px`,
-      args.length > 1 ? "\n" : '',
-      ...args
+      `%c${LOG_LEVEL[logLevel]}%c ${args[0]}`,
+      `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.5rem 1.5rem;border-radius: 4px`,
+      `color:${color}`,
     );
+    for (let i = 1; i < args.length; i = i + 2) {
+      console.log(
+        `%c${args[i]}`,
+        `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.125rem .375rem;border-radius: 2px`,
+        args[i + 1]
+      );
+    }
   }
 }

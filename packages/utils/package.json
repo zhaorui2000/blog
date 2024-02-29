@@ -17,5 +17,9 @@
   "main": "./lib/index.umd.cjs",
   "exports": {
     ".": "./lib/index.js"
+  },
+  "dependencies": {
+    "@nanostores/persistent": "^0.10.1",
+    "nanostores": "^0.10.0"
   }
 }
