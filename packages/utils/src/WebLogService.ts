@@ -25,6 +25,14 @@ export default class WebLogService implements IWebLogService {
     encode: String,
     decode: Number,
   });
+  private _logInclude$: WritableAtom<Array<string>> = persistentAtom<Array<string>>('_logInclude', [], {
+    encode: (value) => value.join(','),
+    decode: (value) => value.split(','),
+  });
+  private _logExclude$: WritableAtom<Array<string>> = persistentAtom<Array<string>>('_logExclude', [], {
+    encode: (value) => value.join(','),
+    decode: (value) => value.split(','),
+  });
 
   trace(...args: ArgsType): void {
     if (this._logLevel$.get() <= LOG_LEVEL.TRACE) {
@@ -78,6 +86,16 @@ export default class WebLogService implements IWebLogService {
       [LOG_LEVEL.WARN]: '#faecd8',
       [LOG_LEVEL.ERROR]: '#fde2e2',
     }[logLevel];
+    /* ------- exclude ------- */
+    if (this._logExclude$.get().length > 0 && this._logExclude$.get().includes(args[0])) {
+      return;
+    }
+    /* ------- --- ------- */
+    /* ------- include ------- */
+    if (this._logInclude$.get().length > 0 && !this._logInclude$.get().includes(args[0])) {
+      return;
+    }
+    /* ------- --- ------- */
     console.log(
       `%c${LOG_LEVEL[logLevel]}%c ${args[0]}`,
       `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.5rem 1.5rem;border-radius: 4px`,
@@ -87,7 +105,7 @@ export default class WebLogService implements IWebLogService {
       console.log(
         `%c${args[i]}`,
         `color:${color};background-color:${bgColor};border:1px solid ${bdColor};padding:.125rem .375rem;border-radius: 2px`,
-        args[i + 1]
+        args[i + 1] ?? '',
       );
     }
   }
