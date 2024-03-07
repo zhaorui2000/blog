@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+import '@blog/ui/style.css';
+import './../global.css';
+import { Header, Container } from '@blog/ui';
+---
+
+<html lang="cn">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body class="grid h-screen" style="grid-template-rows: min-content 1fr;">
+    <Header client:load />
+    <Container client:load>
+      <slot />
+    </Container>
+  </body>
+</html>
