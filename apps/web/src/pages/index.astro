@@ -1,5 +1,11 @@
 ---
 import MainLayout from './../layouts/MainLayout.astro';
+import { CellGroup, Cell, Progress } from '@blog/ui';
 ---
 
-<MainLayout>123</MainLayout>
+<MainLayout>
+  <CellGroup>
+    <Cell><Progress percentage="81" client:load /> </Cell>
+    <Cell><Progress percentage="81" client:load /> </Cell>
+  </CellGroup>
+</MainLayout>
