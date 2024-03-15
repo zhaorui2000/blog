@@ -1,11 +1,10 @@
 ---
 import MainLayout from './../layouts/MainLayout.astro';
-import { CellGroup, Cell, Progress } from '@blog/ui';
+import { CellGroup, Cell, TimeProgress } from '@blog/ui';
 ---
 
 <MainLayout>
   <CellGroup>
-    <Cell><Progress percentage="81" client:load /> </Cell>
-    <Cell><Progress percentage="81" client:load /> </Cell>
+    <Cell><TimeProgress client:load start="2024-03-15" end="2024-03-16" /> </Cell>
   </CellGroup>
 </MainLayout>
