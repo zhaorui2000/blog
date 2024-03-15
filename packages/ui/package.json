@@ -10,6 +10,7 @@
   "dependencies": {
     "dayjs": "^1.11.10",
     "mathjs": "^12.4.1",
+    "nanostores": "^0.10.0",
     "rxjs": "^7.8.1",
     "vant": "^4.8.5"
   },
