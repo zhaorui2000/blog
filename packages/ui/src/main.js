@@ -6,8 +6,6 @@ import Cell from './components/cell.vue';
 import CellGroup from './components/cell-group.vue';
 import Progress from './components/progress.vue';
 import TimeProgress from './components/time-progress.vue';
-import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
+import PrimaryButton from './components/primary-button.vue';
 
-dayjs.extend(duration);
-export { DelButton, Header, Container, Cell, CellGroup, Progress, TimeProgress };
+export { DelButton, Header, Container, Cell, CellGroup, Progress, TimeProgress, PrimaryButton };

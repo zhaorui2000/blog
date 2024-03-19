@@ -12,6 +12,7 @@ declare module 'vue' {
     Container: typeof import('./src/components/container.vue')['default']
     DelButton: typeof import('./src/components/del-button.vue')['default']
     Header: typeof import('./src/components/header.vue')['default']
+    PrimaryButton: typeof import('./src/components/primary-button.vue')['default']
     Progress: typeof import('./src/components/progress.vue')['default']
     TimeProgress: typeof import('./src/components/time-progress.vue')['default']
     VanButton: typeof import('vant/es')['Button']
