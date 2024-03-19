@@ -13,9 +13,9 @@ const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
 onMounted(() => {
-  total.value = Math.abs(dayjs(props.end).diff(dayjs(props.start)));
+  total.value = dayjs(props.end).diff(dayjs(props.start));
   interval$.subscribe((n) => {
-    current.value = Math.abs(dayjs().diff(dayjs(props.start)));
+    current.value = dayjs().diff(dayjs(props.start));
   });
 });
 onUnmounted(() => {});

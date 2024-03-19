@@ -8,6 +8,7 @@
     "build:watch": "vite build --watch"
   },
   "dependencies": {
+    "@nanostores/persistent": "^0.10.1",
     "dayjs": "^1.11.10",
     "mathjs": "^12.4.1",
     "nanostores": "^0.10.0",

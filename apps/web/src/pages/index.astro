@@ -1,10 +1,8 @@
 ---
 import MainLayout from './../layouts/MainLayout.astro';
-import { CellGroup, Cell, TimeProgress } from '@blog/ui';
+import List from './_components/List.vue';
 ---
 
 <MainLayout>
-  <CellGroup>
-    <Cell><TimeProgress client:load start="2024-03-15" end="2024-03-16" /> </Cell>
-  </CellGroup>
-</MainLayout>
+  <List client:load />
+</MainLayout>;
