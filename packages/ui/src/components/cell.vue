@@ -1,7 +1,25 @@
-<script setup></script>
+<script setup>
+import { defineProps } from 'vue';
+const props = defineProps({
+  title: {
+    type: [String, Number],
+    required: false,
+  },
+});
+</script>
 <template>
-  <van-cell>
-    <slot></slot>
-  </van-cell>
+  <div class="grid p-2 shadow-sm rounded-sm">
+    <div class="flex items-center justify-between">
+      <div>
+        {{ props.title }}
+      </div>
+      <div>
+        <slot name="operate"></slot>
+      </div>
+    </div>
+    <div class="flex-1">
+      <slot></slot>
+    </div>
+  </div>
 </template>
 <style></style>

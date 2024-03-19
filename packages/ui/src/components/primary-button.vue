@@ -1,21 +1,12 @@
 <script setup>
-import { Subject, debounceTime } from 'rxjs';
-import { ref } from 'vue';
+import { debounce } from '@blog/utils';
 const emit = defineEmits(['click']);
-const subject = new Subject();
-const isWait = ref(false);
-subject.pipe(debounceTime(700)).subscribe(() => {
-  isWait.value = false;
-});
-const handleClick = () => {
-  if (!isWait.value) {
-    emit('click');
-  }
-  isWait.value = true;
-  subject.next();
-};
+
+const handleClick = debounce(() => {
+  emit('click');
+}, 700);
 </script>
 <template>
-  <van-button type="primary" @click="() => handleClick()"><slot></slot></van-button>
+  <van-button type="primary" @click="handleClick"><slot></slot></van-button>
 </template>
 <style></style>

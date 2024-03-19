@@ -105,6 +105,9 @@ importers:
         specifier: ^4.8.5
         version: 4.8.5(vue@3.4.20)
     devDependencies:
+      '@blog/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@vant/auto-import-resolver':
         specifier: ^1.0.2
         version: 1.0.2
@@ -138,6 +141,9 @@ importers:
       nanostores:
         specifier: ^0.10.0
         version: 0.10.0
+      rxjs:
+        specifier: ^7.8.1
+        version: 7.8.1
     devDependencies:
       '@types/node':
         specifier: ^20.11.21

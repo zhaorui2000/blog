@@ -1,2 +1,3 @@
 import WebLogService from "./WebLogService";
-export { WebLogService } 
+import debounce from "./debounce"
+export { WebLogService, debounce } 
