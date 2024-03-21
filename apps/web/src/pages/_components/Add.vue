@@ -1,13 +1,17 @@
 <script setup>
-import { PrimaryButton } from '@blog/ui';
-import { useStore } from '@nanostores/vue';
-import { $list, log } from './../store';
-const list = useStore($list);
+import { PrimaryButton, Popup } from '@blog/ui';
+import { log } from './../store';
+import { ref } from 'vue';
 const handleClick = () => {
   log.trace('新增');
+  show.value = true;
 };
+const show = ref(false);
 </script>
 <template>
-  <PrimaryButton @click="handleClick">新增</PrimaryButton>
+  <div class="inline-block">
+    <PrimaryButton @click="handleClick">新增</PrimaryButton>
+    <Popup v-model:show="show" position="bottom"></Popup>
+  </div>
 </template>
 <style></style>

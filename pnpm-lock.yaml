@@ -86,9 +86,15 @@ importers:
 
   packages/ui:
     dependencies:
+      '@iconify-icons/material-symbols':
+        specifier: ^1.2.58
+        version: 1.2.58
       '@nanostores/persistent':
         specifier: ^0.10.1
         version: 0.10.1(nanostores@0.10.0)
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.0
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
@@ -108,6 +114,12 @@ importers:
       '@blog/utils':
         specifier: workspace:*
         version: link:../utils
+      '@iconify-json/material-symbols':
+        specifier: ^1.1.75
+        version: 1.1.75
+      '@iconify/tailwind':
+        specifier: ^0.1.4
+        version: 0.1.4
       '@vant/auto-import-resolver':
         specifier: ^1.0.2
         version: 1.0.2
@@ -944,6 +956,31 @@ packages:
     resolution:
       { integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw== }
     dev: true
+
+  /@iconify-icons/material-symbols@1.2.58:
+    resolution:
+      { integrity: sha512-v0ZfPXlmDcDPCejxhg5h2eHCEHClrpn+i44Ev766vkzPIEFRdgT+YK942KzyqBpH0RhKJfel4OZdL1DY1oa5Qg== }
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: false
+
+  /@iconify-json/material-symbols@1.1.75:
+    resolution:
+      { integrity: sha512-YMLagGENDw9QNoo4sPDoMX9wO20YptQ2FuTDCf/H/uRH4lGmD08C+z+kYwR4A90qyyo6hYG7yccPEiMOuLow5A== }
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/tailwind@0.1.4:
+    resolution:
+      { integrity: sha512-U7RzcU2fkwOfMDsGQ3mtpLIaApSnqb+vgcJJknPPbg8/NF5s7tI1o5otEMfcpnLGk4PbYB8bxmKTz7IJVUlU2Q== }
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/types@2.0.0:
+    resolution:
+      { integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg== }
 
   /@isaacs/cliui@8.0.2:
     resolution:

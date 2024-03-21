@@ -7,5 +7,7 @@ import CellGroup from './components/cell-group.vue';
 import Progress from './components/progress.vue';
 import TimeProgress from './components/time-progress.vue';
 import PrimaryButton from './components/primary-button.vue';
+import StatusIcon from './components/status-icon.vue';
+import Popup from './components/popup.vue';
 
-export { DelButton, Header, Container, Cell, CellGroup, Progress, TimeProgress, PrimaryButton };
+export { Popup, DelButton, Header, Container, Cell, CellGroup, Progress, TimeProgress, PrimaryButton, StatusIcon };

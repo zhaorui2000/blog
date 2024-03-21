@@ -22,5 +22,7 @@ export default {
       CY4: '#FAAB0C',
     },
   },
-  plugins: [],
+  plugins: [
+    // Iconify plugin
+  ],
 };
