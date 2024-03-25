@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nanostores/persistent": "^0.10.1",
+    "dayjs": "^1.11.10",
     "nanostores": "^0.10.0",
     "rxjs": "^7.8.1"
   }

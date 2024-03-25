@@ -16,14 +16,18 @@ declare module 'vue' {
     PrimaryButton: typeof import('./src/components/primary-button.vue')['default']
     Progress: typeof import('./src/components/progress.vue')['default']
     StatusIcon: typeof import('./src/components/status-icon.vue')['default']
+    TimePickerField: typeof import('./src/components/time-picker-field.vue')['default']
     TimeProgress: typeof import('./src/components/time-progress.vue')['default']
+    VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanEmpty: typeof import('vant/es')['Empty']
+    VanField: typeof import('vant/es')['Field']
     VanIcon: typeof import('vant/es')['Icon']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanNotify: typeof import('vant/es')['Notify']
     VanPopup: typeof import('vant/es')['Popup']
     VanProgress: typeof import('vant/es')['Progress']
+    VanTimePicker: typeof import('vant/es')['TimePicker']
   }
 }

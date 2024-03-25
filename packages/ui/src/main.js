@@ -9,5 +9,18 @@ import TimeProgress from './components/time-progress.vue';
 import PrimaryButton from './components/primary-button.vue';
 import StatusIcon from './components/status-icon.vue';
 import Popup from './components/popup.vue';
+import TimePickerField from './components/time-picker-field.vue';
 
-export { Popup, DelButton, Header, Container, Cell, CellGroup, Progress, TimeProgress, PrimaryButton, StatusIcon };
+export {
+  TimePickerField,
+  Popup,
+  DelButton,
+  Header,
+  Container,
+  Cell,
+  CellGroup,
+  Progress,
+  TimeProgress,
+  PrimaryButton,
+  StatusIcon,
+};

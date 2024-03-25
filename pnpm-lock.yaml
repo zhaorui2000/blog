@@ -150,6 +150,9 @@ importers:
       '@nanostores/persistent':
         specifier: ^0.10.1
         version: 0.10.1(nanostores@0.10.0)
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
       nanostores:
         specifier: ^0.10.0
         version: 0.10.0

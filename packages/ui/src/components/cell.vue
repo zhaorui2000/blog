@@ -17,7 +17,7 @@ const props = defineProps({
         <slot name="operate"></slot>
       </div>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 pt-1">
       <slot></slot>
     </div>
   </div>

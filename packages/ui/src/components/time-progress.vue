@@ -4,18 +4,19 @@ import { interval } from 'rxjs';
 import dayjs from 'dayjs';
 import Progress from './progress.vue';
 import * as mathjs from 'mathjs';
+import { transToDayjs } from '@blog/utils';
 const props = defineProps({
-  start: { type: [Object, String], required: true },
-  end: { type: [Object, String], required: true },
+  start: { type: Object, required: true },
+  end: { type: Object, required: true },
 });
 const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
 onMounted(() => {
-  total.value = dayjs(props.end).diff(dayjs(props.start));
+  total.value = transToDayjs(props.end).diff(transToDayjs(props.start));
   interval$.subscribe((n) => {
-    current.value = dayjs().diff(dayjs(props.start));
+    current.value = dayjs().diff(transToDayjs(props.start));
   });
 });
 onUnmounted(() => {});

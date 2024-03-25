@@ -1,3 +1,4 @@
-import WebLogService from "./WebLogService";
-import debounce from "./debounce"
-export { WebLogService, debounce } 
+import WebLogService from './WebLogService';
+import debounce from './debounce';
+import transToDayjs from './transToDayjs';
+export { WebLogService, debounce, transToDayjs };
