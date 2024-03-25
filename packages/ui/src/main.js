@@ -10,8 +10,10 @@ import PrimaryButton from './components/primary-button.vue';
 import StatusIcon from './components/status-icon.vue';
 import Popup from './components/popup.vue';
 import TimePickerField from './components/time-picker-field.vue';
+import Field from './components/field.vue';
 
 export {
+  Field,
   TimePickerField,
   Popup,
   DelButton,

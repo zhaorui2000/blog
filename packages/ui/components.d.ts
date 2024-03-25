@@ -11,6 +11,7 @@ declare module 'vue' {
     CellGroup: typeof import('./src/components/cell-group.vue')['default']
     Container: typeof import('./src/components/container.vue')['default']
     DelButton: typeof import('./src/components/del-button.vue')['default']
+    Field: typeof import('./src/components/field.vue')['default']
     Header: typeof import('./src/components/header.vue')['default']
     Popup: typeof import('./src/components/popup.vue')['default']
     PrimaryButton: typeof import('./src/components/primary-button.vue')['default']
@@ -20,6 +21,7 @@ declare module 'vue' {
     TimeProgress: typeof import('./src/components/time-progress.vue')['default']
     VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
+    VanCell: typeof import('vant/es')['Cell']
     VanCellGroup: typeof import('vant/es')['CellGroup']
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
@@ -28,6 +30,7 @@ declare module 'vue' {
     VanNotify: typeof import('vant/es')['Notify']
     VanPopup: typeof import('vant/es')['Popup']
     VanProgress: typeof import('vant/es')['Progress']
+    VanSwipeCell: typeof import('vant/es')['SwipeCell']
     VanTimePicker: typeof import('vant/es')['TimePicker']
   }
 }

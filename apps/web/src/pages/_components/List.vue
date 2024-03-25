@@ -2,6 +2,7 @@
 import { useStore } from '@nanostores/vue';
 import { $list } from './../store';
 import { CellGroup, Cell, TimeProgress, StatusIcon } from '@blog/ui';
+import { PrimaryButton, DelButton } from '@blog/ui';
 import Add from './Add.vue';
 import { produce } from 'immer';
 const list = useStore($list);
@@ -12,11 +13,27 @@ function handleChangeIsLock({ value, index }) {
     }),
   );
 }
+function handleClickFinish() {}
+function handleModify() {}
+function handleClickDel(index) {
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft.splice(index, 1);
+    }),
+  );
+}
 </script>
 <template>
   <Fragment>
     <CellGroup>
       <Cell v-for="({ title, start, end, isLock }, index) of list" :title="title">
+        <template #right>
+          <PrimaryButton class="h-full" @click="handleClickFinish">完成</PrimaryButton>
+        </template>
+        <template #left>
+          <PrimaryButton @click="handleModify">修改</PrimaryButton>
+          <DelButton class="h-full" @click="() => handleClickDel(index)"></DelButton>
+        </template>
         <template #operate>
           <StatusIcon
             @update:status="(value) => handleChangeIsLock({ value, index })"

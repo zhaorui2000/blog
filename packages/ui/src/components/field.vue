@@ -1,5 +1,5 @@
 <script setup></script>
 <template>
-  <Cell><TimeProgress v-bind="$attrs" /></Cell>
+  <van-field />
 </template>
 <style></style>
