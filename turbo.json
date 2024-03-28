@@ -2,6 +2,12 @@
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
   "pipeline": {
+    "@blog/ui#build": {
+      "dependsOn": ["@blog/utils#build"]
+    },
+    "@web#build": {
+      "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
+    },
     "build": {
       "outputs": ["dist/**"]
     },
