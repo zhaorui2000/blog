@@ -1,22 +1,34 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
-const emit = defineEmits(['confirm', 'update:value']);
+import { ref, defineEmits, defineModel, watch } from 'vue';
+const model = defineModel();
+const timeValue = ref();
+
 const show = ref(false);
-const fieldValue = ref('');
+const fieldValue = ref();
+
+watch(
+  model,
+  (newV) => {
+    fieldValue.value = newV.join(' ');
+  },
+  { immediate: true },
+);
+
+function handleOpen() {
+  timeValue.value = model.value;
+}
 function handleFocus() {
   show.value = true;
 }
 function handleConfirm({ selectedValues }) {
   show.value = false;
-  fieldValue.value = selectedValues.join(' ');
-  emit('confirm', selectedValues);
-  emit('update:value', selectedValues);
+  model.value = selectedValues;
 }
 </script>
 <template>
   <van-field v-bind="$attrs.fieldConfig" readonly v-model="fieldValue" @focus="handleFocus"> </van-field>
-  <van-action-sheet v-bind="$attrs.actionSheetConfig" v-model:show="show" title="标题">
-    <van-time-picker @confirm="handleConfirm"></van-time-picker>
+  <van-action-sheet @open="handleOpen" v-bind="$attrs.actionSheetConfig" v-model:show="show">
+    <van-time-picker v-model="timeValue" cancel-button-text="" @confirm="handleConfirm"></van-time-picker>
   </van-action-sheet>
 </template>
 <style></style>
