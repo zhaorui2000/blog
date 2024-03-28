@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue'],
     },
-    outDir: 'lib',
+    outDir: resolve(__dirname, 'lib'),
     lib: {
       entry: resolve(__dirname, './src/main.js'),
       name: '@blog/ui',
