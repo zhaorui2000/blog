@@ -8,3 +8,4 @@ export const $list = persistentAtom('list', [], {
   decode: JSON.parse,
 });
 export const $isShowAdd = atom(false);
+export const $addData = atom(false);

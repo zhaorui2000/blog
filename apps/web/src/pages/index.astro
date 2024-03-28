@@ -5,8 +5,8 @@ import Add from './_components/Add.vue';
 ---
 
 <MainLayout>
-  <List client:load />
+  <List client:only />
   <Fragment slot="footer">
-    <Add client:load />
+    <Add client:only />
   </Fragment>
 </MainLayout>

@@ -10,6 +10,6 @@ const props = defineProps({
 const computedContent = computed(() => transToDayjs(props.time).format('HH:mm'));
 </script>
 <template>
-  <van-tag round type="primary">{{ computedContent }}</van-tag>
+  <van-tag plain type="primary">{{ computedContent }}</van-tag>
 </template>
 <style></style>

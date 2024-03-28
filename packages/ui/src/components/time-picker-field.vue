@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, defineModel, watch } from 'vue';
+import { ref, defineModel, watch } from 'vue';
 const model = defineModel();
 const timeValue = ref();
 
