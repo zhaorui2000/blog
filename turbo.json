@@ -5,7 +5,7 @@
     "@blog/ui#build": {
       "dependsOn": ["@blog/utils#build"]
     },
-    "@web#build": {
+    "web#build": {
       "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
     },
     "build": {
