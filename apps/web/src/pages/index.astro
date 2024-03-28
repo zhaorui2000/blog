@@ -1,8 +1,12 @@
 ---
 import MainLayout from './../layouts/MainLayout.astro';
 import List from './_components/List.vue';
+import Add from './_components/Add.vue';
 ---
 
 <MainLayout>
   <List client:load />
+  <Fragment slot="footer">
+    <Add client:load />
+  </Fragment>
 </MainLayout>

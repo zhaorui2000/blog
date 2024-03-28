@@ -7,11 +7,13 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CancelButton: typeof import('./src/components/cancel-button.vue')['default']
     Cell: typeof import('./src/components/cell.vue')['default']
     CellGroup: typeof import('./src/components/cell-group.vue')['default']
     Container: typeof import('./src/components/container.vue')['default']
     DelButton: typeof import('./src/components/del-button.vue')['default']
     Field: typeof import('./src/components/field.vue')['default']
+    Footer: typeof import('./src/components/footer.vue')['default']
     Header: typeof import('./src/components/header.vue')['default']
     Popup: typeof import('./src/components/popup.vue')['default']
     PrimaryButton: typeof import('./src/components/primary-button.vue')['default']

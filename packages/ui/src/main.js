@@ -11,8 +11,12 @@ import StatusIcon from './components/status-icon.vue';
 import Popup from './components/popup.vue';
 import TimePickerField from './components/time-picker-field.vue';
 import Field from './components/field.vue';
+import CancelButton from './components/cancel-button.vue';
+import Footer from './components/footer.vue';
 
 export {
+  Footer,
+  CancelButton,
   Field,
   TimePickerField,
   Popup,

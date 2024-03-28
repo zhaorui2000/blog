@@ -6,12 +6,11 @@ export default function debounce(func: Function, time: number = 700) {
     isWait = false;
   });
   let result = function (...args: any[]) {
-    if (isWait) {
-      subject.next(undefined);
-    } else {
+    if (!isWait) {
       func.call(null, ...args);
+      isWait = true;
     }
-    isWait = true;
+    subject.next(undefined);
   };
   return result;
 }
