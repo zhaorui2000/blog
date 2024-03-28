@@ -12,16 +12,17 @@ const props = defineProps({
     <template #left>
       <slot name="left"></slot>
     </template>
-
     <template #right>
       <slot name="right"></slot>
     </template>
     <div class="grid p-2 shadow-sm rounded-sm">
       <div class="flex items-center justify-between">
-        <div>
-          {{ props.title }}
+        <div class="flex items-center">
+          <slot name="title">
+            {{ props.title }}
+          </slot>
         </div>
-        <div>
+        <div class="flex items-center">
           <slot name="operate"></slot>
         </div>
       </div>

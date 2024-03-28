@@ -21,6 +21,7 @@ declare module 'vue' {
     StatusIcon: typeof import('./src/components/status-icon.vue')['default']
     TimePickerField: typeof import('./src/components/time-picker-field.vue')['default']
     TimeProgress: typeof import('./src/components/time-progress.vue')['default']
+    TimeTag: typeof import('./src/components/time-tag.vue')['default']
     VanActionSheet: typeof import('vant/es')['ActionSheet']
     VanButton: typeof import('vant/es')['Button']
     VanCell: typeof import('vant/es')['Cell']
@@ -33,6 +34,7 @@ declare module 'vue' {
     VanPopup: typeof import('vant/es')['Popup']
     VanProgress: typeof import('vant/es')['Progress']
     VanSwipeCell: typeof import('vant/es')['SwipeCell']
+    VanTag: typeof import('vant/es')['Tag']
     VanTimePicker: typeof import('vant/es')['TimePicker']
   }
 }

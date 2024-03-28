@@ -13,8 +13,10 @@ import TimePickerField from './components/time-picker-field.vue';
 import Field from './components/field.vue';
 import CancelButton from './components/cancel-button.vue';
 import Footer from './components/footer.vue';
+import TimeTag from './components/time-tag.vue';
 
 export {
+  TimeTag,
   Footer,
   CancelButton,
   Field,
