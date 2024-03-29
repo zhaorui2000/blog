@@ -13,6 +13,7 @@ const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
+
 watch(
   () => props.end,
   (newV) => {

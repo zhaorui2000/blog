@@ -15,7 +15,7 @@ const props = defineProps({
   },
 });
 function handleClickFinish() {}
-function handleChangeIsLock() {
+function handleChangeIsLock({ value }) {
   $list.set(
     produce($list.get(), (draft) => {
       draft[props.index].isLock = value;
@@ -46,7 +46,7 @@ function handleClickDel() {
       </div>
     </template>
     <template #right>
-      <PrimaryButton class="h-full" @click="handleClickFinish">完成</PrimaryButton>
+      <PrimaryButton class="h-full" @click="handleClickFinish">开始</PrimaryButton>
     </template>
     <template #left>
       <PrimaryButton class="h-full" @click="handleModify">修改</PrimaryButton>

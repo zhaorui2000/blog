@@ -51,7 +51,7 @@ const handleComfire = () => {
     const { index } = $addData.get();
     $list.set(
       produce($list.get(), (draft) => {
-        draft.splice(index, 1, itemData);
+        draft[index] = { ...draft[index], ...itemData };
       }),
     );
   } else {
