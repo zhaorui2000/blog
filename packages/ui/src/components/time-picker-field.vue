@@ -9,7 +9,7 @@ const fieldValue = ref();
 watch(
   model,
   (newV) => {
-    fieldValue.value = newV.join(' ');
+    fieldValue.value = newV.map((item) => `${item}`.padStart(2, '0')).join(' ');
   },
   { immediate: true },
 );

@@ -47,7 +47,7 @@ const handleComfire = () => {
     title: title.value,
   };
   if (isObject(addData.value)) {
-    log.trace('新增-新增');
+    log.trace('新增-修改');
     const { index } = $addData.get();
     $list.set(
       produce($list.get(), (draft) => {
@@ -55,7 +55,7 @@ const handleComfire = () => {
       }),
     );
   } else {
-    log.trace('新增-修改');
+    log.trace('新增-新增');
     $list.set(
       produce($list.get(), (draft) => {
         draft.push(itemData);
