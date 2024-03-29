@@ -61,7 +61,14 @@ function handleChangeIsLock({ value }) {
   );
 }
 function handleModify() {
-  $addData.set({ index: props.index, ...content.value });
+  $addData.set({
+    index: props.index,
+    ...content.value,
+    start: computedStart.value,
+    end: computedEnd.value,
+    diff: { hour: 0, minute: 0, second: 0 },
+    endDiff: { hour: 0, minute: 0, second: 0 },
+  });
   $isShowAdd.set(true);
 }
 function handleClickDel() {
@@ -97,7 +104,13 @@ function handleClickDel() {
         onClass="icon-[material-symbols--lock]"
       ></StatusIcon>
     </template>
-    <TimeProgress @start="handleStart" @end="handleEnd" :start="computedStart" :end="computedEnd"></TimeProgress>
+    <TimeProgress
+      class="mt-1"
+      @start="handleStart"
+      @end="handleEnd"
+      :start="computedStart"
+      :end="computedEnd"
+    ></TimeProgress>
   </Cell>
 </template>
 <style></style>

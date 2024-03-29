@@ -10,9 +10,17 @@ watch(list, () => {
   $list.set(
     produce($list.get(), (draft) => {
       draft.sort((a, b) => {
-        return (a.start.hour - b.start.hour) * 12 + (a.start.minute - b.start.minute) * 60;
+        return (
+          (a.start.hour + a.diff.hour - b.start.hour - b.diff.hour) * 12 +
+          (a.start.minute + a.diff.minute - b.start.minute - b.diff.minute) * 60
+        );
       });
-      console.log(JSON.stringify(draft));
+      for (let i = 0; i < draft.length; ++i) {
+        const { start, diff, isLock, endDiff } = draft[i];
+        if (isLock) {
+          break;
+        }
+      }
     }),
   );
 });

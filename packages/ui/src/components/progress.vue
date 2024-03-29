@@ -29,6 +29,6 @@ watch(
 );
 </script>
 <template>
-  <van-progress :inactive="props.percentage <= 0" :percentage="innerPercentage" :color="color" />
+  <van-progress stroke-width="1rem" :inactive="props.percentage <= 0" :percentage="innerPercentage" :color="color" />
 </template>
 <style></style>

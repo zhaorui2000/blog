@@ -1,1 +1,8 @@
 @tailwind utilities;
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+  -webkit-overflow-scrolling: touch;
+  -overflow-scrolling: touch;
+}
