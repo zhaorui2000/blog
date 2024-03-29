@@ -9,13 +9,26 @@ const props = defineProps({
   start: { type: Object, required: true },
   end: { type: Object, required: true },
 });
+const emit = defineEmits(['start', 'end']);
 const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
 
+watch(percentage, (newV, oldV) => {
+  if (newV >= 0 && newV <= 100) {
+    if (oldV < 0) {
+      emit('start');
+    }
+  }
+  if (newV > 100) {
+    if (oldV <= 100) {
+      emit('end');
+    }
+  }
+});
 watch(
-  () => props.end,
+  () => [props.end, props.start],
   (newV) => {
     total.value = transToDayjs(props.end).diff(transToDayjs(props.start));
   },

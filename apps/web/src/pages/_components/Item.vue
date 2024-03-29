@@ -4,9 +4,26 @@ import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } fro
 import { defineProps, computed } from 'vue';
 import { $addData, $list, $isShowAdd } from './../store';
 import { useStore } from '@nanostores/vue';
+import { log } from './../store';
+import dayjs from 'dayjs';
+import { transToDayjs, secodeToObj } from '@blog/utils';
 const list = useStore($list);
 const content = computed(() => {
   return list.value[props.index] ?? {};
+});
+const computedStart = computed(() => {
+  return {
+    hour: content.value.start.hour + content.value.diff.hour,
+    minute: content.value.start.minute + content.value.diff.minute,
+    second: content.value.start.second + content.value.diff.second,
+  };
+});
+const computedEnd = computed(() => {
+  return {
+    hour: content.value.end.hour + content.value.diff.hour,
+    minute: content.value.end.minute + content.value.diff.minute,
+    second: content.value.end.second + content.value.diff.second,
+  };
 });
 const props = defineProps({
   index: {
@@ -14,7 +31,23 @@ const props = defineProps({
     required: true,
   },
 });
-function handleClickFinish() {}
+function handleClickFinish() {
+  log.trace('完成按钮');
+}
+function handleClickStart() {
+  log.trace('开始按钮');
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft[props.index].diff = secodeToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
+    }),
+  );
+}
+function handleStart() {
+  log.trace('进度条开始');
+}
+function handleEnd() {
+  log.trace('进度条结束');
+}
 function handleChangeIsLock({ value }) {
   $list.set(
     produce($list.get(), (draft) => {
@@ -37,16 +70,15 @@ function handleClickDel() {
 <template>
   <Cell>
     <template #title>
-      <div>
-        <TimeTag :time="content.start"></TimeTag>
-        <TimeTag class="ml-1" :time="content.end"></TimeTag>
-        <span class="ml-2">
-          {{ content.title }}
-        </span>
-      </div>
+      <TimeTag :time="computedStart"></TimeTag>
+      <TimeTag class="ml-1" :time="computedEnd"></TimeTag>
+      <span class="ml-2">
+        {{ content.title }}
+      </span>
     </template>
     <template #right>
-      <PrimaryButton class="h-full" @click="handleClickFinish">开始</PrimaryButton>
+      <PrimaryButton class="h-full" @click="handleClickStart">开始</PrimaryButton>
+      <PrimaryButton class="h-full" type="default" plain @click="handleClickFinish">完成</PrimaryButton>
     </template>
     <template #left>
       <PrimaryButton class="h-full" @click="handleModify">修改</PrimaryButton>
@@ -60,7 +92,7 @@ function handleClickDel() {
         onClass="icon-[material-symbols--lock]"
       ></StatusIcon>
     </template>
-    <TimeProgress :start="content.start" :end="content.end"></TimeProgress>
+    <TimeProgress @start="handleStart" @end="handleEnd" :start="computedStart" :end="computedEnd"></TimeProgress>
   </Cell>
 </template>
 <style></style>

@@ -6,6 +6,7 @@ import { ref, watch } from 'vue';
 import { $list, $isShowAdd, $addData } from './../store';
 import { produce } from 'immer';
 import { useStore } from '@nanostores/vue';
+import { v4 as uuidv4 } from 'uuid';
 const isShowAdd = useStore($isShowAdd);
 const addData = useStore($addData);
 const start = ref(['00', '00']);
@@ -45,6 +46,7 @@ const handleComfire = () => {
     end: { hour: Number(end.value[0]), minute: Number(end.value[1]), second: 0 },
     isLock: false,
     title: title.value,
+    diff: { hour: 0, minute: 0, second: 0 },
   };
   if (isObject(addData.value)) {
     log.trace('新增-修改');
@@ -58,7 +60,7 @@ const handleComfire = () => {
     log.trace('新增-新增');
     $list.set(
       produce($list.get(), (draft) => {
-        draft.push(itemData);
+        draft.push({ id: uuidv4(), ...itemData });
       }),
     );
   }
