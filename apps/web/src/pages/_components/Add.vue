@@ -47,6 +47,7 @@ const handleComfire = () => {
     isLock: false,
     title: title.value,
     diff: { hour: 0, minute: 0, second: 0 },
+    endDiff: { hour: 0, minute: 0, second: 0 },
   };
   if (isObject(addData.value)) {
     log.trace('新增-修改');

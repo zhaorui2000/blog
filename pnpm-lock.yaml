@@ -171,6 +171,9 @@ importers:
       dayjs:
         specifier: ^1.11.10
         version: 1.11.10
+      mathjs:
+        specifier: ^12.4.1
+        version: 12.4.1
       nanostores:
         specifier: ^0.10.0
         version: 0.10.0

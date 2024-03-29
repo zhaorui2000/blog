@@ -20,9 +20,9 @@ const computedStart = computed(() => {
 });
 const computedEnd = computed(() => {
   return {
-    hour: content.value.end.hour + content.value.diff.hour,
-    minute: content.value.end.minute + content.value.diff.minute,
-    second: content.value.end.second + content.value.diff.second,
+    hour: content.value.end.hour + content.value.diff.hour + content.value.endDiff.hour,
+    minute: content.value.end.minute + content.value.diff.minute + content.value.endDiff.minute,
+    second: content.value.end.second + content.value.diff.second + content.value.endDiff.second,
   };
 });
 const props = defineProps({
@@ -33,6 +33,11 @@ const props = defineProps({
 });
 function handleClickFinish() {
   log.trace('完成按钮');
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft[props.index].endDiff = secodeToObj(dayjs().diff(transToDayjs(computedEnd.value), 'second'));
+    }),
+  );
 }
 function handleClickStart() {
   log.trace('开始按钮');

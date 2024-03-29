@@ -1,7 +1,9 @@
+import * as mathjs from "mathjs"
 export default function (value: number) {
-    var hour = Math.floor(value / 3600);
-    var minute = Math.floor((value % 3600) / 60);
-    var second = value % 60;
+    console.log(value)
+    let hour = mathjs.chain(value).divide(3600).floor().done()
+    let minute = mathjs.chain(value).mod(3600).divide(60).floor().done()
+    let second = mathjs.chain(value).mod(60).floor().done();
     return {
         hour,
         minute,

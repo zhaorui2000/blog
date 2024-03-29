@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { defineProps, ref, onMounted, onUnmounted, computed, watch, popScopeId } from 'vue';
 import { interval } from 'rxjs';
 import dayjs from 'dayjs';
 import Progress from './progress.vue';
@@ -14,6 +14,13 @@ const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
+const computedEnd = computed(() => {
+  let result = transToDayjs(props.end);
+  if (result.diff(transToDayjs(props.start)) < 0) {
+    result = result.add(1, 'day');
+  }
+  return result;
+});
 
 watch(percentage, (newV, oldV) => {
   if (newV >= 0 && newV <= 100) {
@@ -30,7 +37,7 @@ watch(percentage, (newV, oldV) => {
 watch(
   () => [props.end, props.start],
   (newV) => {
-    total.value = transToDayjs(props.end).diff(transToDayjs(props.start));
+    total.value = computedEnd.value.diff(transToDayjs(props.start));
   },
   {
     immediate: true,
