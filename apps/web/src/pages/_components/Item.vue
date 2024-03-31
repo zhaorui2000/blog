@@ -43,6 +43,7 @@ function handleClickStart() {
   log.trace('开始按钮');
   $list.set(
     produce($list.get(), (draft) => {
+      raft[props.index].isLock = true;
       draft[props.index].diff = secodeToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
       draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
     }),
