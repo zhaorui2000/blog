@@ -28,7 +28,12 @@ function handleConfirm({ selectedValues }) {
 <template>
   <van-field v-bind="$attrs.fieldConfig" readonly v-model="fieldValue" @focus="handleFocus"> </van-field>
   <van-action-sheet @open="handleOpen" v-bind="$attrs.actionSheetConfig" v-model:show="show">
-    <van-time-picker v-model="timeValue" cancel-button-text="" @confirm="handleConfirm"></van-time-picker>
+    <van-time-picker
+      v-model="timeValue"
+      cancel-button-text=""
+      @confirm="handleConfirm"
+      v-bind="$attrs.timePickerConfig"
+    ></van-time-picker>
   </van-action-sheet>
 </template>
 <style></style>

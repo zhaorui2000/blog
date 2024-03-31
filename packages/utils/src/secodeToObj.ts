@@ -1,6 +1,5 @@
 import * as mathjs from "mathjs"
 export default function (value: number) {
-    console.log(value)
     let hour = mathjs.chain(value).divide(3600).floor().done()
     let minute = mathjs.chain(value).mod(3600).divide(60).floor().done()
     let second = mathjs.chain(value).mod(60).floor().done();

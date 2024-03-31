@@ -69,6 +69,12 @@ const handleComfire = () => {
   updateList();
   $isShowAdd.set(false);
 };
+const timeFilter = (type, options) => {
+  if (type === 'minute') {
+    return options.filter((option) => Number(option.value) % 5 === 0);
+  }
+  return options;
+};
 </script>
 <template>
   <div>
@@ -78,8 +84,20 @@ const handleComfire = () => {
     </div>
     <Popup :show="isShowAdd" position="bottom">
       <Field label="标题" v-model="title"></Field>
-      <TimePickerField v-model="start" :fieldConfig="{ label: '开始时间' }"></TimePickerField>
-      <TimePickerField v-model="end" :fieldConfig="{ label: '结束时间' }"></TimePickerField>
+      <TimePickerField
+        v-model="start"
+        :timePickerConfig="{
+          filter: timeFilter,
+        }"
+        :fieldConfig="{ label: '开始时间' }"
+      ></TimePickerField>
+      <TimePickerField
+        v-model="end"
+        :timePickerConfig="{
+          filter: timeFilter,
+        }"
+        :fieldConfig="{ label: '结束时间' }"
+      ></TimePickerField>
       <div class="flex">
         <CancelButton class="grow" @click="handleCancel">取消</CancelButton>
         <PrimaryButton class="grow" @click="handleComfire">确定</PrimaryButton>

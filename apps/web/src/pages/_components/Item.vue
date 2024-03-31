@@ -4,7 +4,7 @@ import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } fro
 import { defineProps, computed } from 'vue';
 import { $addData, $list, $isShowAdd } from './../store';
 import { useStore } from '@nanostores/vue';
-import { log } from './../store';
+import { log, updateList } from './../store';
 import dayjs from 'dayjs';
 import { transToDayjs, secodeToObj } from '@blog/utils';
 const list = useStore($list);
@@ -44,8 +44,10 @@ function handleClickStart() {
   $list.set(
     produce($list.get(), (draft) => {
       draft[props.index].diff = secodeToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
+      draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
     }),
   );
+  updateList();
 }
 function handleStart() {
   log.trace('进度条开始');
@@ -70,6 +72,7 @@ function handleModify() {
     endDiff: { hour: 0, minute: 0, second: 0 },
   });
   $isShowAdd.set(true);
+  updateList();
 }
 function handleClickDel() {
   $list.set(
@@ -77,6 +80,7 @@ function handleClickDel() {
       draft.splice(props.index, 1);
     }),
   );
+  updateList();
 }
 </script>
 <template>

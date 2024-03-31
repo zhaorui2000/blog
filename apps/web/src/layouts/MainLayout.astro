@@ -12,7 +12,7 @@ import { Header, Container, Footer } from '@blog/ui';
     <meta name="generator" content={Astro.generator} />
     <title>Astro</title>
   </head>
-  <body class="grid h-screen" style="grid-template-rows: min-content 1fr min-content;">
+  <body class="grid h-screen gap-2" style="grid-template-rows: min-content 1fr min-content;">
     <Header client:load title="" />
     <Container client:load>
       <slot />
