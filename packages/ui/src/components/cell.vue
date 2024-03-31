@@ -15,7 +15,7 @@ const props = defineProps({
     <template #right>
       <slot name="right"></slot>
     </template>
-    <div class="grid p-2 border rounded-sm">
+    <div class="grid p-2 border-N4 border rounded-lg shadow-lg">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           <slot name="title">
