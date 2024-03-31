@@ -93,7 +93,7 @@ function handleClickDel() {
       <PrimaryButton class="h-full" type="default" plain @click="handleClickFinish">完成</PrimaryButton>
     </template>
     <template #left>
-      <PrimaryButton class="h-full" @click="handleModify">修改</PrimaryButton>
+      <PrimaryButton type="default" class="h-full" @click="handleModify">修改</PrimaryButton>
       <DelButton class="h-full" @click="handleClickDel"></DelButton>
     </template>
     <template #operate>
