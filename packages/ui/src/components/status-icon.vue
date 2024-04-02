@@ -16,9 +16,9 @@ const computedIconClass = computed(() => {
   return clsx(
     'text-[1.5em]',
     {
-      [props.onClass]: status.value,
+      [props.onClass]: props.status,
     },
-    { [props.offClass]: !status.value },
+    { [props.offClass]: !props.status },
   );
 });
 const handleClick = function () {
