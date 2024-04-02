@@ -6,7 +6,7 @@ import { $addData, $list, $isShowAdd, updateList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
 import dayjs from 'dayjs';
-import { transToDayjs, secodeToObj, objToSecond } from '@blog/utils';
+import { transToDayjs, secondToObj, objToSecond } from '@blog/utils';
 const list = useStore($list);
 const cellElementRef = ref(null);
 const content = computed(() => {
@@ -40,7 +40,7 @@ function handleClickFinish() {
       if (draft[props.index].isFinish) {
         // ToDo: 修复
       } else {
-        draft[props.index].endDiff = secodeToObj(dayjs().diff(endDate, 'second'));
+        draft[props.index].endDiff = secondToObj(dayjs().diff(endDate, 'second'));
       }
       draft[props.index].isFinish = true;
     }),
@@ -52,7 +52,7 @@ function handleClickStart() {
   $list.set(
     produce($list.get(), (draft) => {
       draft[props.index].isLock = true;
-      draft[props.index].diff = secodeToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
+      draft[props.index].diff = secondToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
       draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
       draft[props.index].isFinish = false;
     }),
