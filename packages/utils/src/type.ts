@@ -1,0 +1,1 @@
+export interface ObjTime { hour?: string | number, minute?: string | number, second?: string | number }

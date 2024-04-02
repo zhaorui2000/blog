@@ -2,11 +2,11 @@
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
 import { defineProps, computed, ref } from 'vue';
-import { $addData, $list, $isShowAdd } from './../store';
+import { $addData, $list, $isShowAdd, updateList } from './../_store';
 import { useStore } from '@nanostores/vue';
-import { log, updateList } from './../store';
+import { log } from './../store';
 import dayjs from 'dayjs';
-import { transToDayjs, secodeToObj } from '@blog/utils';
+import { transToDayjs, secodeToObj, objToSecond } from '@blog/utils';
 const list = useStore($list);
 const cellElementRef = ref(null);
 const content = computed(() => {
@@ -36,9 +36,16 @@ function handleClickFinish() {
   log.trace('完成按钮');
   $list.set(
     produce($list.get(), (draft) => {
-      draft[props.index].endDiff = secodeToObj(dayjs().diff(transToDayjs(computedEnd.value), 'second'));
+      const endDate = transToDayjs(computedEnd.value);
+      if (draft[props.index].isFinish) {
+        // ToDo: 修复
+      } else {
+        draft[props.index].endDiff = secodeToObj(dayjs().diff(endDate, 'second'));
+      }
+      draft[props.index].isFinish = true;
     }),
   );
+  updateList();
 }
 function handleClickStart() {
   log.trace('开始按钮');
@@ -47,6 +54,7 @@ function handleClickStart() {
       draft[props.index].isLock = true;
       draft[props.index].diff = secodeToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
       draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
+      draft[props.index].isFinish = false;
     }),
   );
   updateList();
@@ -59,6 +67,7 @@ function handleEnd() {
   log.trace('进度条结束');
 }
 function handleChangeIsLock({ value }) {
+  log.trace('是否锁定', '参数:修改值', value, '参数:坐标', props.index);
   $list.set(
     produce($list.get(), (draft) => {
       draft[props.index].isLock = value;

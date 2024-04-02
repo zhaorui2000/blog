@@ -4,4 +4,5 @@ import transToDayjs from './transToDayjs';
 import isNil from "./isNil"
 import isObject from './isObject';
 import secodeToObj from "./secodeToObj"
-export { isNil, WebLogService, debounce, transToDayjs, isObject, secodeToObj };
+import objToSecond from "./objToSecond"
+export { isNil, WebLogService, debounce, transToDayjs, isObject, secodeToObj, objToSecond };

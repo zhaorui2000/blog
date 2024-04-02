@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted, defineExpose, ref } from 'vue';
+import { defineProps, defineExpose, ref } from 'vue';
 import anime from 'animejs';
 const contentElement = ref(null);
 const props = defineProps({
@@ -9,6 +9,7 @@ const props = defineProps({
   },
 });
 function active() {
+  contentElement.value.scrollIntoView({ behavior: 'smooth', block: 'end' });
   anime({
     targets: contentElement.value,
     backgroundColor: '#1989FA',
@@ -27,7 +28,7 @@ defineExpose({ active });
     <template #right>
       <slot name="right"></slot>
     </template>
-    <div ref="contentElement" class="grid p-2 border-N4 border rounded-lg shadow-lg">
+    <div ref="contentElement" class="grid p-2 bg-N1 border-N4 border rounded-lg shadow-lg">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           <slot name="title">

@@ -1,6 +1,6 @@
 <script setup>
 import Item from './Item.vue';
-import { $list } from './../store';
+import { $list } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { CellGroup } from '@blog/ui';
 const list = useStore($list);

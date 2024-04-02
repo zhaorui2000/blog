@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     colors: {
       MR: '#1989FA',
@@ -20,6 +23,7 @@ export default {
       O4: '#ED6A0C',
       Y1: '#FFFBE8',
       CY4: '#FAAB0C',
+      transparent: 'transparent',
     },
   },
   plugins: [

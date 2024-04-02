@@ -1,9 +1,9 @@
 <script setup>
 import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton } from '@blog/ui';
 import { isObject } from '@blog/utils';
-import { log, updateList } from './../store';
+import { log } from './../store';
 import { ref, watch } from 'vue';
-import { $list, $isShowAdd, $addData } from './../store';
+import { $list, $isShowAdd, $addData, updateList } from './../_store';
 import { produce } from 'immer';
 import { useStore } from '@nanostores/vue';
 import { v4 as uuidv4 } from 'uuid';
@@ -35,6 +35,9 @@ const reset = () => {
 const handleClick = () => {
   log.trace('新增/修改 弹框');
   $isShowAdd.set(true);
+};
+const handleReset = () => {
+  log.trace('重置');
 };
 const handleCancel = () => {
   log.trace('取消');
@@ -79,7 +82,7 @@ const timeFilter = (type, options) => {
 <template>
   <div>
     <div class="flex">
-      <DelButton block @click="handleClick">重置</DelButton>
+      <DelButton block @click="handleReset">重置</DelButton>
       <PrimaryButton block @click="handleClick">新增</PrimaryButton>
     </div>
     <Popup :show="isShowAdd" position="bottom">
