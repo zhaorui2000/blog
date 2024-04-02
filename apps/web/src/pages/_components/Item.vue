@@ -1,13 +1,14 @@
 <script setup>
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
-import { defineProps, computed } from 'vue';
+import { defineProps, computed, ref } from 'vue';
 import { $addData, $list, $isShowAdd } from './../store';
 import { useStore } from '@nanostores/vue';
 import { log, updateList } from './../store';
 import dayjs from 'dayjs';
 import { transToDayjs, secodeToObj } from '@blog/utils';
 const list = useStore($list);
+const cellElementRef = ref(null);
 const content = computed(() => {
   return list.value[props.index] ?? {};
 });
@@ -49,6 +50,7 @@ function handleClickStart() {
     }),
   );
   updateList();
+  cellElementRef.value.active();
 }
 function handleStart() {
   log.trace('进度条开始');
@@ -85,7 +87,7 @@ function handleClickDel() {
 }
 </script>
 <template>
-  <Cell>
+  <Cell ref="cellElementRef">
     <template #title>
       <TimeTag :time="computedStart"></TimeTag>
       <TimeTag class="ml-1" :time="computedEnd"></TimeTag>

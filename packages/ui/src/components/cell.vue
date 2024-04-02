@@ -1,11 +1,23 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, onMounted, defineExpose, ref } from 'vue';
+import anime from 'animejs';
+const contentElement = ref(null);
 const props = defineProps({
   title: {
     type: [String, Number],
     required: false,
   },
 });
+function active() {
+  anime({
+    targets: contentElement.value,
+    backgroundColor: '#1989FA',
+    easing: 'easeInOutQuad',
+    duration: 700,
+    direction: 'alternate',
+  });
+}
+defineExpose({ active });
 </script>
 <template>
   <van-swipe-cell>
@@ -15,7 +27,7 @@ const props = defineProps({
     <template #right>
       <slot name="right"></slot>
     </template>
-    <div class="grid p-2 border-N4 border rounded-lg shadow-lg">
+    <div ref="contentElement" class="grid p-2 border-N4 border rounded-lg shadow-lg">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           <slot name="title">

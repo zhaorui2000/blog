@@ -104,6 +104,9 @@ importers:
       '@nanostores/persistent':
         specifier: ^0.10.1
         version: 0.10.1(nanostores@0.10.0)
+      animejs:
+        specifier: ^3.2.2
+        version: 3.2.2
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
@@ -2676,6 +2679,11 @@ packages:
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
     dev: true
+
+  /animejs@3.2.2:
+    resolution:
+      { integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ== }
+    dev: false
 
   /ansi-align@3.0.1:
     resolution:

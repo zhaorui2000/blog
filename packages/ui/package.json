@@ -10,6 +10,7 @@
   "dependencies": {
     "@iconify-icons/material-symbols": "^1.2.58",
     "@nanostores/persistent": "^0.10.1",
+    "animejs": "^3.2.2",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
     "joi": "^17.12.2",
