@@ -9,27 +9,25 @@ const fieldValue = ref();
 watch(
   model,
   (newV) => {
-    fieldValue.value = `${`${newV[0] % 24}`.padStart(2, '0')} ${`${newV[1] % 60}`.padStart(2, '0')}`;
+    timeValue.value = [`${newV.hour}`, `${newV.minute}`];
+    fieldValue.value = `${`${newV.hour}`.padStart(2, 0)} ${`${newV.minute}`.padStart(2, 0)}`;
   },
   { immediate: true },
 );
-
-function handleOpen() {
-  timeValue.value = model.value;
-}
 function handleFocus() {
   show.value = true;
 }
 function handleConfirm({ selectedValues }) {
   show.value = false;
-  model.value = selectedValues;
+  model.value = { hour: selectedValues?.[0] ?? 0, minute: selectedValues?.[1] ?? 0 };
 }
 </script>
 <template>
-  <van-field v-bind="$attrs.fieldConfig" readonly v-model="fieldValue" @focus="handleFocus"> </van-field>
-  <van-action-sheet @open="handleOpen" v-bind="$attrs.actionSheetConfig" v-model:show="show">
+  <van-field v-bind="$attrs.fieldConfig" readonly v-model="fieldValue" @focus="handleFocus"></van-field>
+  {{ timeValue.value }}
+  <van-action-sheet v-bind="$attrs.actionSheetConfig" v-model:show="show">
     <van-time-picker
-      v-model="timeValue"
+      :modelValue="timeValue"
       cancel-button-text=""
       @confirm="handleConfirm"
       v-bind="$attrs.timePickerConfig"

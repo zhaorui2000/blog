@@ -2,30 +2,23 @@
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
 import { defineProps, computed, ref } from 'vue';
-import { $addData, $list, $isShowAdd, updateList, resetList } from './../_store';
+import { $list, $addData, $isShowAdd } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
+import { objTimeOperate, transToDayjs, secondToObj } from '@blog/utils';
 import dayjs from 'dayjs';
-import { transToDayjs, secondToObj, objTimeOperate } from '@blog/utils';
 const list = useStore($list);
 const cellElementRef = ref(null);
 const content = computed(() => {
   return list.value[props.index] ?? {};
 });
-const computedStart = computed(() => {
-  return {
-    hour: content.value.start.hour + content.value.diff.hour,
-    minute: content.value.start.minute + content.value.diff.minute,
-    second: content.value.start.second + content.value.diff.second,
-  };
+const computedStartTime = computed(() => {
+  return objTimeOperate(content.value.startTime).add(content.value.startTimeOffset).done();
 });
-const computedEnd = computed(() => {
-  return {
-    hour: content.value.end.hour + content.value.diff.hour + content.value.endDiff.hour,
-    minute: content.value.end.minute + content.value.diff.minute + content.value.endDiff.minute,
-    second: content.value.end.second + content.value.diff.second + content.value.endDiff.second,
-  };
+const computedEndTime = computed(() => {
+  return objTimeOperate(content.value.startTime).add(content.value.startTimeOffset).add(content.value.duration).done();
 });
+
 const props = defineProps({
   index: {
     type: Number,
@@ -34,54 +27,26 @@ const props = defineProps({
 });
 function handleClickFinish() {
   log.trace('完成按钮');
-  $list.set(
-    produce($list.get(), (draft) => {
-      const endDate = transToDayjs(computedEnd.value);
-      if (draft[props.index].isFinish) {
-        draft[props.index].endDiff = objTimeOperate(secondToObj(dayjs().diff(endDate, 'second')))
-          .add(draft[props.index].endDiff)
-          .done();
-      } else {
-        draft[props.index].endDiff = secondToObj(dayjs().diff(endDate, 'second'));
-      }
-      draft[props.index].isFinish = true;
-    }),
-  );
-  resetList(props.index + 1);
-  updateList();
 }
 function handleClickStart() {
   log.trace('开始按钮');
   $list.set(
     produce($list.get(), (draft) => {
-      draft[props.index].diff = secondToObj(dayjs().diff(transToDayjs(draft[props.index].start), 'seconds'));
-      draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
-      draft[props.index].isFinish = false;
-      draft[props.index].isStart = true;
+      draft[props.index].startTimeOffset = secondToObj(
+        dayjs().diff(transToDayjs(draft[props.index].startTime), 'second'),
+      );
     }),
   );
-  resetList(props.index + 1);
-  updateList();
   cellElementRef.value.active();
 }
 function handleStart() {
   log.trace('进度条自动开始');
-  $list.set(
-    produce($list.get(), (draft) => {
-      draft[props.index].isStart = true;
-    }),
-  );
 }
 function handleEnd() {
   log.trace('进度条结束');
-  $list.set(
-    produce($list.get(), (draft) => {
-      draft[props.index].isFinish = true;
-    }),
-  );
 }
 function handleChangeIsLock({ value }) {
-  log.trace('是否锁定', '参数:修改值', value, '参数:坐标', props.index);
+  log.trace('点击【锁定】图标', '参数:修改值', value, '参数:坐标', props.index);
   $list.set(
     produce($list.get(), (draft) => {
       draft[props.index].isLock = value;
@@ -89,16 +54,13 @@ function handleChangeIsLock({ value }) {
   );
 }
 function handleModify() {
+  log.trace('点击【修改】');
   $addData.set({
-    index: props.index,
+    start: computedStartTime.value,
+    end: computedEndTime.value,
     ...content.value,
-    start: computedStart.value,
-    end: computedEnd.value,
-    diff: { hour: 0, minute: 0, second: 0 },
-    endDiff: { hour: 0, minute: 0, second: 0 },
   });
   $isShowAdd.set(true);
-  updateList();
 }
 function handleClickDel() {
   $list.set(
@@ -106,14 +68,13 @@ function handleClickDel() {
       draft.splice(props.index, 1);
     }),
   );
-  updateList();
 }
 </script>
 <template>
   <Cell ref="cellElementRef">
     <template #title>
-      <TimeTag :time="computedStart"></TimeTag>
-      <TimeTag class="ml-1" :time="computedEnd"></TimeTag>
+      <TimeTag :time="computedStartTime"></TimeTag>
+      <TimeTag :time="computedEndTime" class="ml-1"></TimeTag>
       <span class="ml-2">
         {{ content.title }}
       </span>
@@ -135,11 +96,11 @@ function handleClickDel() {
       ></StatusIcon>
     </template>
     <TimeProgress
+      :start="computedStartTime"
+      :end="computedEndTime"
       class="mt-1"
       @start="handleStart"
       @end="handleEnd"
-      :start="computedStart"
-      :end="computedEnd"
     ></TimeProgress>
   </Cell>
 </template>

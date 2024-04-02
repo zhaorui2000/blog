@@ -1,77 +1,71 @@
 <script setup>
 import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton } from '@blog/ui';
-import { isObject } from '@blog/utils';
+import { isNil, isObject } from '@blog/utils';
 import { log } from './../store';
 import { ref, watch } from 'vue';
-import { $list, $isShowAdd, $addData, updateList, resetList } from './../_store';
-import { produce } from 'immer';
+import { v4 as uuid } from 'uuid';
+import { $isShowAdd, $addData } from './../_store';
 import { useStore } from '@nanostores/vue';
-import { v4 as uuidv4 } from 'uuid';
+import { produce } from 'immer';
+import { $list } from './../_store';
 const isShowAdd = useStore($isShowAdd);
 const addData = useStore($addData);
-const start = ref(['00', '00']);
-const end = ref(['00', '00']);
+const start = ref({ hour: 0, minute: 0, second: 0 });
+const end = ref({ hour: 0, minute: 0, second: 0 });
 const title = ref('');
 
 watch(isShowAdd, (newV) => {
   if (newV) {
-    if (isObject(addData.value)) {
-      const obj = $addData.get();
-      start.value = [obj.start.hour, obj.start.minute];
-      end.value = [obj.end.hour, obj.end.minute];
-      title.value = obj.title;
+    if (isNil(addData.value?.id)) {
+      reset();
+    } else {
+      const initData = $addData.get();
+      start.value = initData.start;
+      end.value = initData.end;
+      title.value = initData.title;
     }
-  } else {
-    reset();
   }
 });
 
 const reset = () => {
-  start.value = ['00', '00'];
-  end.value = ['00', '00'];
+  start.value = { hour: 0, minute: 0, second: 0 };
+  end.value = { hour: 0, minute: 0, second: 0 };
   title.value = '';
-  $addData.set(undefined);
 };
 const handleClick = () => {
-  log.trace('新增/修改 弹框');
+  log.trace('点击【新增】');
+  $addData.set(undefined);
   $isShowAdd.set(true);
 };
 const handleReset = () => {
-  log.trace('重置按钮');
-  resetList();
-  updateList();
+  log.trace('点击【重置】');
 };
 const handleCancel = () => {
-  log.trace('取消');
+  log.trace('点击【取消】');
   $isShowAdd.set(false);
 };
 const handleComfire = () => {
-  let itemData = {
-    isLock: true,
-    diff: { hour: 0, minute: 0, second: 0 },
-    endDiff: { hour: 0, minute: 0, second: 0 },
-    ...($addData.get() ?? {}),
-    title: title.value,
-    end: { hour: Number(end.value[0]), minute: Number(end.value[1]), second: 0 },
-    start: { hour: Number(start.value[0]), minute: Number(start.value[1]), second: 0 },
-  };
-  if (isObject(addData.value)) {
-    log.trace('修改');
-    const { index } = $addData.get();
-    $list.set(
-      produce($list.get(), (draft) => {
-        draft[index] = { ...draft[index], ...itemData };
-      }),
-    );
-  } else {
-    log.trace('新增-新增');
-    $list.set(
-      produce($list.get(), (draft) => {
-        draft.push({ id: uuidv4(), ...itemData });
-      }),
-    );
-  }
-  updateList();
+  log.trace('点击【确定】');
+  $list.set(
+    produce($list.get(), (draft) => {
+      const itemObj = {
+        startTime: { ...start.value, second: 0 },
+        duration: {
+          hour: end.value.hour - start.value.hour,
+          minute: end.value.minute - start.value.minute,
+          second: 0,
+        },
+        startTimeOffset: { hour: 0, minute: 0, second: 0 },
+        durationOffset: { hour: 0, minute: 0, second: 0 },
+        title: title.value,
+      };
+      if (isNil(addData.value?.id)) {
+        draft.push({ ...itemObj, index: draft.length, id: uuid(), isLock: false });
+      } else {
+        draft[addData.value.index] = { ...draft[addData.value.index], ...itemObj };
+      }
+    }),
+  );
   $isShowAdd.set(false);
 };
 const timeFilter = (type, options) => {
