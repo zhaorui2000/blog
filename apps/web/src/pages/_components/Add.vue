@@ -47,7 +47,7 @@ const handleCancel = () => {
 };
 const handleComfire = () => {
   let itemData = {
-    isLock: false,
+    isLock: true,
     diff: { hour: 0, minute: 0, second: 0 },
     endDiff: { hour: 0, minute: 0, second: 0 },
     ...($addData.get() ?? {}),

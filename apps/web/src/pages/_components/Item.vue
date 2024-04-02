@@ -26,9 +26,6 @@ const computedEnd = computed(() => {
     second: content.value.end.second + content.value.diff.second + content.value.endDiff.second,
   };
 });
-const computedFinishDisabled = computed(() => {
-  return !list.value[props.index].isStart;
-});
 const props = defineProps({
   index: {
     type: Number,
@@ -123,9 +120,7 @@ function handleClickDel() {
     </template>
     <template #right>
       <PrimaryButton class="h-full" @click="handleClickStart">开始</PrimaryButton>
-      <PrimaryButton :disabled="computedFinishDisabled" class="h-full" type="default" plain @click="handleClickFinish"
-        >完成</PrimaryButton
-      >
+      <PrimaryButton class="h-full" type="default" plain @click="handleClickFinish">完成</PrimaryButton>
     </template>
     <template #left>
       <PrimaryButton type="default" class="h-full" @click="handleModify">修改</PrimaryButton>
