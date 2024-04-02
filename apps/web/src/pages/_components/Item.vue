@@ -2,11 +2,11 @@
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
 import { defineProps, computed, ref } from 'vue';
-import { $addData, $list, $isShowAdd, updateList } from './../_store';
+import { $addData, $list, $isShowAdd, updateList, resetList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
 import dayjs from 'dayjs';
-import { transToDayjs, secondToObj, objToSecond } from '@blog/utils';
+import { transToDayjs, secondToObj, objTimeOperate } from '@blog/utils';
 const list = useStore($list);
 const cellElementRef = ref(null);
 const content = computed(() => {
@@ -26,6 +26,9 @@ const computedEnd = computed(() => {
     second: content.value.end.second + content.value.diff.second + content.value.endDiff.second,
   };
 });
+const computedFinishDisabled = computed(() => {
+  return !list.value[props.index].isStart;
+});
 const props = defineProps({
   index: {
     type: Number,
@@ -38,33 +41,47 @@ function handleClickFinish() {
     produce($list.get(), (draft) => {
       const endDate = transToDayjs(computedEnd.value);
       if (draft[props.index].isFinish) {
-        // ToDo: 修复
+        draft[props.index].endDiff = objTimeOperate(secondToObj(dayjs().diff(endDate, 'second')))
+          .add(draft[props.index].endDiff)
+          .done();
       } else {
         draft[props.index].endDiff = secondToObj(dayjs().diff(endDate, 'second'));
       }
       draft[props.index].isFinish = true;
     }),
   );
+  resetList(props.index + 1);
   updateList();
 }
 function handleClickStart() {
   log.trace('开始按钮');
   $list.set(
     produce($list.get(), (draft) => {
-      draft[props.index].isLock = true;
-      draft[props.index].diff = secondToObj(dayjs().diff(transToDayjs(content.value.start), 'seconds'));
+      draft[props.index].diff = secondToObj(dayjs().diff(transToDayjs(draft[props.index].start), 'seconds'));
       draft[props.index].endDiff = { hour: 0, minute: 0, second: 0 };
       draft[props.index].isFinish = false;
+      draft[props.index].isStart = true;
     }),
   );
+  resetList(props.index + 1);
   updateList();
   cellElementRef.value.active();
 }
 function handleStart() {
-  log.trace('进度条开始');
+  log.trace('进度条自动开始');
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft[props.index].isStart = true;
+    }),
+  );
 }
 function handleEnd() {
   log.trace('进度条结束');
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft[props.index].isFinish = true;
+    }),
+  );
 }
 function handleChangeIsLock({ value }) {
   log.trace('是否锁定', '参数:修改值', value, '参数:坐标', props.index);
@@ -106,7 +123,9 @@ function handleClickDel() {
     </template>
     <template #right>
       <PrimaryButton class="h-full" @click="handleClickStart">开始</PrimaryButton>
-      <PrimaryButton class="h-full" type="default" plain @click="handleClickFinish">完成</PrimaryButton>
+      <PrimaryButton :disabled="computedFinishDisabled" class="h-full" type="default" plain @click="handleClickFinish"
+        >完成</PrimaryButton
+      >
     </template>
     <template #left>
       <PrimaryButton type="default" class="h-full" @click="handleModify">修改</PrimaryButton>

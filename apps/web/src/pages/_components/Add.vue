@@ -3,7 +3,7 @@ import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton }
 import { isObject } from '@blog/utils';
 import { log } from './../store';
 import { ref, watch } from 'vue';
-import { $list, $isShowAdd, $addData, updateList } from './../_store';
+import { $list, $isShowAdd, $addData, updateList, resetList } from './../_store';
 import { produce } from 'immer';
 import { useStore } from '@nanostores/vue';
 import { v4 as uuidv4 } from 'uuid';
@@ -37,7 +37,9 @@ const handleClick = () => {
   $isShowAdd.set(true);
 };
 const handleReset = () => {
-  log.trace('重置');
+  log.trace('重置按钮');
+  resetList();
+  updateList();
 };
 const handleCancel = () => {
   log.trace('取消');

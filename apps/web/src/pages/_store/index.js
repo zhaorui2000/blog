@@ -2,6 +2,7 @@ import { persistentAtom } from '@nanostores/persistent';
 import { atom } from 'nanostores';
 import { produce } from 'immer';
 import { log } from './../store';
+import { objTimeOperate } from '@blog/utils';
 
 export const $list = persistentAtom('list', [], {
   encode: JSON.stringify,
@@ -27,12 +28,21 @@ export function updateList() {
           totalDiff = { hour: 0, minute: 0, second: 0 };
           continue;
         }
-        totalDiff = {
-          hour: totalDiff.hour + diff.hour,
-          minute: totalDiff.minute + diff.minute,
-          second: totalDiff.second + diff.second,
-        };
+        totalDiff = objTimeOperate(totalDiff).add(diff).done();
         draft[i].diff = totalDiff;
+        totalDiff = objTimeOperate(totalDiff).add(endDiff).done();
+      }
+    }),
+  );
+}
+
+export function resetList(startIndex = 0) {
+  log.trace('重置列表', '参数:下标', startIndex);
+  $list.set(
+    produce($list.get(), (draft) => {
+      for (let i = startIndex; i < draft.length; ++i) {
+        draft[i].diff = { hour: 0, minute: 0, second: 0 };
+        draft[i].endDiff = { hour: 0, minute: 0, second: 0 };
       }
     }),
   );
