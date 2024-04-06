@@ -2,7 +2,7 @@
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
 import { defineProps, computed, ref } from 'vue';
-import { $list, $addData, $isShowAdd } from './../_store';
+import { $list, $addData, $isShowAdd, updateList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
 import { objTimeOperate, transToDayjs, secondToObj } from '@blog/utils';
@@ -37,6 +37,7 @@ function handleClickStart() {
       );
     }),
   );
+  updateList();
   cellElementRef.value.active();
 }
 function handleStart() {

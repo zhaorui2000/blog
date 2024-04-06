@@ -1,10 +1,10 @@
 <script setup>
 import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton } from '@blog/ui';
-import { isNil, isObject } from '@blog/utils';
+import { isNil } from '@blog/utils';
 import { log } from './../store';
 import { ref, watch } from 'vue';
 import { v4 as uuid } from 'uuid';
-import { $isShowAdd, $addData } from './../_store';
+import { $isShowAdd, $addData, resetList, updateList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
 import { $list } from './../_store';
@@ -39,6 +39,7 @@ const handleClick = () => {
 };
 const handleReset = () => {
   log.trace('点击【重置】');
+  resetList();
 };
 const handleCancel = () => {
   log.trace('点击【取消】');
@@ -66,6 +67,7 @@ const handleComfire = () => {
       }
     }),
   );
+  updateList();
   $isShowAdd.set(false);
 };
 const timeFilter = (type, options) => {
