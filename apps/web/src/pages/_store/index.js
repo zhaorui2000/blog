@@ -21,16 +21,26 @@ export const $list = persistentAtom('list', [], {
 });
 export const $isShowAdd = atom(false);
 export const $addData = atom(false);
+export const $endOfDay = persistentAtom(
+  'endOfDay',
+  { hour: 1, minute: 0, second: 0 },
+  {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  },
+);
 
-export function updateList(startIndex = 0) {
+export function updateList({ startIndex = 0, divideTime = { hour: 0, minute: 0, second: 0 } } = {}) {
   log.trace('重新计算列表', '参数:下标', startIndex);
   $list.set(
     produce($list.get(), (draft) => {
+      // ------- 排序 -------
       draft.sort((a, b) => {
         return objToSecond(
           objTimeOperate(a.startTime).subtract(b.startTime).add(a.startTimeOffset).subtract(b.startTimeOffset).done(),
         );
       });
+      // ------- 重新计算时间偏移 -------
     }),
   );
 }

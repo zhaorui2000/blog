@@ -16,7 +16,7 @@ const computedStartTime = computed(() => {
   return objTimeOperate(content.value.startTime).add(content.value.startTimeOffset).done();
 });
 const computedEndTime = computed(() => {
-  return objTimeOperate(content.value.startTime).add(content.value.startTimeOffset).add(content.value.duration).done();
+  return objTimeOperate(computedStartTime.value).add(content.value.duration).add(content.value.durationOffset).done();
 });
 
 const props = defineProps({
@@ -27,6 +27,15 @@ const props = defineProps({
 });
 function handleClickFinish() {
   log.trace('完成按钮');
+  $list.set(
+    produce($list.get(), (draft) => {
+      draft[props.index].durationOffset = objTimeOperate(dayjs())
+        .subtract(computedStartTime.value)
+        .subtract(draft[props.index].duration)
+        .done();
+    }),
+  );
+  updateList();
 }
 function handleClickStart() {
   log.trace('开始按钮');
