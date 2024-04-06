@@ -2,7 +2,7 @@
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
 import { defineProps, computed, ref } from 'vue';
-import { $list, $addData, $isShowAdd, updateList } from './../_store';
+import { $list, $addData, $isShowAdd, sortList, calcList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
 import { objTimeOperate, transToDayjs, secondToObj } from '@blog/utils';
@@ -35,7 +35,8 @@ function handleClickFinish() {
         .done();
     }),
   );
-  updateList();
+  sortList();
+  calcList();
 }
 function handleClickStart() {
   log.trace('开始按钮');
@@ -46,7 +47,8 @@ function handleClickStart() {
       );
     }),
   );
-  updateList();
+  sortList();
+  calcList();
   cellElementRef.value.active();
 }
 function handleStart() {
