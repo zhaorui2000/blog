@@ -12,7 +12,9 @@ import { objToSecond, objTimeOperate } from '@blog/utils';
     "startTimeOffset":"[objTime]【开始时间偏移】",
     "durationOffset":"[objTime]【持续时间偏移】",
     "id":"[string]【唯一key】",
-    "title":"[string]【标题】"
+    "title":"[string]【标题】",
+    "index":"[number]【下标】",
+    "label":"[string]【分类标签】"
   }
 */
 export const $list = persistentAtom('list', [], {
@@ -49,6 +51,7 @@ export function updateList({ startIndex = 0, divideTime = { hour: 0, minute: 0, 
           totalOffset = objTimeOperate(totalOffset).add(draft[i].durationOffset).done();
         }
         draft[i].startTimeOffset = objTimeOperate(draft[i].startTimeOffset).add(totalOffset).done();
+        draft[i].index = i;
       }
     }),
   );
