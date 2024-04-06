@@ -43,12 +43,12 @@ export function updateList({ startIndex = 0, divideTime = { hour: 0, minute: 0, 
       // ------- 重新计算开始时间偏移 -------
       let totalOffset = { hour: 0, minute: 0, second: 0 };
       for (let i = startIndex; i < draft.length; ++i) {
-        draft[i].startTimeOffset = objTimeOperate(draft[i].startTimeOffset).add(totalOffset).done();
         if (draft[i].isLock) {
           totalOffset = { hour: 0, minute: 0, second: 0 };
         } else {
           totalOffset = objTimeOperate(totalOffset).add(draft[i].durationOffset).done();
         }
+        draft[i].startTimeOffset = objTimeOperate(draft[i].startTimeOffset).add(totalOffset).done();
       }
     }),
   );
