@@ -36,7 +36,6 @@ function handleClickFinish() {
     }),
   );
   updateList();
-  $isShowAdd.set(false);
 }
 function handleClickStart() {
   log.trace('开始按钮');
