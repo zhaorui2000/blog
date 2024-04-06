@@ -31,7 +31,7 @@ export const $endOfDay = persistentAtom(
 );
 
 export function updateList({ startIndex = 0, divideTime = { hour: 0, minute: 0, second: 0 } } = {}) {
-  log.trace('重新计算列表', '参数:下标', startIndex);
+  log.trace('重新计算列表', '参数', [...arguments]);
   $list.set(
     produce($list.get(), (draft) => {
       // ------- 排序 -------
@@ -40,7 +40,16 @@ export function updateList({ startIndex = 0, divideTime = { hour: 0, minute: 0, 
           objTimeOperate(a.startTime).subtract(b.startTime).add(a.startTimeOffset).subtract(b.startTimeOffset).done(),
         );
       });
-      // ------- 重新计算时间偏移 -------
+      // ------- 重新计算开始时间偏移 -------
+      let totalOffset = { hour: 0, minute: 0, second: 0 };
+      for (let i = startIndex; i < draft.length; ++i) {
+        draft[i].startTimeOffset = objTimeOperate(draft[i].startTimeOffset).add(totalOffset).done();
+        if (draft[i].isLock) {
+          totalOffset = { hour: 0, minute: 0, second: 0 };
+        } else {
+          totalOffset = objTimeOperate(totalOffset).add(draft[i].durationOffset).done();
+        }
+      }
     }),
   );
 }
