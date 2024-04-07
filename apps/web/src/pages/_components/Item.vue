@@ -45,6 +45,7 @@ function handleClickStart() {
       draft[props.index].startTimeOffset = secondToObj(
         dayjs().diff(transToDayjs(draft[props.index].startTime), 'second'),
       );
+      draft[props.index].durationOffset = { hour: 0, minute: 0, second: 0 };
     }),
   );
   sortList();
