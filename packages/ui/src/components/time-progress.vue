@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, onMounted, onUnmounted, computed, watch, popScopeId } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch, popScopeId } from 'vue';
 import { interval } from 'rxjs';
 import dayjs from 'dayjs';
 import Progress from './progress.vue';

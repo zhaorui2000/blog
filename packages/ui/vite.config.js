@@ -14,6 +14,9 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
+      output: {
+        globals: { vue: 'vue' },
+      },
       external: ['vue'],
     },
     outDir: resolve(__dirname, 'lib'),

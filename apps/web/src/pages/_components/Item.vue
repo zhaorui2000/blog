@@ -1,7 +1,7 @@
 <script setup>
 import { produce } from 'immer';
 import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
-import { defineProps, computed, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { $list, $addData, $isShowAdd, sortList, calcList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, computed, defineEmits } from 'vue';
+import { ref, computed, defineEmits } from 'vue';
 import clsx from 'clsx';
 const props = defineProps({
   onClass: { type: String, require: true },
