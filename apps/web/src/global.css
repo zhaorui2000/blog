@@ -1,3 +1,6 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+:root {
+  font-size: 1rem;
+}

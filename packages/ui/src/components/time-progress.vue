@@ -36,7 +36,7 @@ watch(percentage, (newV, oldV) => {
 });
 watch(
   () => [props.end, props.start],
-  (newV) => {
+  () => {
     total.value = computedEnd.value.diff(transToDayjs(props.start));
   },
   {
