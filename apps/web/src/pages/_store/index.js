@@ -22,7 +22,7 @@ export const $list = persistentAtom('list', [], {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
-export const $currentSelectLabel = persistentAtom('currentSelectLabel', '');
+export const $currentSelectLabel = persistentAtom('currentSelectLabel', '全部');
 export const $labelList = persistentAtom(
   'labelList',
   [
