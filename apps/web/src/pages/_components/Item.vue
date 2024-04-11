@@ -5,7 +5,7 @@ import { computed, ref } from 'vue';
 import { $list, $addData, $isShowAdd, sortList, calcList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { log } from './../store';
-import { objTimeOperate, transToDayjs, secondToObj } from '@blog/utils';
+import { objTimeOperate, transToDayjs, secondToObj, objToSecond } from '@blog/utils';
 import dayjs from 'dayjs';
 const list = useStore($list);
 const cellElementRef = ref(null);
@@ -13,7 +13,10 @@ const content = computed(() => {
   return list.value[props.index] ?? {};
 });
 const computedStartTime = computed(() => {
-  return objTimeOperate(content.value.startTime).add(content.value.startTimeOffset).done();
+  return objTimeOperate(content.value.startTime)
+    .add(content.value.selfStartTimeOffset)
+    .add(content.value.calcStartTimeOffset)
+    .done();
 });
 const computedEndTime = computed(() => {
   return objTimeOperate(computedStartTime.value).add(content.value.duration).add(content.value.durationOffset).done();
@@ -29,10 +32,17 @@ function handleClickFinish() {
   log.trace('完成按钮');
   $list.set(
     produce($list.get(), (draft) => {
-      draft[props.index].durationOffset = objTimeOperate(dayjs())
+      let result = objTimeOperate(dayjs())
         .subtract(computedStartTime.value)
         .subtract(draft[props.index].duration)
         .done();
+      if (objToSecond(result) < 0) {
+        draft[props.index].durationOffset = objTimeOperate(computedStartTime.value)
+          .subtract(computedEndTime.value)
+          .done();
+      } else {
+        draft[props.index].durationOffset = result;
+      }
     }),
   );
   sortList();
@@ -42,7 +52,7 @@ function handleClickStart() {
   log.trace('开始按钮');
   $list.set(
     produce($list.get(), (draft) => {
-      draft[props.index].startTimeOffset = secondToObj(
+      draft[props.index].selfStartTimeOffset = secondToObj(
         dayjs().diff(transToDayjs(draft[props.index].startTime), 'second'),
       );
       draft[props.index].durationOffset = { hour: 0, minute: 0, second: 0 };

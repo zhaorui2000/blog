@@ -1,6 +1,6 @@
 <script setup>
 import Item from './Item.vue';
-import { $list, $endOfDay } from './../_store';
+import { $list, $endOfDay, sortList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { CellGroup, Cell, TimeTag } from '@blog/ui';
 const list = useStore($list);

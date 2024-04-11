@@ -56,7 +56,8 @@ const handleComfire = () => {
           minute: end.value.minute - start.value.minute,
           second: 0,
         },
-        startTimeOffset: { hour: 0, minute: 0, second: 0 },
+        selfStartTimeOffset: { hour: 0, minute: 0, second: 0 },
+        calcStartTimeOffset: { hour: 0, minute: 0, second: 0 },
         durationOffset: { hour: 0, minute: 0, second: 0 },
         title: title.value,
       };

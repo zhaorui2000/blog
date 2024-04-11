@@ -9,7 +9,8 @@ import { objToSecond, objTimeOperate } from '@blog/utils';
     "startTime":"[objTime]【开始时间】",
     "duration":"[objTime]【持续时间】",
     "isLock":"[boolean]是否锁定",
-    "startTimeOffset":"[objTime]【开始时间偏移】",
+    "calcStartTimeOffset":"[objTime]【计算开始时间偏移】",
+    "selfStartTimeOffset":"[objTime]【开始时间偏移】",
     "durationOffset":"[objTime]【持续时间偏移】",
     "id":"[string]【唯一key】",
     "title":"[string]【标题】",
@@ -39,7 +40,13 @@ export function sortList({ divideTime = { hour: 0, minute: 0, second: 0 } } = {}
       // ------- 排序 -------
       draft.sort((a, b) => {
         return objToSecond(
-          objTimeOperate(a.startTime).subtract(b.startTime).add(a.startTimeOffset).subtract(b.startTimeOffset).done(),
+          objTimeOperate(a.startTime)
+            .subtract(b.startTime)
+            .add(a.selfStartTimeOffset)
+            .subtract(b.selfStartTimeOffset)
+            .add(a.calcStartTimeOffset)
+            .subtract(b.calcStartTimeOffset)
+            .done(),
         );
       });
     }),
@@ -52,13 +59,12 @@ export function calcList({ startIndex = 0 } = {}) {
   $list.set(
     produce($list.get(), (draft) => {
       for (let i = startIndex; i < draft.length; ++i) {
+        draft[i] = { ...draft[i], index: i, calcStartTimeOffset: totalOffset };
         if (draft[i].isLock) {
           totalOffset = { hour: 0, minute: 0, second: 0 };
         } else {
           totalOffset = objTimeOperate(totalOffset).add(draft[i].durationOffset).done();
         }
-        draft[i].startTimeOffset = objTimeOperate(draft[i].startTimeOffset).add(totalOffset).done();
-        draft[i].index = i;
       }
     }),
   );
@@ -69,7 +75,8 @@ export function resetList(startIndex = 0) {
   $list.set(
     produce($list.get(), (draft) => {
       for (let i = startIndex; i < draft.length; ++i) {
-        draft[i].startTimeOffset = { hour: 0, minute: 0, second: 0 };
+        draft[i].selfStartTimeOffset = { hour: 0, minute: 0, second: 0 };
+        draft[i].calcStartTimeOffset = { hour: 0, minute: 0, second: 0 };
         draft[i].durationOffset = { hour: 0, minute: 0, second: 0 };
       }
     }),
