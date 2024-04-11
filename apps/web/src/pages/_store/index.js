@@ -69,17 +69,19 @@ export function sortList({ divideTime = { hour: 0, minute: 0, second: 0 } } = {}
   $list.set(
     produce($list.get(), (draft) => {
       // ------- 排序 -------
-      draft.sort((a, b) => {
-        return objToSecond(
-          objTimeOperate(a.startTime)
-            .subtract(b.startTime)
-            .add(a.selfStartTimeOffset)
-            .subtract(b.selfStartTimeOffset)
-            .add(a.calcStartTimeOffset)
-            .subtract(b.calcStartTimeOffset)
-            .done(),
-        );
-      });
+      return draft
+        .toSorted((a, b) =>
+          objToSecond(
+            objTimeOperate(a.startTime)
+              .add(a.selfStartTimeOffset)
+              .add(a.calcStartTimeOffset)
+              .subtract(b.startTime)
+              .subtract(b.selfStartTimeOffset)
+              .subtract(b.calcStartTimeOffset)
+              .done(),
+          ),
+        )
+        .map((item, index) => ({ ...item, index }));
     }),
   );
 }

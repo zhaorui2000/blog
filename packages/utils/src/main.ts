@@ -6,4 +6,5 @@ import isObject from './isObject';
 import secondToObj from "./secondToObj"
 import objToSecond from "./objToSecond"
 import objTimeOperate from "./objTimeOperate"
-export { isNil, WebLogService, debounce, transToDayjs, isObject, secondToObj, objToSecond, objTimeOperate };
+import transToObjTime from "./transToObjTime"
+export { transToObjTime, isNil, WebLogService, debounce, transToDayjs, isObject, secondToObj, objToSecond, objTimeOperate };

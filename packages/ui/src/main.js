@@ -17,8 +17,10 @@ import TimeTag from './components/time-tag.vue';
 import OperateField from './components/operate-field.vue';
 import Tabs from './components/tabs.vue';
 import Tab from './components/tab.vue';
+import Tag from './components/tag.vue';
 
 export {
+  Tag,
   Tab,
   Tabs,
   OperateField,

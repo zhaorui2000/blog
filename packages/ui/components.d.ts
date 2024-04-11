@@ -22,6 +22,7 @@ declare module 'vue' {
     StatusIcon: typeof import('./src/components/status-icon.vue')['default']
     Tab: typeof import('./src/components/tab.vue')['default']
     Tabs: typeof import('./src/components/tabs.vue')['default']
+    Tag: typeof import('./src/components/tag.vue')['default']
     TimePickerField: typeof import('./src/components/time-picker-field.vue')['default']
     TimeProgress: typeof import('./src/components/time-progress.vue')['default']
     TimeTag: typeof import('./src/components/time-tag.vue')['default']

@@ -1,6 +1,6 @@
 <script setup>
 import { produce } from 'immer';
-import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon } from '@blog/ui';
+import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon, Tag } from '@blog/ui';
 import { computed, ref } from 'vue';
 import { $list, $addData, $isShowAdd, sortList, calcList } from './../_store';
 import { useStore } from '@nanostores/vue';
@@ -91,6 +91,7 @@ function handleClickDel() {
       draft.splice(props.index, 1);
     }),
   );
+  sortList();
 }
 </script>
 <template>

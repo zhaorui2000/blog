@@ -17,9 +17,19 @@ const handleSelect = function ({ name }) {
   model.value = name;
   show.value = false;
 };
+const handleClickRightIcon = function () {
+  model.value = '';
+};
 </script>
 <template>
-  <van-field v-bind="$attrs.fieldConfig" readonly v-model="fieldValue" @focus="handleFocus"></van-field>
+  <van-field
+    right-icon="close"
+    v-bind="$attrs.fieldConfig"
+    readonly
+    v-model="fieldValue"
+    @focus="handleFocus"
+    @click-right-icon="handleClickRightIcon"
+  ></van-field>
   <van-action-sheet v-bind="$attrs.actionSheetConfig" v-model:show="show" @select="handleSelect"> </van-action-sheet>
 </template>
 <style></style>

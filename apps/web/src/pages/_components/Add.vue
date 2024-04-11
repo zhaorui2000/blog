@@ -87,7 +87,7 @@ const timeFilter = (type, options) => {
 <template>
   <div>
     <div class="flex">
-      <DelButton block @click="handleReset">重置</DelButton>
+      <DelButton block @click="handleReset">重置全部</DelButton>
       <PrimaryButton block @click="handleClick">新增</PrimaryButton>
     </div>
     <Popup :show="isShowAdd" position="bottom">

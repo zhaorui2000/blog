@@ -9,7 +9,6 @@ const handleChangeTab = function ({ title }) {
 </script>
 <template>
   <Tabs @click-tab="handleChangeTab">
-    <Tab title="全部"></Tab>
     <Tab v-for="(item, index) of labelList" :key="index" :title="item.name"></Tab>
   </Tabs>
 </template>
