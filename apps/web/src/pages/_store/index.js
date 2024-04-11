@@ -22,11 +22,42 @@ export const $list = persistentAtom('list', [], {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
+export const $currentSelectLabel = persistentAtom('currentSelectLabel', '');
+export const $labelList = persistentAtom(
+  'labelList',
+  [
+    {
+      name: '星期一',
+    },
+    {
+      name: '星期二',
+    },
+    {
+      name: '星期三',
+    },
+    {
+      name: '星期四',
+    },
+    {
+      name: '星期五',
+    },
+    {
+      name: '星期六',
+    },
+    {
+      name: '星期日',
+    },
+  ],
+  {
+    encode: JSON.stringify,
+    decode: JSON.parse,
+  },
+);
 export const $isShowAdd = atom(false);
 export const $addData = atom(false);
 export const $endOfDay = persistentAtom(
   'endOfDay',
-  { hour: 1, minute: 0, second: 0 },
+  { hour: 0, minute: 0, second: 0 },
   {
     encode: JSON.stringify,
     decode: JSON.parse,

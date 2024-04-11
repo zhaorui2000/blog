@@ -14,8 +14,14 @@ import Field from './components/field.vue';
 import CancelButton from './components/cancel-button.vue';
 import Footer from './components/footer.vue';
 import TimeTag from './components/time-tag.vue';
+import OperateField from './components/operate-field.vue';
+import Tabs from './components/tabs.vue';
+import Tab from './components/tab.vue';
 
 export {
+  Tab,
+  Tabs,
+  OperateField,
   TimeTag,
   Footer,
   CancelButton,

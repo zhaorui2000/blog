@@ -1,5 +1,5 @@
 <script setup>
-import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton } from '@blog/ui';
+import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton, OperateField } from '@blog/ui';
 import { isNil } from '@blog/utils';
 import { log } from './../store';
 import { ref, watch } from 'vue';
@@ -7,11 +7,13 @@ import { v4 as uuid } from 'uuid';
 import { $isShowAdd, $addData, resetList, sortList } from './../_store';
 import { useStore } from '@nanostores/vue';
 import { produce } from 'immer';
-import { $list } from './../_store';
+import { $list, $labelList } from './../_store';
 const isShowAdd = useStore($isShowAdd);
 const addData = useStore($addData);
+const labelList = useStore($labelList);
 const start = ref({ hour: 0, minute: 0, second: 0 });
 const end = ref({ hour: 0, minute: 0, second: 0 });
+const label = ref('');
 const title = ref('');
 
 watch(isShowAdd, (newV) => {
@@ -23,14 +25,17 @@ watch(isShowAdd, (newV) => {
       start.value = initData.start;
       end.value = initData.end;
       title.value = initData.title;
+      label.value = initData.label;
     }
   }
 });
 
 const reset = () => {
+  log.trace('重置新增弹框内容');
   start.value = { hour: 0, minute: 0, second: 0 };
   end.value = { hour: 0, minute: 0, second: 0 };
   title.value = '';
+  label.value = '';
 };
 const handleClick = () => {
   log.trace('点击【新增】');
@@ -60,6 +65,7 @@ const handleComfire = () => {
         calcStartTimeOffset: { hour: 0, minute: 0, second: 0 },
         durationOffset: { hour: 0, minute: 0, second: 0 },
         title: title.value,
+        label: label.value,
       };
       if (isNil(addData.value?.id)) {
         draft.push({ ...itemObj, index: draft.length, id: uuid(), isLock: false });
@@ -100,6 +106,13 @@ const timeFilter = (type, options) => {
         }"
         :fieldConfig="{ label: '结束时间' }"
       ></TimePickerField>
+      <OperateField
+        v-model="label"
+        :actionSheetConfig="{
+          actions: labelList,
+        }"
+        :fieldConfig="{ label: '标签' }"
+      ></OperateField>
       <div class="flex">
         <CancelButton class="grow" @click="handleCancel">取消</CancelButton>
         <PrimaryButton class="grow" @click="handleComfire">确定</PrimaryButton>
