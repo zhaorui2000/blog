@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 const labelList = useStore($labelList);
 const currentSelectLabel = useStore($currentSelectLabel);
 onMounted(() => {
-  $currentSelectLabel.set(labelList.value.at(dayjs().day() + 1).name);
+  $currentSelectLabel.set(labelList.value.at(dayjs().day()).name);
 });
 const handleChangeTab = function ({ title }) {
   log.trace('切换tab', '参数', title);

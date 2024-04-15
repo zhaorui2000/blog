@@ -180,6 +180,9 @@ importers:
       nanostores:
         specifier: ^0.10.0
         version: 0.10.0
+      radash:
+        specifier: ^12.1.0
+        version: 12.1.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
@@ -6197,6 +6200,12 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
+
+  /radash@12.1.0:
+    resolution:
+      { integrity: sha512-b0Zcf09AhqKS83btmUeYBS8tFK7XL2e3RvLmZcm0sTdF1/UUlHSsjXdCcWNxe7yfmAlPve5ym0DmKGtTzP6kVQ== }
+    engines: { node: '>=14.18.0' }
+    dev: false
 
   /rc@1.2.8:
     resolution:
