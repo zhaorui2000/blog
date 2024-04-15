@@ -22,10 +22,12 @@ export const $list = persistentAtom('list', [], {
   encode: JSON.stringify,
   decode: JSON.parse,
 });
-export const $currentSelectLabel = persistentAtom('currentSelectLabel', '全部');
-export const $labelList = persistentAtom(
-  'labelList',
+export const $currentSelectLabel = atom('currentSelectLabel');
+export const $labelList = atom(
   [
+    {
+      name: '星期日',
+    },
     {
       name: '星期一',
     },
@@ -43,9 +45,6 @@ export const $labelList = persistentAtom(
     },
     {
       name: '星期六',
-    },
-    {
-      name: '星期日',
     },
   ],
   {
