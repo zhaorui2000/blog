@@ -12,6 +12,7 @@ const currentSelectLabel = useStore($currentSelectLabel);
 const endOfDay = useStore($endOfDay);
 const itemElement = ref();
 const titleElement = ref();
+const cellGroupElement = ref();
 
 const computedList = computed(() => {
   return list.value.filter((item) => {
@@ -30,14 +31,17 @@ watch(
     }
   },
 );
+watch(currentSelectLabel, () => {
+  cellGroupElement.value?.scrollToTop();
+});
 onMounted(() => {
-  log.trace('计算 列表 min height');
+  log.trace('计算 列表 min-height');
   const { height: titleHeight } = getComputedStyle(titleElement.value);
-  itemElement.value.style['min-height'] = `calc( 100% - ${titleHeight} + 2px )`;
+  itemElement.value.style['min-height'] = `calc( 100% - ${titleHeight} + .125rem )`;
 });
 </script>
 <template>
-  <CellGroup>
+  <CellGroup ref="cellcellGroupElement">
     <div ref="titleElement">
       <Cell title="结束时间">
         <template #title>
@@ -51,7 +55,7 @@ onMounted(() => {
     <div class="sticky top-0 z-10">
       <LabelList></LabelList>
     </div>
-    <div class="grid gap-1" :style="computedListStyle" ref="itemElement">
+    <div class="grid gap-1" ref="itemElement">
       <Item v-for="{ id, index } of computedList" :index="index" :key="id"></Item>
     </div>
   </CellGroup>
