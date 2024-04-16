@@ -1,0 +1,11 @@
+{
+  "appId": "zr_blog.netlify.app",
+  "appName": "blog",
+  "bundledWebRuntime": false,
+  "webDir": "./../web/dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}
