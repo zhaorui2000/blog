@@ -8,7 +8,7 @@
     "mobile"
   ],
   "scripts": {
-    "build": "rm -r android && npx cap add android"
+    "build": "rm -rf android && npx cap add android"
   },
   "dependencies": {
     "@capacitor/android": "^6.0.0",
