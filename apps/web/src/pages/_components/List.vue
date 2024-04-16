@@ -19,19 +19,17 @@ const computedList = computed(() => {
 });
 </script>
 <template>
-  <div>
-    <CellGroup>
-      <Cell title="结束时间">
-        <template #title>
-          <div class="flex items-center gap-2">
-            <div>一天结束时间</div>
-            <TimeTag :time="endOfDay"></TimeTag>
-          </div>
-        </template>
-      </Cell>
-      <LabelList></LabelList>
-      <Item v-for="{ id, index } of computedList" :index="index" :key="id"></Item>
-    </CellGroup>
-  </div>
+  <CellGroup>
+    <Cell title="结束时间">
+      <template #title>
+        <div class="flex items-center gap-2">
+          <div>一天结束时间</div>
+          <TimeTag :time="endOfDay"></TimeTag>
+        </div>
+      </template>
+    </Cell>
+    <LabelList></LabelList>
+    <Item v-for="{ id, index } of computedList" :index="index" :key="id"></Item>
+  </CellGroup>
 </template>
 <style></style>

@@ -13,12 +13,14 @@ import { Header, Container, Footer } from '@blog/ui';
     <title>Astro</title>
   </head>
   <body class="h-screen">
-    <div class="grid h-screen gap-2" style="grid-template-rows: min-content 1fr min-content;">
-      <Header title="日程安排" left-arrow={false} left-text="" />
-      <Container class="overflow-y-auto">
-        <slot />
-      </Container>
-      <slot name="footer" />
-    </div>
+    <Container class="overflow-y-auto">
+      <Fragment slot="header">
+        <Header title="日程安排" left-arrow={false} left-text="" />
+      </Fragment>
+      <slot />
+      <Fragment slot="footer">
+        <slot name="footer" #footer />
+      </Fragment>
+    </Container>
   </body>
 </html>

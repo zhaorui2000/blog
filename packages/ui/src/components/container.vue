@@ -1,9 +1,23 @@
 <script setup></script>
 <template>
-  <div class="bg-N1 grid w-screen max-h-[100vh] h-full overflow-hidden">
-    <slot>
-      <van-empty />
-    </slot>
+  <div
+    class="bg-N1 grid w-screen h-full overflow-hidden"
+    style="
+      grid-template-rows:
+        min-content 1fr
+        min-content;
+    "
+  >
+    <div><slot name="header"></slot></div>
+    <div class="overflow-y-hidden p-2 pt-0">
+      <div class="h-2"></div>
+      <slot>
+        <van-empty />
+      </slot>
+    </div>
+    <div class="pb-1">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 <style></style>

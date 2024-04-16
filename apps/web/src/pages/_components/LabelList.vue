@@ -16,7 +16,7 @@ const handleChangeTab = function ({ title }) {
 };
 </script>
 <template>
-  <Tabs class="sticky" :active="currentSelectLabel" @click-tab="handleChangeTab">
+  <Tabs class="sticky top-0 z-10" :active="currentSelectLabel" @click-tab="handleChangeTab">
     <Tab v-for="(item, index) of labelList" :key="index" :name="item.name" :title="item.name"></Tab>
   </Tabs>
 </template>

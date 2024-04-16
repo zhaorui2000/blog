@@ -8,6 +8,9 @@
     "web#build": {
       "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
     },
+    "web#dev": {
+      "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
+    },
     "build": {
       "outputs": ["dist/**"]
     },
