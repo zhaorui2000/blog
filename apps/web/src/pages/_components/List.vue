@@ -1,17 +1,18 @@
 <script setup>
 import Item from './Item.vue';
 import { $list, $endOfDay, $currentSelectLabel } from './../_store';
+import { log } from './../store';
 import { useStore } from '@nanostores/vue';
 import { CellGroup, Cell, TimeTag } from '@blog/ui';
 import LabelList from './LabelList.vue';
 import { isNil } from '@blog/utils';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 const list = useStore($list);
 const currentSelectLabel = useStore($currentSelectLabel);
 const endOfDay = useStore($endOfDay);
-const stickyElement = ref();
 const itemElement = ref();
 const titleElement = ref();
+
 const computedList = computed(() => {
   return list.value.filter((item) => {
     if (isNil(item.label) || item.label === '') {
@@ -20,26 +21,37 @@ const computedList = computed(() => {
     return item.label === currentSelectLabel.value;
   });
 });
+watch(
+  () => [itemElement.value, computedList.value],
+  (newV) => {
+    if (newV[0]) {
+      log.trace('重新计算 grid template row 布局');
+      newV[0].style['grid-template-rows'] = `repeat(${newV[1].length}, min-content) 1fr`;
+    }
+  },
+);
 onMounted(() => {
-  const { height: stickyHeight } = window.getComputedStyle(stickyElement.value);
-  const { height: titleHeight } = window.getComputedStyle(stickyElement.value);
-  itemElement.value.style.height = `calc(100% + ${stickyHeight} + ${titleHeight})`;
+  log.trace('计算 列表 min height');
+  const { height: titleHeight } = getComputedStyle(titleElement.value);
+  itemElement.value.style['min-height'] = `calc( 100% - ${titleHeight} + 2px )`;
 });
 </script>
 <template>
   <CellGroup>
-    <Cell title="结束时间" ref="titleElement">
-      <template #title>
-        <div class="flex items-center gap-2">
-          <div>一天结束时间</div>
-          <TimeTag :time="endOfDay"></TimeTag>
-        </div>
-      </template>
-    </Cell>
-    <div class="sticky top-0 z-10" ref="stickyElement">
+    <div ref="titleElement">
+      <Cell title="结束时间">
+        <template #title>
+          <div class="flex items-center gap-2">
+            <div>一天结束时间</div>
+            <TimeTag :time="endOfDay"></TimeTag>
+          </div>
+        </template>
+      </Cell>
+    </div>
+    <div class="sticky top-0 z-10">
       <LabelList></LabelList>
     </div>
-    <div ref="itemElement">
+    <div class="grid" :style="computedListStyle" ref="itemElement">
       <Item v-for="{ id, index } of computedList" :index="index" :key="id"></Item>
     </div>
   </CellGroup>

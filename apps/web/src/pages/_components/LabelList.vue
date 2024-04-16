@@ -13,6 +13,7 @@ onMounted(() => {
 const handleChangeTab = function ({ title }) {
   log.trace('切换tab', '参数', title);
   $currentSelectLabel.set(title);
+  // TODO:切换 tab 自动滚动开头
 };
 </script>
 <template>
