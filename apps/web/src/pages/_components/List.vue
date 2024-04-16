@@ -51,7 +51,7 @@ onMounted(() => {
     <div class="sticky top-0 z-10">
       <LabelList></LabelList>
     </div>
-    <div class="grid" :style="computedListStyle" ref="itemElement">
+    <div class="grid gap-1" :style="computedListStyle" ref="itemElement">
       <Item v-for="{ id, index } of computedList" :index="index" :key="id"></Item>
     </div>
   </CellGroup>
