@@ -91,10 +91,11 @@ export function calcList({ startIndex = 0 } = {}) {
   $list.set(
     produce($list.get(), (draft) => {
       for (let i = startIndex; i < draft.length; ++i) {
-        draft[i] = { ...draft[i], index: i, calcStartTimeOffset: totalOffset };
         if (draft[i].isLock) {
           totalOffset = { hour: 0, minute: 0, second: 0 };
-        } else {
+        }
+        draft[i] = { ...draft[i], index: i, calcStartTimeOffset: totalOffset };
+        if (!draft[i].isLock) {
           totalOffset = objTimeOperate(totalOffset).add(draft[i].durationOffset).done();
         }
       }

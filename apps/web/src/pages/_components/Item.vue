@@ -36,13 +36,7 @@ function handleClickFinish() {
         .subtract(computedStartTime.value)
         .subtract(draft[props.index].duration)
         .done();
-      if (objToSecond(result) < 0) {
-        draft[props.index].durationOffset = objTimeOperate(computedStartTime.value)
-          .subtract(computedEndTime.value)
-          .done();
-      } else {
-        draft[props.index].durationOffset = result;
-      }
+      draft[props.index].durationOffset = result;
     }),
   );
   sortList();

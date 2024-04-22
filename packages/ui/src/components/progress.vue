@@ -9,9 +9,9 @@ watch(
   () => props.percentage,
   (newV, oldV) => {
     // 计算颜色
-    if (Number(newV) <= 80) {
+    if (Number(newV) <= 90) {
       color.value = '#1989FA';
-    } else if (Number(newV) >= 80 && Number(newV) <= 100) {
+    } else if (Number(newV) >= 90 && Number(newV) <= 100) {
       color.value = '#07C160';
     } else {
       color.value = '#EE0A24';
