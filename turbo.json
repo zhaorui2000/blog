@@ -9,7 +9,7 @@
       "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
     },
     "mobile#build": {
-      "dependsOn": ["web#build"]
+      "dependsOn": ["^web#build"]
     },
     "web#dev": {
       "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
