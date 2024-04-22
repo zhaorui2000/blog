@@ -56,6 +56,9 @@ importers:
       '@astrojs/vue':
         specifier: ^4.0.8
         version: 4.0.8(@babel/core@7.24.3)(astro@4.4.4)(vite@5.2.7)(vue@3.4.20)
+      '@blog/font':
+        specifier: workspace:*
+        version: link:../../packages/font
       '@blog/postcss-any-to-viewport':
         specifier: workspace:*
         version: link:../../packages/postcss-any-to-viewport
@@ -111,6 +114,8 @@ importers:
       prettier-plugin-astro:
         specifier: ^0.13.0
         version: 0.13.0
+
+  packages/font: {}
 
   packages/postcss-any-to-viewport:
     dependencies:

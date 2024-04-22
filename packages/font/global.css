@@ -1,0 +1,20 @@
+@font-face {
+  font-family: 'Yozai-Bold';
+  src: url('./Yozai-Bold.ttf');
+}
+@font-face {
+  font-family: 'Yozai-Light';
+  src: url('./Yozai-Light.ttf');
+}
+@font-face {
+  font-family: 'Yozai-Medium';
+  src: url('./Yozai-Medium.ttf');
+}
+@font-face {
+  font-family: 'Yozai-Regular';
+  src: url('./Yozai-Regular.ttf');
+}
+:root,
+body {
+  font-family: 'Yozai-Regular' !important;
+}

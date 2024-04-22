@@ -1,0 +1,13 @@
+{
+  "name": "@blog/font",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "main": "./global.css",
+  "exports": {
+    "./index.css": "./global.css"
+  }
+}
