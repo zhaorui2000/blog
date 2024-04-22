@@ -14,6 +14,7 @@ const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
+const computedPivotText = computed(() => percentage.value.toFixed(2));
 const computedStart = computed(() => {
   let result = transToDayjs(props.start);
   if (transToDayjs(props.end).diff(result) < 0) {
@@ -51,6 +52,6 @@ onMounted(() => {
 onUnmounted(() => {});
 </script>
 <template>
-  <Progress :percentage="percentage"></Progress>
+  <Progress :percentage="percentage" :pivot-text="computedPivotText"></Progress>
 </template>
 <style></style>
