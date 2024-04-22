@@ -15,7 +15,7 @@
         <van-empty />
       </slot>
     </div>
-    <div class="pb-1">
+    <div>
       <slot name="footer"></slot>
     </div>
   </div>

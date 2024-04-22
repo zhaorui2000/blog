@@ -14,10 +14,10 @@ const current = ref(0);
 const total = ref(0);
 const interval$ = interval(1000);
 const percentage = computed(() => mathjs.chain(current.value).divide(total.value).multiply(100).fix(2).done());
-const computedEnd = computed(() => {
-  let result = transToDayjs(props.end);
-  if (result.diff(transToDayjs(props.start)) < 0) {
-    result = result.add(1, 'day');
+const computedStart = computed(() => {
+  let result = transToDayjs(props.start);
+  if (transToDayjs(props.end).diff(result) < 0) {
+    result = result.add(-1, 'day');
   }
   return result;
 });
@@ -35,9 +35,9 @@ watch(percentage, (newV, oldV) => {
   }
 });
 watch(
-  () => [props.end, props.start],
+  () => [props.end, computedStart.value],
   () => {
-    total.value = computedEnd.value.diff(transToDayjs(props.start));
+    total.value = transToDayjs(props.end).diff(computedStart.value);
   },
   {
     immediate: true,
@@ -45,7 +45,7 @@ watch(
 );
 onMounted(() => {
   interval$.subscribe((n) => {
-    current.value = dayjs().diff(transToDayjs(props.start));
+    current.value = dayjs().diff(computedStart.value);
   });
 });
 onUnmounted(() => {});
