@@ -1,7 +1,7 @@
 <script setup>
 import { Tabs, Tab } from '@blog/ui';
 import { $labelList, $currentSelectLabel } from './../_store';
-import { log } from './../store';
+import { log } from '@/store';
 import { useStore } from '@nanostores/vue';
 import { onMounted } from 'vue';
 import dayjs from 'dayjs';

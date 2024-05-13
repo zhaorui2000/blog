@@ -1,6 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent';
 import { atom } from 'nanostores';
-import { log } from './../store';
+import { log } from '@/store';
 import { produce } from 'immer';
 import { objToSecond, objTimeOperate } from '@blog/utils';
 

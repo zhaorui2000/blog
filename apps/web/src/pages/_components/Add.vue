@@ -1,7 +1,7 @@
 <script setup>
 import { PrimaryButton, CancelButton, Popup, TimePickerField, Field, DelButton, OperateField } from '@blog/ui';
 import { isNil } from '@blog/utils';
-import { log } from './../store';
+import { log } from '@/store';
 import { ref, watch } from 'vue';
 import { v4 as uuid } from 'uuid';
 import { $isShowAdd, $addData, resetList, sortList } from './../_store';

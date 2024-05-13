@@ -4,7 +4,7 @@ import { PrimaryButton, DelButton, TimeTag, Cell, TimeProgress, StatusIcon, Tag 
 import { computed, ref } from 'vue';
 import { $list, $addData, $isShowAdd, sortList, calcList } from './../_store';
 import { useStore } from '@nanostores/vue';
-import { log } from './../store';
+import { log } from '@/store';
 import { objTimeOperate, transToDayjs, secondToObj, objToSecond } from '@blog/utils';
 import dayjs from 'dayjs';
 const list = useStore($list);

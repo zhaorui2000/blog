@@ -1,7 +1,7 @@
 <script setup>
 import Item from './Item.vue';
 import { $list, $endOfDay, $currentSelectLabel } from './../_store';
-import { log } from './../store';
+import { log } from '@/store';
 import { useStore } from '@nanostores/vue';
 import { CellGroup, Cell, TimeTag } from '@blog/ui';
 import LabelList from './LabelList.vue';
