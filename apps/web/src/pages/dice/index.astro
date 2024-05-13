@@ -1,0 +1,8 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Main from './_components/main.vue';
+---
+
+<MainLayout hasBack title="骰子">
+  <Main client:load />
+</MainLayout>
