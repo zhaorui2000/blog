@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@blog/utils": "workspace:*",
+    "@blog/tailwind-config": "workspace:*",
     "@iconify-json/material-symbols": "^1.1.79",
     "@iconify/tailwind": "^1.0.1",
     "@vant/auto-import-resolver": "^1.1.0",

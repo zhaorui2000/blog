@@ -13,6 +13,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.2.0",
     "@blog/font": "workspace:*",
+    "@blog/tailwind-config": "workspace:*",
     "@blog/postcss-any-to-viewport": "workspace:*",
     "@blog/ui": "workspace:*",
     "@blog/utils": "workspace:*",
