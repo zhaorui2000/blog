@@ -1,13 +1,9 @@
 ---
 export const prerender = true;
-import MainLayout from './../layouts/MainLayout.astro';
+import MainLayout from '@/layouts/MainLayout.astro';
 import List from './_components/List.vue';
-import Add from './_components/Add.vue';
 ---
 
-<MainLayout>
+<MainLayout title="首页">
   <List client:only />
-  <Fragment slot="footer">
-    <Add client:only />
-  </Fragment>
 </MainLayout>

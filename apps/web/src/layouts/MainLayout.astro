@@ -3,6 +3,7 @@ import '@blog/ui/style.css';
 import '@blog/font/index.css';
 import './../global.css';
 import { Header, Container, Footer } from '@blog/ui';
+const { hasBack = false, title = '' } = Astro.props;
 ---
 
 <html lang="cn">
@@ -16,7 +17,7 @@ import { Header, Container, Footer } from '@blog/ui';
   <body class="h-screen">
     <Container class="overflow-y-auto">
       <Fragment slot="header">
-        <Header title="日程安排" left-arrow={false} left-text="" />
+        <Header client:load title={title} left-arrow={hasBack} left-text="" />
       </Fragment>
       <slot />
       <Fragment slot="footer">
