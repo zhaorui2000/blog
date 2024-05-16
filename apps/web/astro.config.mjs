@@ -7,10 +7,7 @@ import vue from '@astrojs/vue';
 
 // https://astro.build/config
 export default defineConfig({
-  // ...
   integrations: [tailwind(), sentry(), spotlightjs(), vue()],
-  output: 'server',
-  adapter: netlify({
-    cacheOnDemandPages: true,
-  }),
+  output: 'hybrid',
+  adapter: netlify({}),
 });

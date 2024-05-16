@@ -13,8 +13,8 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vue": "^4.2.0",
     "@blog/font": "workspace:*",
-    "@blog/tailwind-config": "workspace:*",
     "@blog/postcss-any-to-viewport": "workspace:*",
+    "@blog/tailwind-config": "workspace:*",
     "@blog/ui": "workspace:*",
     "@blog/utils": "workspace:*",
     "@nanostores/persistent": "^0.10.1",
@@ -33,6 +33,7 @@
     "xstate": "^5.13.0"
   },
   "devDependencies": {
+    "@types/three": "^0.164.0",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0"
   }
