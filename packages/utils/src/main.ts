@@ -11,5 +11,4 @@ import isMathMediaMaxWidth from './dom/isMathMediaMaxWidth';
 import * as randash from "radash"
 export { transToObjTime, isNil, WebLogService, debounce, transToDayjs, isObject, secondToObj, objToSecond, objTimeOperate }
 export const dom = { isMathMediaMaxWidth }
-export const three = {}
 export default randash;

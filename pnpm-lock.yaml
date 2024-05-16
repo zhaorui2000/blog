@@ -227,16 +227,10 @@ importers:
       rxjs:
         specifier: ^7.8.1
         version: 7.8.1
-      three:
-        specifier: ^0.164.1
-        version: 0.164.1
     devDependencies:
       '@types/node':
         specifier: ^20.11.21
         version: 20.11.21
-      '@types/three':
-        specifier: ^0.164.0
-        version: 0.164.0
       typescript:
         specifier: ^5.3.3
         version: 5.3.3
@@ -8021,6 +8015,7 @@ packages:
   /tslib@2.6.2:
     resolution:
       { integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q== }
+    requiresBuild: true
 
   /turbo-darwin-64@1.13.2:
     resolution:
