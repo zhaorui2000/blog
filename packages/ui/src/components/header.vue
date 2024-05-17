@@ -1,6 +1,7 @@
 <script setup>
 function onClickLeft() {
-  history.back();
+  const resultHref = location.pathname.split('/').filter((item) => item);
+  location.href = `${location.origin}${resultHref.slice(0, -1).join('/')}`;
 }
 </script>
 <template>
