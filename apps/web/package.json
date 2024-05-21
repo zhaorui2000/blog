@@ -22,7 +22,7 @@
     "@sentry/astro": "^7.114.0",
     "@spotlightjs/astro": "^1.0.20",
     "@xstate/vue": "^3.1.2",
-    "astro": "^4.8.2",
+    "astro": "^4.8.6",
     "dayjs": "^1.11.11",
     "immer": "^10.1.1",
     "nanostores": "^0.10.3",

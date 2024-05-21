@@ -21,11 +21,11 @@
     "vue": "^3.4.27"
   },
   "devDependencies": {
-    "@blog/utils": "workspace:*",
     "@blog/tailwind-config": "workspace:*",
-    "@iconify-json/material-symbols": "^1.1.79",
-    "@iconify/tailwind": "^1.0.1",
-    "@vant/auto-import-resolver": "^1.1.0",
+    "@blog/utils": "workspace:*",
+    "@iconify-json/material-symbols": "^1.1.80",
+    "@iconify/tailwind": "^1.1.1",
+    "@vant/auto-import-resolver": "^1.2.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "cssnano": "^7.0.1",

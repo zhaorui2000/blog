@@ -20,6 +20,9 @@ export default class World {
     this.scene.add(this.cube, this.light)
     container.append(this.renderer.domElement);
     const resizer = new Resizer(container, this.camera, this.renderer)
+    resizer.onResize = () => {
+      this.render()
+    }
   }
   render() {
     this.renderer.render(this.scene, this.camera)
