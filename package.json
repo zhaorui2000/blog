@@ -2,10 +2,10 @@
   "name": "blog",
   "private": true,
   "scripts": {
-    "dev": "turbo dev",
-    "start": "turbo dev",
-    "build": "turbo build",
-    "preview": "turbo preview",
+    "dev": "turbo run dev build:watch",
+    "start": "turbo run dev",
+    "build": "turbo run build",
+    "preview": "turbo run preview",
     "prepare": "husky"
   },
   "devDependencies": {

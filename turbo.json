@@ -3,28 +3,30 @@
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "@blog/ui#build": {
-      "dependsOn": ["@blog/utils#build"]
+      "dependsOn": ["^build"]
     },
-    "web#build": {
-      "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
-    },
+    "web#dev": {},
     "mobile#build": {
+      "persistent": true,
       "dependsOn": ["web#build"]
-    },
-    "web#dev": {
-      "dependsOn": ["@blog/utils#build", "@blog/ui#build"]
-    },
-    "build": {
-      "outputs": ["dist/**"]
     },
     "dev": {
       "cache": false,
-      "persistent": true,
-      "dependsOn": ["build:watch"]
+      "persistent": true
+    },
+    "build": {
+      "cache": false,
+      "outputs": ["dist/**", "lib/**"],
+      "dependsOn": ["^build"]
     },
     "build:watch": {
-      "outputs": ["dist/**"]
+      "cache": true,
+      "persistent": true,
+      "outputs": ["dist/**", "lib/**"]
     },
-    "test": {}
+    "test": {
+      "cache": false,
+      "dependsOn": []
+    }
   }
 }
