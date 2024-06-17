@@ -11,4 +11,3 @@ onMounted(() => {
   <div ref="container" class="h-full w-full"></div>
 </template>
 <style></style>
-../_utils/World
