@@ -9,9 +9,9 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/netlify": "^5.2.1",
+    "@astrojs/netlify": "^5.3.0",
     "@astrojs/tailwind": "^5.1.0",
-    "@astrojs/vue": "^4.2.0",
+    "@astrojs/vue": "^4.4.0",
     "@blog/font": "workspace:*",
     "@blog/postcss-any-to-viewport": "workspace:*",
     "@blog/tailwind-config": "workspace:*",
@@ -19,22 +19,22 @@
     "@blog/utils": "workspace:*",
     "@nanostores/persistent": "^0.10.1",
     "@nanostores/vue": "^0.10.0",
-    "@sentry/astro": "^7.114.0",
+    "@sentry/astro": "^7.117.0",
     "@spotlightjs/astro": "^1.0.20",
     "@xstate/vue": "^3.1.2",
-    "astro": "^4.8.6",
+    "astro": "^4.10.2",
     "dayjs": "^1.11.11",
     "immer": "^10.1.1",
     "nanostores": "^0.10.3",
-    "tailwindcss": "^3.4.3",
-    "three": "^0.164.1",
-    "uuid": "^9.0.1",
-    "vue": "^3.4.27",
-    "xstate": "^5.13.0"
+    "tailwindcss": "^3.4.4",
+    "three": "^0.165.0",
+    "uuid": "^10.0.0",
+    "vue": "^3.4.29",
+    "xstate": "^5.13.2"
   },
   "devDependencies": {
-    "@types/three": "^0.164.0",
-    "prettier": "^3.2.5",
-    "prettier-plugin-astro": "^0.13.0"
+    "@types/three": "^0.165.0",
+    "prettier": "^3.3.2",
+    "prettier-plugin-astro": "^0.14.0"
   }
 }
