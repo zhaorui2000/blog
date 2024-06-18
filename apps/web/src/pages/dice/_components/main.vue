@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import Word from '../_utils/World';
+import MainSence from '../_utils/MainSence';
 const container = ref(null);
 onMounted(async function() {
-  const word = new Word(container.value);
-  await word.init()
-  word.start();
+  const mainSence = new MainSence(container.value);
+  await mainSence.init()
+  mainSence.start();
 });
 </script>
 <template>

@@ -89,6 +89,9 @@ importers:
       astro:
         specifier: ^4.10.2
         version: 4.10.2(@types/node@20.14.2)(typescript@5.4.5)
+      cannon-es:
+        specifier: ^0.20.0
+        version: 0.20.0
       dayjs:
         specifier: ^1.11.11
         version: 1.11.11
@@ -2096,6 +2099,10 @@ packages:
   caniuse-lite@1.0.30001636:
     resolution:
       { integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg== }
+
+  cannon-es@0.20.0:
+    resolution:
+      { integrity: sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA== }
 
   ccount@2.0.1:
     resolution:
@@ -6744,6 +6751,8 @@ snapshots:
       lodash.uniq: 4.5.0
 
   caniuse-lite@1.0.30001636: {}
+
+  cannon-es@0.20.0: {}
 
   ccount@2.0.1: {}
 

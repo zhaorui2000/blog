@@ -23,6 +23,7 @@
     "@spotlightjs/astro": "^1.0.20",
     "@xstate/vue": "^3.1.2",
     "astro": "^4.10.2",
+    "cannon-es": "^0.20.0",
     "dayjs": "^1.11.11",
     "immer": "^10.1.1",
     "nanostores": "^0.10.3",

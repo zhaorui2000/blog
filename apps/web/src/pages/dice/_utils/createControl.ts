@@ -9,6 +9,6 @@ export default function createControls(camera: Camera, light: DirectionalLight, 
     light.position.x += 2;
     light.position.y += 2;
   });
-  Reflect.set(controls, 'tick', controls.update);
+  controls.enabled = false;
   return controls;
 }
