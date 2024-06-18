@@ -2,8 +2,9 @@
 import { ref, onMounted } from 'vue';
 import Word from '../_utils/World';
 const container = ref(null);
-onMounted(() => {
+onMounted(async function() {
   const word = new Word(container.value);
+  await word.init()
   word.start();
 });
 </script>
