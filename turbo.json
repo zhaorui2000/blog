@@ -15,7 +15,7 @@
       "persistent": true
     },
     "build": {
-      "cache": false,
+      "cache": true,
       "outputs": ["dist/**", "lib/**"],
       "dependsOn": ["^build"]
     },

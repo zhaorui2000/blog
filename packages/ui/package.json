@@ -38,9 +38,5 @@
   "exports": {
     ".": "./lib/index.js",
     "./style.css": "./lib/style.css"
-  },
-  "imports": {
-    "#utils": "./../utils",
-    "#tailwind-config": "./../tailwind-config"
   }
 }
