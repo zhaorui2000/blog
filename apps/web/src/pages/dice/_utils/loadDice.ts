@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 export default async function loadDice() {
   const loader = new GLTFLoader();
-  const diceData = await loader.loadAsync(new URL('./../_assets/dice/scene.gltf', import.meta.url).href);
+  const diceData = await loader.loadAsync(new URL('@public/dice/scene.gltf', import.meta.url).href);
   const diceMesh = diceData.scene.children[0];
   const material = new CANNON.Material();
   const box3 = new THREE.Box3();
