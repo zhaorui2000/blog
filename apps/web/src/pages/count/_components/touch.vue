@@ -27,8 +27,18 @@ const handleTouchEnd = function () {
 </script>
 <template>
   <div class="absolute bg-red h-full w-full grid" style="grid-template-columns: 1fr 1fr">
-    <div class="active:bg-MR opacity-25" @touchend="handleTouchEnd" @touchstart="handleTouchLeftStart"></div>
-    <div class="active:bg-MG opacity-25" @touchend="handleTouchEnd" @touchstart="handleTouchRightStart"></div>
+    <div
+      class="active:bg-MR opacity-25"
+      @touchcancel="handleTouchEnd"
+      @touchend="handleTouchEnd"
+      @touchstart="handleTouchLeftStart"
+    ></div>
+    <div
+      class="active:bg-MG opacity-25"
+      @touchcancel="handleTouchEnd"
+      @touchend="handleTouchEnd"
+      @touchstart="handleTouchRightStart"
+    ></div>
   </div>
 </template>
 <style></style>
