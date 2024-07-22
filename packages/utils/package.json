@@ -8,10 +8,10 @@
     "build:watch": "tsc && vite build --watch"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
-    "typescript": "^5.4.5",
-    "vite": "^5.3.1",
-    "vite-plugin-dts": "^3.9.1"
+    "@types/node": "^20.14.11",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vite-plugin-dts": "4.0.0-beta.1"
   },
   "types": "./lib/index.d.ts",
   "main": "./lib/index.umd.cjs",
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@nanostores/persistent": "^0.10.1",
-    "dayjs": "^1.11.11",
-    "mathjs": "^13.0.0",
+    "dayjs": "^1.11.12",
+    "mathjs": "^13.0.3",
     "nanostores": "^0.10.3",
     "radash": "^12.1.0",
     "rxjs": "^7.8.1"
