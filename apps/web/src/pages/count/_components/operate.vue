@@ -7,12 +7,15 @@ const count = useStore($count);
 const isLock = useStore($isLock);
 const isFast = useStore($isFast);
 const handleClickRest = function () {
+  if (isLock.value) {
+    return;
+  }
   $count.set(0);
 };
 </script>
 <template>
   <div class="grid gap-x-2" style="grid-template-columns: 1fr min-content">
-    <div class="flex items-center border border-solid border-N3 rounded-md">
+    <div class="flex gap-x-4 px-4 items-center border border-solid border-N3 rounded-md text-[20px]">
       <StatusIcon
         @update:status="(value) => $isLock.set(value)"
         :status="isLock"
@@ -27,7 +30,7 @@ const handleClickRest = function () {
       ></StatusIcon>
     </div>
     <div>
-      <DelButton @click="handleClickRest">重置</DelButton>
+      <DelButton @click="handleClickRest" :disabled="isLock">重置</DelButton>
     </div>
   </div>
 </template>
