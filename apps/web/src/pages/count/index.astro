@@ -2,11 +2,15 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import Show from './_components/show.vue';
 import Touch from './_components/touch.vue';
+import Operate from './_components/operate.vue';
 ---
 
 <MainLayout hasBack title="计数器">
-  <div class="grid h-full relative">
-    <Show client:only />
-    <Touch client:only />
+  <div class="grid h-full pb-2 gap-y-2" style="grid-template-rows:1fr min-content">
+    <div class="relative">
+      <Show client:only />
+      <Touch client:only />
+    </div>
+    <Operate client:only />
   </div>
 </MainLayout>
