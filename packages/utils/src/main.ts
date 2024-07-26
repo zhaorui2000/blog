@@ -8,8 +8,10 @@ import objToSecond from './objToSecond';
 import objTimeOperate from './objTimeOperate';
 import transToObjTime from './transToObjTime';
 import isMathMediaMaxWidth from './dom/isMathMediaMaxWidth';
+import axios from './axios';
 import * as randash from 'radash';
 export {
+  axios,
   transToObjTime,
   isNil,
   WebLogService,

@@ -1,0 +1,8 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Show from './_component/Show.vue';
+---
+
+<MainLayout hasBack title="天气">
+  <Show client:load />
+</MainLayout>
