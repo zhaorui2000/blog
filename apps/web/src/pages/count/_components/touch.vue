@@ -42,7 +42,7 @@ const handleTouchRightStart = function () {
   });
 };
 const handleTouchEnd = function () {
-  subscription.value.unsubscribe();
+  subscription.value?.unsubscribe();
 };
 </script>
 <template>

@@ -1,11 +1,14 @@
 <script setup>
 import { DelButton, StatusIcon } from '@blog/ui';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { $count, $isLock, $isFast } from './../_store';
 import { useStore } from '@nanostores/vue';
 const count = useStore($count);
 const isLock = useStore($isLock);
 const isFast = useStore($isFast);
+onMounted(() => {
+  $isLock.set(true);
+});
 const handleClickRest = function () {
   if (isLock.value) {
     return;

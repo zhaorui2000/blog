@@ -22,6 +22,7 @@ const hideTypeList = computed(() => {
 const handleDelType = function (type) {
   $showType.set(
     produce($showType.get(), (draft) => {
+      console.log(draft, type, draft.indexOf(type));
       draft.splice(draft.indexOf(type), 1);
     }),
   );
@@ -78,7 +79,7 @@ onBeforeMount(async () => {
       </div>
     </Card>
     <CellGroup>
-      <Cell v-for="{ name, category, level, text, count } of showTypeList">
+      <Cell v-for="{ name, category, level, text, count, type } of showTypeList">
         <template #title
           ><Tag type="primary">{{ name }}</Tag></template
         >
