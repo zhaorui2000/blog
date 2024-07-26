@@ -1,13 +1,15 @@
 <script setup>
-import { $count, $isLock, $isFast } from './../_store';
+import { $count, $isLock, $isFast, $isAutoLock } from './../_store';
 import { useStore } from '@nanostores/vue';
-import { Subject, interval } from 'rxjs';
+import { interval, timeout } from 'rxjs';
 import { ref, watch } from 'vue';
 import { log } from '@/store';
 const count = useStore($count);
 const isLock = useStore($isLock);
 const isFast = useStore($isFast);
-const subscription = ref();
+const isAutoLock = useStore($isAutoLock);
+const autoLockTimer = ref();
+const pressSub = ref();
 const time = ref(200);
 
 watch(
@@ -21,28 +23,49 @@ watch(
   },
   { immediate: true },
 );
+watch(isAutoLock, (newV, oldV) => {
+  if (newV) {
+    autoLockTimer.value = setTimeout(() => {
+      $isLock.set(true);
+    }, 10000);
+  }
+});
+const commonTouchEvent = function () {
+  log.trace('commonTouchEvent');
+  if (isLock.value) {
+    return false;
+  }
+  clearTimeout(autoLockTimer.value);
+  if (isAutoLock.value) {
+    autoLockTimer.value = setTimeout(() => {
+      $isLock.set(true);
+    }, 10000);
+  }
+  return true;
+};
 const handleTouchLeftStart = function () {
   log.trace('touchLeftStart');
-  if (isLock.value) {
+  if (!commonTouchEvent()) {
     return;
   }
   $count.set(count.value - 1);
-  subscription.value = interval(time.value).subscribe(() => {
+  pressSub.value = interval(time.value).subscribe(() => {
     $count.set(count.value - 1);
   });
 };
 const handleTouchRightStart = function () {
   log.trace('touchRightStart');
-  if (isLock.value) {
+  if (!commonTouchEvent()) {
     return;
   }
   $count.set(count.value + 1);
-  subscription.value = interval(time.value).subscribe(() => {
+  pressSub.value = interval(time.value).subscribe(() => {
     $count.set(count.value + 1);
   });
 };
 const handleTouchEnd = function () {
-  subscription.value?.unsubscribe();
+  log.trace('handleTouchEnd');
+  pressSub.value?.unsubscribe();
 };
 </script>
 <template>

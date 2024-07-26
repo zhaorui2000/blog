@@ -1,10 +1,11 @@
 <script setup>
 import { DelButton, StatusIcon } from '@blog/ui';
 import { onMounted, ref } from 'vue';
-import { $count, $isLock, $isFast } from './../_store';
+import { $count, $isLock, $isFast, $isAutoLock } from './../_store';
 import { useStore } from '@nanostores/vue';
 const count = useStore($count);
 const isLock = useStore($isLock);
+const isAutoLock = useStore($isAutoLock);
 const isFast = useStore($isFast);
 onMounted(() => {
   $isLock.set(true);
@@ -30,6 +31,12 @@ const handleClickRest = function () {
         :status="isFast"
         offClass="icon-[material-symbols--fast-forward-outline]"
         onClass="icon-[material-symbols--fast-forward]"
+      ></StatusIcon>
+      <StatusIcon
+        @update:status="(value) => $isAutoLock.set(value)"
+        :status="isAutoLock"
+        onClass="icon-[material-symbols--time-auto]"
+        offClass="icon-[material-symbols--time-auto-outline]"
       ></StatusIcon>
     </div>
     <div>
