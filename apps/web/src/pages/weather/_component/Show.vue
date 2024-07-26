@@ -1,10 +1,38 @@
 <script setup>
+import { $showType } from '../_store';
 import { axios } from '@blog/utils';
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import dayjs from 'dayjs';
 import Card from './Card.vue';
-import { Rate, Cell, CellGroup, Tag } from '@blog/ui';
+import { Rate, Cell, CellGroup, Tag, DelButton, PrimaryButton } from '@blog/ui';
+import { useStore } from '@nanostores/vue';
+import { produce } from 'immer';
 const weatherNowData = ref();
+const showType = useStore($showType);
+const showTypeList = computed(() => {
+  return weatherNowData.value?.daily?.filter((item) => {
+    return showType.value.includes(Number(item.type));
+  });
+});
+const hideTypeList = computed(() => {
+  return weatherNowData.value?.daily?.filter((item) => {
+    return !showType.value.includes(Number(item.type));
+  });
+});
+const handleDelType = function (type) {
+  $showType.set(
+    produce($showType.get(), (draft) => {
+      draft.splice(draft.indexOf(type), 1);
+    }),
+  );
+};
+const handleShowType = function (type) {
+  $showType.set(
+    produce($showType.get(), (draft) => {
+      draft.push(type);
+    }),
+  );
+};
 onBeforeMount(async () => {
   const {
     data: { now },
@@ -16,8 +44,11 @@ onBeforeMount(async () => {
   } = await axios.get(
     'https://devapi.qweather.com/v7/indices/1d?key=6e4385bb47a24cccad7558e07bc45fa2&location=101120406&type=0',
   );
-  weatherNowData.value = { ...now, daily };
-  console.log(weatherNowData.value);
+
+  weatherNowData.value = {
+    ...now,
+    daily: daily.map((item, index) => ({ ...item, count: [3, 4, 7, 3, 5, 5, 5, 7, 4, 5, 4, 5, 8, 6, 5, 5][index] })),
+  };
 });
 </script>
 <template>
@@ -27,7 +58,9 @@ onBeforeMount(async () => {
       <div>地址</div>
       <div>乐陵</div>
       <div>数据观测时间</div>
-      <div>{{ dayjs(weatherNowData?.obsTime).format('【MM-DD】HH:mm:ss') }}</div>
+      <div>
+        <Tag>{{ dayjs(weatherNowData?.obsTime).format('HH:mm') }}</Tag>
+      </div>
       <div>温度</div>
       <div>{{ weatherNowData?.temp }}</div>
       <div>体感温度</div>
@@ -45,13 +78,27 @@ onBeforeMount(async () => {
       </div>
     </Card>
     <CellGroup>
-      <Cell v-for="{ name, category, level, text } of weatherNowData.daily">
+      <Cell v-for="{ name, category, level, text, count } of showTypeList">
+        <template #title
+          ><Tag type="primary">{{ name }}</Tag></template
+        >
+        <div>
+          <Tag>{{ category }}</Tag>
+        </div>
+        <div>{{ text }}</div>
+        <template #operate>
+          <Rate :modelValue="Number(level)" :count="count"></Rate>
+        </template>
+        <template #left>
+          <DelButton class="h-full" @click="() => handleDelType(Number(type))">删除</DelButton>
+        </template>
+      </Cell>
+      <Cell v-for="{ name, type } of hideTypeList">
         <template #title
           ><Tag>{{ name }}</Tag></template
         >
-        {{ text }}
-        <template #operate>
-          <Rate :modelValue="Number(level)"></Rate>
+        <template #right>
+          <PrimaryButton class="h-full" @click="handleShowType(Number(type))">展示</PrimaryButton>
         </template>
       </Cell>
     </CellGroup>

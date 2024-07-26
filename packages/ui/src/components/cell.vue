@@ -21,14 +21,14 @@ function active() {
 defineExpose({ active });
 </script>
 <template>
-  <van-swipe-cell>
+  <van-swipe-cell class="mb-1">
     <template #left>
       <slot name="left"></slot>
     </template>
     <template #right>
       <slot name="right"></slot>
     </template>
-    <div ref="contentElement" class="grid p-2 bg-N1 border-N4 border rounded-lg shadow-lg">
+    <div ref="contentElement" class="grid p-2 bg-N1 border-N4 border rounded-lg">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
           <slot name="title">
