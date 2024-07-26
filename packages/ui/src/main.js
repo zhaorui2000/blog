@@ -19,8 +19,10 @@ import Tabs from './components/tabs.vue';
 import Tab from './components/tab.vue';
 import Tag from './components/tag.vue';
 import Stepper from './components/stepper.vue';
+import Rate from './components/rate.vue';
 
 export {
+  Rate,
   Stepper,
   Tag,
   Tab,

@@ -101,6 +101,9 @@ importers:
       nanostores:
         specifier: ^0.10.3
         version: 0.10.3
+      qweather-icons:
+        specifier: ^1.6.0
+        version: 1.6.0
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -4415,6 +4418,11 @@ packages:
   queue-microtask@1.2.3:
     resolution:
       { integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A== }
+
+  qweather-icons@1.6.0:
+    resolution:
+      { integrity: sha512-uINrSOteHHarEeHRpP37aBnuuwYnWc1eyZ2gbnujoEqOVabIPDiEseF7a9eIOnBn7GZBlo5nYj29eOEfLH/bEA== }
+    engines: { node: '>=10' }
 
   radash@12.1.0:
     resolution:
@@ -9139,6 +9147,8 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  qweather-icons@1.6.0: {}
 
   radash@12.1.0: {}
 

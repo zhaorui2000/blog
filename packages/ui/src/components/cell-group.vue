@@ -9,7 +9,7 @@ const scrollToTop = function () {
 defineExpose({ scrollToTop });
 </script>
 <template>
-  <van-cell-group ref="mainRef" class="h-full overflow-y-scroll p-1 pt-0 bg-W">
+  <van-cell-group ref="mainRef" class="h-full overflow-y-scroll p-1 pt-0 bg-N2">
     <div class="h-1"></div>
     <slot></slot>
   </van-cell-group>
