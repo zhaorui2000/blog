@@ -23,6 +23,13 @@ watch(
   },
   { immediate: true },
 );
+watch(isAutoLock, (newV, oldV) => {
+  if (newV) {
+    autoLockTimer.value = setTimeout(() => {
+      $isLock.set(true);
+    }, 10000);
+  }
+});
 const commonTouchEvent = function () {
   log.trace('commonTouchEvent');
   if (isLock.value) {
