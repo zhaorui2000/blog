@@ -23,24 +23,12 @@ watch(
   },
   { immediate: true },
 );
-watch(isAutoLock, (newV, oldV) => {
-  if (newV) {
-    autoLockTimer.value = setTimeout(() => {
-      $isLock.set(true);
-    }, 10000);
-  }
-});
 const commonTouchEvent = function () {
   log.trace('commonTouchEvent');
   if (isLock.value) {
     return false;
   }
   clearTimeout(autoLockTimer.value);
-  if (isAutoLock.value) {
-    autoLockTimer.value = setTimeout(() => {
-      $isLock.set(true);
-    }, 10000);
-  }
   return true;
 };
 const handleTouchLeftStart = function () {
@@ -66,6 +54,11 @@ const handleTouchRightStart = function () {
 const handleTouchEnd = function () {
   log.trace('handleTouchEnd');
   pressSub.value?.unsubscribe();
+  if (isAutoLock.value) {
+    autoLockTimer.value = setTimeout(() => {
+      $isLock.set(true);
+    }, 10000);
+  }
 };
 </script>
 <template>
