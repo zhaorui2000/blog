@@ -25,7 +25,9 @@ watch(
 );
 watch(isAutoLock, (newV, oldV) => {
   if (newV) {
+    clearTimeout(autoLockTimer.value);
     autoLockTimer.value = setTimeout(() => {
+      log.trace("watch isAutoLock $isLock set true")
       $isLock.set(true);
     }, 10000);
   }
@@ -63,6 +65,7 @@ const handleTouchEnd = function () {
   pressSub.value?.unsubscribe();
   if (isAutoLock.value) {
     autoLockTimer.value = setTimeout(() => {
+      log.trace("handleTouchEnd $isLock set true")
       $isLock.set(true);
     }, 10000);
   }
