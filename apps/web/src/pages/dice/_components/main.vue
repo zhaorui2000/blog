@@ -4,14 +4,18 @@ import createCamera from "./../_utils/createCamera";
 import createRender from "./../_utils/createRender";
 import createScene from "./../_utils/createScene";
 import createLight from "./../_utils/createLight";
-import createCube from "./../_utils/createCube";
 import createControl from "./../_utils/createControl";
 import Dice from "@/pages/dice/_utils/Dice";
+import {Injector} from "@wendellhu/redi";
+import {GLTFLoader} from "three/examples/jsm/Addons.js";
+
+
+ const injector = new Injector([[Dice],[GLTFLoader]])
 
 onMounted(async() => {
   const aspect = container.value.clientWidth / container.value.clientHeight;
   const camera = createCamera({aspect})
-  const mash = await (new Dice()).load()
+  const mash = await injector.get(Dice).load()
   const scene = createScene()
   const {pointLight,pointLightHelper,ambientLight} = createLight()
   scene.add(pointLight)
