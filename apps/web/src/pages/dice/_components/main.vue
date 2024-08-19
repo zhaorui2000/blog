@@ -18,7 +18,7 @@ onMounted(() => {
   scene.add(pointLightHelper)
   scene.add(mash)
   const renderer = createRender({
-    width: container.value.clientWidth,
+    width: container.value.clientWidth,                  
     height: container.value.clientHeight,
     scene,
     camera,
