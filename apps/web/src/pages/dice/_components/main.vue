@@ -6,11 +6,12 @@ import createScene from "./../_utils/createScene";
 import createLight from "./../_utils/createLight";
 import createCube from "./../_utils/createCube";
 import createControl from "./../_utils/createControl";
+import Dice from "@/pages/dice/_utils/Dice";
 
-onMounted(() => {
+onMounted(async() => {
   const aspect = container.value.clientWidth / container.value.clientHeight;
   const camera = createCamera({aspect})
-  const mash = createCube()
+  const mash = await (new Dice()).load()
   const scene = createScene()
   const {pointLight,pointLightHelper,ambientLight} = createLight()
   scene.add(pointLight)
@@ -18,7 +19,7 @@ onMounted(() => {
   scene.add(pointLightHelper)
   scene.add(mash)
   const renderer = createRender({
-    width: container.value.clientWidth,                  
+    width: container.value.clientWidth,
     height: container.value.clientHeight,
     scene,
     camera,

@@ -21,6 +21,7 @@
     "@nanostores/vue": "^0.10.0",
     "@sentry/astro": "^7.119.0",
     "@spotlightjs/astro": "^1.0.20",
+    "@wendellhu/redi": "^0.16.1",
     "@xstate/vue": "^3.1.2",
     "astro": "^4.14.2",
     "cannon-es": "^0.20.0",
